@@ -3,25 +3,23 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 //Importación de imagenes
 
-
 function Form() {
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [values, setValues] = useState({
+        email: '',
+        password: ''
+    })
     const navigate = useNavigate()
 
-    function handleSubmit(event) {
+    const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:4000/api/login', { email, password })
+        axios.post('http://localhost:4000/api/login', values)
             .then(res => {
-                console.log(res)
-                if (res.data.Status === "Success") {
+                if (res.data.Status === "Admin") {
                     navigate('/shop')
-                } else {
-                    alert("Error")
-                }
+                } 
             })
-            .catch(err => console.log(err));
+            .then(err => console.log(err));
     }
 
     return (
@@ -42,15 +40,15 @@ function Form() {
                                             <p>Porfavor ingrese a su cuenta</p>
 
                                             <div className="form-outline mb-4">
-                                                <input type="email" id="form2Example11" className="form-control"
+                                                <input type="email" id="email" name="email"className="form-control"
                                                     placeholder="Email"
-                                                    onChange={e => setEmail(e.target.value)} />
+                                                    onChange={e => setValues({ ...values, email: e.target.value })} />
 
                                             </div>
 
                                             <div className="form-outline mb-4">
-                                                <input type="password" id="form2Example22" className="form-control"
-                                                    placeholder="Contraseña" onChange={e => setPassword(e.target.value)} />
+                                                <input type="password" id="password" name="password"className="form-control"
+                                                    placeholder="Contraseña" onChange={e => setValues({ ...values, password: e.target.value })} />
                                             </div>
 
                                             <div className="text-center pt-1 mb-5 pb-1">
@@ -60,7 +58,7 @@ function Form() {
                                             </div>
 
                                             <div className="d-flex align-items-center justify-content-center pb-4">
-                                            <p className="mb-0 me-2">No tienes cuenta?</p>
+                                                <p className="mb-0 me-2">No tienes cuenta?</p>
 
                                                 <Link to="/register">
                                                     <button type="button" className="btn btn-outline-danger ml-3">Crear cuenta</button>
