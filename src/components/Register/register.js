@@ -1,4 +1,5 @@
 import React,{ useState } from "react";
+import {useNavigate} from 'react-router-dom'
 import axios from "axios";
 
 
@@ -8,11 +9,17 @@ function FormRegister() {
         email: '',
         password: ''
     })
-
+    const navigate = useNavigate()
     const handleSubmit = (event) =>{
         event.preventDefault();
         axios.post('http://localhost:4000/api/register', values)
-        .then(res => console.log(res))
+        .then(res => {
+            if(res.data.Status === "Success"){
+                navigate('/login')
+            }else{
+                alert('Error');
+            }
+        })
         .then(err =>console.log(err));
     }
 
