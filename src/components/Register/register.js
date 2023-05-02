@@ -1,26 +1,67 @@
-import React,{ useState } from "react";
-import {useNavigate} from 'react-router-dom'
+import React, { useState } from "react";
+import { useNavigate } from 'react-router-dom'
+
+//sweetalert2
+import Swal from 'sweetalert2';
+
+//Axios para conectar a la api
 import axios from "axios";
+
+//Validaciones de formulario
+import { Validation } from './validation';
+import { ValidationPass } from './password'
+
+//Archivos CSS
+import '../../assets/css/alertas.css'
 
 
 function FormRegister() {
 
-    const [values , setValues] = useState({
+    const [values, setValues] = useState({
         email: '',
         password: ''
     })
     const navigate = useNavigate()
-    const handleSubmit = (event) =>{
+
+    const [errors, setErrors] = useState({});
+    const [errorP, setErrorp] = useState({})
+
+    const handleInput = (event) => {
+        setValues(prev => ({ ...prev, [event.target.name]: event.target.value }))
+    }
+
+    const handleBlur = (event) => {
+        setErrors(Validation(values));
+    }
+
+    const handleBlurPass = (event) => {
+        setErrorp(ValidationPass(values));
+    }
+
+    const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:4000/api/register', values)
-        .then(res => {
-            if(res.data.Status === "Success"){
-                navigate('/login')
-            }else{
-                alert('Error');
-            }
-        })
-        .then(err =>console.log(err));
+        if (errors.email === "" && errorP.password === "") {
+            axios.post('http://localhost:4000/api/register', values)
+                .then(res => {
+                    if (res.data.Status === "Success") {
+                        Swal.fire({
+                            icon: 'success',
+                            title: 'Usuario registrado correctamente',
+                            showConfirmButton: false,
+                            timer: 1500
+                        })
+                        navigate('/login')
+                    } else {
+                        Swal.fire({ // Muestra la alerta de SweetAlert2
+                            title: 'Error!',
+                            text: 'Hubo un problema al registrar el usuario.',
+                            icon: 'error',
+                            confirmButtonText: 'OK'
+                        });
+                    }
+                })
+                .then(err => console.log(err));
+        }
     }
 
     return (
@@ -43,15 +84,17 @@ function FormRegister() {
 
                                             <div className="form-outline mb-4">
                                                 <input type="email" id="email" name="email" className="form-control"
-                                                    placeholder="Email" onChange={e=> setValues({...values, email: e.target.value})}
+                                                    placeholder="Email" onChange={handleInput} onBlur={handleBlur}
                                                 />
-
+                                                {errors.email && <span className="text-danger"> {errors.email}</span>}
                                             </div>
 
                                             <div className="form-outline mb-4">
                                                 <input type="password" id="password" name="password" className="form-control"
-                                                    placeholder="Contraseña" onChange={e=> setValues({...values, password: e.target.value})} />
-                                            </div>  
+                                                    placeholder="Contraseña" onChange={handleInput} onBlur={handleBlurPass} />
+                                                {errorP.password && <span className="text-danger"> {errorP.password}</span>}
+
+                                            </div>
 
                                             {/* <div className="form-outline mb-4">
                                                 <input type="password" id="form2Example22" className="form-control"
