@@ -1,21 +1,14 @@
-import React from 'react';
-import { Route, Navigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
-function PrivateRoute({ element: Component, ...rest }) {
-    const isAuthenticated = localStorage.getItem('isAuthenticated'); // verifica si el usuario está autenticado
+export const PrivateRoute = ({ children }) => {
 
-    return (
-        <Route
-            {...rest}
-            render={({ location }) =>
-                isAuthenticated ? (
-                    <Component />
-                ) : (
-                    <Navigate to="/login" state={{ from: location }} /> // redirige al usuario a la página de inicio de sesión
-                )
-            }
-        />
-    );
+    const authToken = Cookies.get('token');
+
+    // Validar el token aquí o hacer una solicitud a tu servidor para validar el token
+
+    if (!authToken) {
+        return <Navigate to="/login" />;
+    }
+    return children
 }
-
-export { PrivateRoute };

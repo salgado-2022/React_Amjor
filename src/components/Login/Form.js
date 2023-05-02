@@ -14,7 +14,9 @@ function Form() {
         email: '',
         password: ''
     })
-    const navigate = useNavigate()
+
+    const navigate = useNavigate();
+    axios.defaults.withCredentials = true;
 
     const handleSubmit = (event) => {
         event.preventDefault();
