@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+
+
+//sweetalert2
+import Swal from 'sweetalert2';
+
 //Importación de imagenes
 
 function Form() {
@@ -17,7 +22,14 @@ function Form() {
             .then(res => {
                 if (res.data.Status === "Admin") {
                     navigate('/shop')
-                } 
+                }else{
+                    Swal.fire({ // Muestra la alerta de SweetAlert2
+                        title: 'Error!',
+                        text: res.data.Error,
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
+                }
             })
             .then(err => console.log(err));
     }

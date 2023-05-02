@@ -2,6 +2,7 @@ import React from 'react';
 
 import { Route, Routes, BrowserRouter } from "react-router-dom";
 
+// Componentes publicos 
 import Inicio from '../views/Inicio'
 import { Nosotros } from '../views/Nosotros';
 import { Catalogo } from '../views/Catalogo';
@@ -11,6 +12,10 @@ import { Login } from '../views/Login';
 import { Payment } from '../views/Payment';
 import { Navbar } from '../components/Navbar/Navbar';
 import { Register } from '../views/Register';
+
+
+//Rutas privadas
+// import { PrivateRoute } from './PrivateRoute'
 
 function Rutas() {
     return (
@@ -24,6 +29,7 @@ function Rutas() {
                 <Route path='/payment' element={<Payment />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                {/* <PrivateRoute path="/dashboard" element={a} /> */}
                 <Route path="*" element={<Error404 />} />
 
             </Routes>
