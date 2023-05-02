@@ -15,7 +15,7 @@ import { Register } from '../views/Register';
 
 
 //Rutas privadas
-// import { PrivateRoute } from './PrivateRoute'
+import { PrivateRoute } from './PrivateRoute'
 
 function Rutas() {
     return (
@@ -24,12 +24,14 @@ function Rutas() {
             <Routes>
                 <Route path="/" element={<Inicio />} />
                 <Route path="/nosotros" element={<Nosotros />} />
-                <Route path="/shop" element={<Catalogo />} />
+                <Route path="/shop" element={
+                    <PrivateRoute>
+                        <Catalogo />
+                    </PrivateRoute>} />
                 <Route path="/carrito" element={<Carrito />} />
                 <Route path='/payment' element={<Payment />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
-                {/* <PrivateRoute path="/dashboard" element={a} /> */}
                 <Route path="*" element={<Error404 />} />
 
             </Routes>
