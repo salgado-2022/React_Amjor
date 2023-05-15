@@ -1,7 +1,13 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+
+//Axios 
 import axios from "axios";
 
+//JWT-Decode
+import jwt_decode from 'jwt-decode';
+
+import Cookies from 'js-cookie';
 
 //sweetalert2
 import Swal from 'sweetalert2';
@@ -22,10 +28,20 @@ function Form() {
         event.preventDefault();
         axios.post('http://localhost:4000/api/login', values)
             .then(res => {
-                if (res.data.Status === "Admin") {
-                    navigate('/shop')
-                }else{
-                    Swal.fire({ // Muestra la alerta de SweetAlert2
+
+                // Obtener el token de las cookies
+                const token = Cookies.get('token');
+
+                if (token) {
+                    // Decodificar el token usando jwt-decode
+                    const decodedToken = jwt_decode(token);
+
+                    if (decodedToken.Status === 'Admin') {
+                        navigate('/admin/pedidos');
+                    }
+                    console.log(decodedToken)
+                } else {
+                    Swal.fire({
                         title: 'Error!',
                         text: res.data.Error,
                         icon: 'error',
@@ -33,7 +49,7 @@ function Form() {
                     });
                 }
             })
-            .then(err => console.log(err));
+            .catch(err => console.log(err));
     }
 
     return (
@@ -45,7 +61,6 @@ function Form() {
                             <div className="row g-0">
                                 <div className="col-lg-6">
                                     <div className="card-body p-md-2 mx-md-4">
-
                                         <div className="text-center mt-5">
                                             <h4 className="mt-1 mb-5 pb-1">Iniciar Sesión</h4>
                                         </div>
@@ -54,21 +69,23 @@ function Form() {
                                             <p>Porfavor ingrese a su cuenta</p>
 
                                             <div className="form-outline mb-4">
-                                                <input type="email" id="email" name="email"className="form-control"
+                                                <input type="email" id="email" name="email" className="form-control"
                                                     placeholder="Email"
                                                     onChange={e => setValues({ ...values, email: e.target.value })} />
 
                                             </div>
 
                                             <div className="form-outline mb-4">
-                                                <input type="password" id="password" name="password"className="form-control"
+                                                <input type="password" id="password" name="password" className="form-control"
                                                     placeholder="Contraseña" onChange={e => setValues({ ...values, password: e.target.value })} />
                                             </div>
 
                                             <div className="text-center pt-1 mb-5 pb-1">
                                                 <button className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit"
                                                 >Login</button>
-                                                <a className="text-muted" href="#!">Olvidaste tu contraseña?</a>
+                                                <Link to="/reset">
+                                                    <a className="text-muted" href=" ">Olvidaste tu contraseña?</a>
+                                                </Link>
                                             </div>
 
                                             <div className="d-flex align-items-center justify-content-center pb-4">
