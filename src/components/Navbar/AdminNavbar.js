@@ -54,10 +54,10 @@ function AdminNavbar() {
                             <Link to="/nosotros">Usuarios</Link>
                         </li>
                         <li>
-                            <Link to="/shop">Anchetas</Link>
+                            <Link to="/admin/anchetas">Anchetas</Link>
                         </li>
                         <li className="">
-                            <Link to="/contact">Insumos</Link>
+                            <Link to="/admin/insumos">Insumos</Link>
                         </li>
                         <li className="">
                             <Link to="/admin/pedidos">Pedidos</Link>
