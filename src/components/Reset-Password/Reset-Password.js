@@ -21,11 +21,24 @@ function ResetPassword() {
                         title: 'Correo enviado Correctamente',
                         confirmButtonText: 'OK'
                     })
+                }else if (response.data.existe === false){
+                    Swal.fire({ // Muestra la alerta de SweetAlert2
+                        title: 'Error!',
+                        text: 'El correo no se encuentra registrado en el sistema.',
+                        icon: 'error',
+                        confirmButtonText: 'OK'
+                    });
                 }
             })
             .catch((error) => {
                 // Aquí puedes manejar los errores
                 console.error(error);
+                Swal.fire({ // Muestra la alerta de SweetAlert2
+                    title: 'Error!',
+                    text: error,
+                    icon: 'error',
+                    confirmButtonText: 'OK'
+                });
             });
     };
 
