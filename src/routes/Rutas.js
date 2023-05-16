@@ -15,6 +15,8 @@ import { ResetPassword } from '../components/Reset-Password/Reset-Password';
 
 //Rutas Admin
 import {Pedidos}  from '../views/Admin/Pedidos'
+import {Anchetas}  from '../views/Admin/Anchetas'
+import {Insumos}  from '../views/Admin/Insumos'
 
 //Rutas privadas
 import { PrivateRoute } from './PrivateRoute'
@@ -39,7 +41,16 @@ function Rutas() {
                         <Pedidos />
                     </PrivateRoute>} />
                 <Route path="*" element={<Error404 />} />
-
+                <Route path="/admin/anchetas" element={
+                    <PrivateRoute>
+                        <Anchetas />
+                    </PrivateRoute>} />
+                <Route path="*" element={<Error404/>} />
+                <Route path="/admin/insumos" element={
+                    <PrivateRoute>
+                        <Insumos />
+                    </PrivateRoute>} />
+                <Route path="*" element={<Error404/>} />
             </Routes>
 
         </BrowserRouter>
