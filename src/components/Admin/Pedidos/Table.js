@@ -57,8 +57,8 @@ function Table() {
                                         return <tr key={index}>
                                             <th scope="row">{pedidos.ID_Pedido}</th>
                                             <td>{pedidos.Nombre_Cliente}</td>
-                                            <td><button className=" icon-eye" data-bs-toggle="modal"
-                                                data-bs-target="#modalPedidos">  </button></td>
+                                            <td><a href="#!" className=" icon-eye" data-bs-toggle="modal"
+                                                data-bs-target="#modalPedidos">  </a></td>
                                             <td>{formatDate(pedidos.Feche_Entrega)}</td>
                                             <td>{pedidos.Direccion_Entrega}</td>
                                             <td>{formatPrice(pedidos.Precio_Total)}</td>
