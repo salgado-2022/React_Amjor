@@ -1,15 +1,16 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link,useNavigate} from 'react-router-dom';
 import logo from '../../assets/img/logos/logomoradoclaro.png';
 import axios from "axios";
 
 function AdminNavbar() {
 
     axios.defaults.withCredentials = true;
-
+    const navigate = useNavigate();
     const handleDelete = () => {
         axios.get('http://localhost:4000/api/logout')
             .then(res => {
+                navigate('/');
                 window.location.reload(true);
             }).catch(err => console.log(err));
     }

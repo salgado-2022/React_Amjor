@@ -21,6 +21,7 @@ import {Insumos}  from '../views/Admin/Insumos'
 //Rutas privadas
 import { PrivateRoute } from './PrivateRoute'
 import { PrivateNavbar } from './PrivateNavbar'
+import { UpdataPassword } from '../components/Register/updatePassword';
 
 
 function Rutas() {
@@ -35,6 +36,7 @@ function Rutas() {
                 <Route path='/payment' element={<Payment />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/restore/password" element={<UpdataPassword />} />
                 <Route path="/reset" element={<ResetPassword />} />
                 <Route path="/admin/pedidos" element={
                     <PrivateRoute>
