@@ -17,11 +17,14 @@ import { ResetPassword } from '../components/Reset-Password/Reset-Password';
 import {Pedidos}  from '../views/Admin/Pedidos'
 import {Anchetas}  from '../views/Admin/Anchetas'
 import {Insumos}  from '../views/Admin/Insumos'
+import { Usuarios } from '../views/Admin/Usuarios';
+import { Configuracion } from '../views/Admin/Configuracion';
 
 //Rutas privadas
 import { PrivateRoute } from './PrivateRoute'
 import { PrivateNavbar } from './PrivateNavbar'
 import { UpdataPassword } from '../components/Register/updatePassword';
+
 
 
 function Rutas() {
@@ -53,6 +56,18 @@ function Rutas() {
                         <Insumos />
                     </PrivateRoute>} />
                 <Route path="*" element={<Error404/>} />
+
+                <Route path='/admin/usuarios' element={
+                    <PrivateRoute>
+                        <Usuarios/>
+                    </PrivateRoute>
+                }/>
+
+                <Route path='/admin/configuracion' element={
+                    <PrivateRoute>
+                        <Configuracion/>
+                    </PrivateRoute>
+                }/>
             </Routes>
 
         </BrowserRouter>
@@ -60,4 +75,3 @@ function Rutas() {
 }
 
 export { Rutas }
-
