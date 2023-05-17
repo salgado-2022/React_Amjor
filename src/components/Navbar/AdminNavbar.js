@@ -1,16 +1,40 @@
 import React from "react";
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/img/logos/logomoradoclaro.png';
 import axios from "axios";
+
+//sweetalert2
+import Swal from 'sweetalert2';
 
 function AdminNavbar() {
 
     axios.defaults.withCredentials = true;
+    const navigate = useNavigate();
 
     const handleDelete = () => {
         axios.get('http://localhost:4000/api/logout')
             .then(res => {
-                window.location.reload(true);
+                navigate('/');
+                let timerInterval
+                Swal.fire({
+                    title: 'Cerrando Sesión!',
+                    html: 'Por favor espere un momento.',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval);
+                        window.location.reload(true);
+                    }
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log('I was closed by the timer')
+                    }
+                })
+
             }).catch(err => console.log(err));
     }
 
@@ -54,10 +78,10 @@ function AdminNavbar() {
                             <Link to="/admin/usuarios">Usuarios</Link>
                         </li>
                         <li>
-                            <Link to="/shop">Anchetas</Link>
+                            <Link to="/admin/anchetas">Anchetas</Link>
                         </li>
                         <li className="">
-                            <Link to="/contact">Insumos</Link>
+                            <Link to="/admin/insumos">Insumos</Link>
                         </li>
                         <li className="">
                             <Link to="/admin/pedidos">Pedidos</Link>

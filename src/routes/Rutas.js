@@ -15,13 +15,15 @@ import { ResetPassword } from '../components/Reset-Password/Reset-Password';
 
 //Rutas Admin
 import {Pedidos}  from '../views/Admin/Pedidos'
-import { Configuracion } from '../views/Admin/Configuracion';
+import {Anchetas}  from '../views/Admin/Anchetas'
+import {Insumos}  from '../views/Admin/Insumos'
 import { Usuarios } from '../views/Admin/Usuarios';
+import { Configuracion } from '../views/Admin/Configuracion';
 
 //Rutas privadas
 import { PrivateRoute } from './PrivateRoute'
 import { PrivateNavbar } from './PrivateNavbar'
-
+import { UpdataPassword } from '../components/Register/updatePassword';
 
 
 
@@ -37,22 +39,35 @@ function Rutas() {
                 <Route path='/payment' element={<Payment />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
+                <Route path="/restore/password" element={<UpdataPassword />} />
                 <Route path="/reset" element={<ResetPassword />} />
                 <Route path="/admin/pedidos" element={
                     <PrivateRoute>
                         <Pedidos />
                     </PrivateRoute>} />
                 <Route path="*" element={<Error404 />} />
-                <Route path="/admin/configuracion" element={
+                <Route path="/admin/anchetas" element={
                     <PrivateRoute>
-                        <Configuracion />
+                        <Anchetas />
                     </PrivateRoute>} />
-                    <Route path="*" element={<Error404 />} />
-                    <Route path="/admin/usuarios" element={
+                <Route path="*" element={<Error404/>} />
+                <Route path="/admin/insumos" element={
                     <PrivateRoute>
-                        <Usuarios />
+                        <Insumos />
                     </PrivateRoute>} />
-                    <Route path="*" element={<Error404 />} />
+                <Route path="*" element={<Error404/>} />
+
+                <Route path='/admin/usuarios' element={
+                    <PrivateRoute>
+                        <Usuarios/>
+                    </PrivateRoute>
+                }/>
+
+                <Route path='/admin/configuracion' element={
+                    <PrivateRoute>
+                        <Configuracion/>
+                    </PrivateRoute>
+                }/>
             </Routes>
 
         </BrowserRouter>
@@ -60,4 +75,3 @@ function Rutas() {
 }
 
 export { Rutas }
-
