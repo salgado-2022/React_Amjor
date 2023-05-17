@@ -43,12 +43,12 @@ function Rutas() {
                         <Pedidos />
                     </PrivateRoute>} />
                 <Route path="*" element={<Error404 />} />
-                <Route path="/admin/Configuracion" element={
+                <Route path="/admin/configuracion" element={
                     <PrivateRoute>
                         <Configuracion />
                     </PrivateRoute>} />
                     <Route path="*" element={<Error404 />} />
-                    <Route path="/admin/Usuarios" element={
+                    <Route path="/admin/usuarios" element={
                     <PrivateRoute>
                         <Usuarios />
                     </PrivateRoute>} />
