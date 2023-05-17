@@ -48,10 +48,10 @@ function AdminNavbar() {
                 <div className="container">
                     <ul className="site-menu">
                         <li>
-                            <Link to="/">Configuración</Link>
+                            <Link to="/admin/Configuracion">Configuración</Link>
                         </li>
                         <li>
-                            <Link to="/nosotros">Usuarios</Link>
+                            <Link to="/admin/Usuarios">Usuarios</Link>
                         </li>
                         <li>
                             <Link to="/shop">Anchetas</Link>

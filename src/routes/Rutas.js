@@ -15,10 +15,14 @@ import { ResetPassword } from '../components/Reset-Password/Reset-Password';
 
 //Rutas Admin
 import {Pedidos}  from '../views/Admin/Pedidos'
+import { Configuracion } from '../views/Admin/Configuracion';
+import { Usuarios } from '../views/Admin/Usuarios';
 
 //Rutas privadas
 import { PrivateRoute } from './PrivateRoute'
 import { PrivateNavbar } from './PrivateNavbar'
+
+
 
 
 function Rutas() {
@@ -39,7 +43,16 @@ function Rutas() {
                         <Pedidos />
                     </PrivateRoute>} />
                 <Route path="*" element={<Error404 />} />
-
+                <Route path="/admin/Configuracion" element={
+                    <PrivateRoute>
+                        <Configuracion />
+                    </PrivateRoute>} />
+                    <Route path="*" element={<Error404 />} />
+                    <Route path="/admin/Usuarios" element={
+                    <PrivateRoute>
+                        <Usuarios />
+                    </PrivateRoute>} />
+                    <Route path="*" element={<Error404 />} />
             </Routes>
 
         </BrowserRouter>

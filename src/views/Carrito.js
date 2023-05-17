@@ -24,8 +24,6 @@ function Carrito() {
             </div>
         </React.Fragment>
 
-
-
     );
 }
 export { Carrito }
