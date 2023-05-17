@@ -81,7 +81,6 @@ function FormRegister() {
 
                                         <form onSubmit={handleSubmit}>
                                             <p>Porfavor ingrese sus datos </p>
-
                                             <div className="form-outline mb-4">
                                                 <input type="email" id="email" name="email" className="form-control"
                                                     placeholder="Email" onChange={handleInput} onBlur={handleBlur}
