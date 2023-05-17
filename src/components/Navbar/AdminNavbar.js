@@ -3,6 +3,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import logo from '../../assets/img/logos/logomoradoclaro.png';
 import axios from "axios";
 
+//sweetalert2
+import Swal from 'sweetalert2';
+
 function AdminNavbar() {
 
     axios.defaults.withCredentials = true;
@@ -10,24 +13,29 @@ function AdminNavbar() {
 
     const handleDelete = () => {
         axios.get('http://localhost:4000/api/logout')
-            .then(() => {
-                const navigatePromise = new Promise((resolve) => {
-                    navigate('/');
-                    resolve();
-                });
+            .then(res => {
+                navigate('/');
+                let timerInterval
+                Swal.fire({
+                    title: 'Cerrando Sesión!',
+                    html: 'Por favor espere un momento.',
+                    timer: 2000,
+                    timerProgressBar: true,
+                    didOpen: () => {
+                        
+                    },
+                    willClose: () => {
+                        clearInterval(timerInterval);
+                        window.location.reload(true);
+                    }
+                }).then((result) => {
+                    /* Read more about handling dismissals below */
+                    if (result.dismiss === Swal.DismissReason.timer) {
+                        console.log('I was closed by the timer')
+                    }
+                })
 
-                const reloadPromise = new Promise((resolve) => {
-                    window.location.reload(true);
-                    resolve();
-                });
-
-                Promise.all([navigatePromise, reloadPromise])
-                    .then(() => {
-                        // Ambas acciones se han completado
-                        // Puedes realizar cualquier otra operación aquí si es necesario
-                    });
-            })
-            .catch((err) => console.log(err));
+            }).catch(err => console.log(err));
     }
 
     return (

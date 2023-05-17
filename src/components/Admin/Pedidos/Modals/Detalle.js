@@ -28,38 +28,38 @@ function Detalle() {
                                 <tr>
                                     <th scope="row">1</th>
                                     <td>Ancheta Navideña</td>
-                                    <td><a href="#" class=" icon-eye" data-toggle="modal" data-target="#modalInsumos"
-                                        data-dismiss="modal"></a>
+                                    <td><a href="#!" class=" icon-eye" data-toggle="modal" data-target="#modalInsumos"
+                                        data-dismiss="modal"> </a>
                                     </td>
 
                                     <td>5</td>
                                     <td>50.000</td>
-                                    <td><a href="#" class="icon-remove"></a></td>
+                                    <td><a href="#!" class="icon-remove"> </a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">1</th>
                                     <td>Mark</td>
 
-                                    <td><a href="#" class=" icon-eye" data-toggle="modal" data-target="#modalInsumos"
-                                        data-dismiss="modal"></a>
+                                    <td><a href="#!" class=" icon-eye" data-toggle="modal" data-target="#modalInsumos"
+                                        data-dismiss="modal"> </a>
                                     </td>
 
                                     <td>4</td>
                                     <td>50.000</td>
-                                    <td><a href="#" class="icon-remove"></a></td>
+                                    <td><a href="#!" class="icon-remove"> </a></td>
                                 </tr>
                                 <tr>
                                     <th scope="row">1</th>
                                     <td>Mark</td>
 
-                                    <td><a href="#" class=" icon-eye" data-toggle="modal" data-target="#modalInsumos"
-                                        data-dismiss="modal"></a>
+                                    <td><a href="#!" class=" icon-eye" data-toggle="modal" data-target="#modalInsumos"
+                                        data-dismiss="modal"> </a>
                                     </td>
 
                                     <td>3</td>
                                     <td>50.000</td>
 
-                                    <td><a href="#" class="icon-remove"></a></td>
+                                    <td><a href="#!" class="icon-remove"> </a></td>
                                 </tr>
                             </tbody>
                         </table>
