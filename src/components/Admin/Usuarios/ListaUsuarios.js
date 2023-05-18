@@ -29,47 +29,40 @@ function ListaUsuarios(){
             <th scope="row">1</th>
             <td>Juan</td>
             <td>juanpapas@misena.edu.co</td>
-            <td>456789</td>
+            <td>*******</td>
             <td>Activo</td>
             <td><label class="switch">
                     <input type="checkbox"/>
                     <span class="slider"></span>
-                    <br></br>&nbsp;
                 </label></td>
-                <button class="edit-button">Editar</button>
-                    <td>
-                    <button class="delete-button">Eliminar</button>
-                    </td>
+                <td><a href="#!" class="icon-edit" onclick="modificarUsuario()"> </a></td>
+                <td><a href="#!" class="icon-trash" onclick="eliminarUsuario()"> </a></td>
             <tr>
                 <th scope="row">2</th>
                 <td>Fabian</td>
                 <td>fabian@calditorico.com</td>
-                <td>159756</td>
+                <td>*******</td>
                 <td>Desactivo</td>
                 <td><label class="switch">
                         <input type="checkbox"/>
                         <span class="slider"></span>
-                        <br></br>&nbsp;
+
                     </label></td>
-                    <button class="edit-button">Editar</button>
-                    <td>
-                    <button class="delete-button">Eliminar</button>
-                    </td>
+                    <td><a href="#!" class="icon-edit" onclick="modificarUsuario()"> </a></td>
+                    <td><a href="#!" class="icon-trash" onclick="eliminarUsuario()"> </a></td>
             </tr>
             <tr>
                 <th scope="row">3</th>
                 <td>Sofia</td>
                 <td>sofiacarson@gmail.com</td>
-                <td>127843</td>
+                <td>*******</td>
                 <td>Activa</td>
                 <td><label class="switch">
                         <input type="checkbox"/>
                         <span class="slider"></span>
                     </label></td>
-                    <button class="edit-button">Editar</button>
-                    <td>
-                    <button class="delete-button">Eliminar</button>
-                    </td>
+                    <td><a href="#!" class="icon-edit" onclick="modificarUsuario()"> </a></td>
+                    <td><a href="#!" class="icon-trash" onclick="eliminarUsuario()"> </a></td>
             </tr>
         </tbody>
     </table>
