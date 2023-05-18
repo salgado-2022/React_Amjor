@@ -86,13 +86,6 @@ function UsuariosFormulario (){
                     </div>
                 </div>
             </div>
-    <body>
-    <label class="toggle-container"/>
-     <input type="checkbox" id="theme-toggle"/>
-     <span class="toggle-slider"></span>
-     <span class="toggle-label">Cambiar tema</span>
-    </body>
-   
     </>
     );
 }
