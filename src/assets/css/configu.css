@@ -23,8 +23,8 @@
     position: relative;
     display: block;
     padding: 10px 20px;
-    background-color: #ff4081;
-    color: #fff;
+    background-color: #3184cc;
+    color: #ffffff;
     font-size: 16px;
     border: none;
     border-radius: 4px;
@@ -75,8 +75,8 @@
   #dropdown > button {
     display: block;
     padding: 10px 20px;
-    background-color: #e88787;
-    color: #fff;
+    background-color: #844a4a;
+    color: #ffffff;
     font-size: 16px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -84,7 +84,7 @@
   }
 
   #dropdown > button:hover {
-    background-color: #a2ef8b;
+    background-color: #844a4a;
   }
 
   #dropdown-content {

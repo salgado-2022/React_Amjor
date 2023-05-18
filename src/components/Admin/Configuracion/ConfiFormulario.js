@@ -18,7 +18,7 @@ function ConfiFormulario(){
       </div> 
       <br></br>
       <div id="dropdown">
-    <button>Seleccionar opciones</button> 
+    <button>SELECCIONE LOS PERMISOS ASOCIADOS</button> 
     <br></br> 
     <div id="dropdown-content">
       <input type="checkbox" id="option1"/>
@@ -37,9 +37,7 @@ function ConfiFormulario(){
       <label for="option4">Intensos</label><br></br>
        </div> &nbsp;  
     </div> 
-   <br></br> 
-
-      <button type="submit" className ="btn-agregar mb-4 col-8" id="btn-agregar">
+      <button type="submit" className ="btn-agregar mb-4 col-4" id="btn-agregar">
         AGREGAR
       </button>
     </div>  
