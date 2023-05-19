@@ -11,12 +11,28 @@ import { Detalle } from './Modals/Detalle'
 function Table() {
 
     const [data, setData] = useState([])
+
+    const [modalShow, setModalShow] = React.useState(false);
+
+    const [selectedPedidoID, setSelectedPedidoID] = useState(null);
+
     useEffect(() => {
+        fetchData();
+        const interval = setInterval(fetchData, 1000); // Actualiza los datos cada 5 segundos (ajusta el intervalo según tus necesidades)
+
+        return () => clearInterval(interval);
+    }, []);
+
+    const fetchData = () => {
         axios.get('http://localhost:4000/api/admin/pedidos')
             .then(res => setData(res.data))
             .catch(err => console.log(err));
-    }, []);
+    };
 
+    const handleDetalleClick = (pedidoID) => {
+        setSelectedPedidoID(pedidoID);
+        setModalShow(true);
+    };
 
     const formatDate = (dateString) => {
         const options = { year: 'numeric', month: 'long', day: 'numeric' };
@@ -57,8 +73,9 @@ function Table() {
                                         return <tr key={index}>
                                             <th scope="row">{pedidos.ID_Pedido}</th>
                                             <td>{pedidos.Nombre_Cliente}</td>
-                                            <td><a href="#!" className=" icon-eye" data-bs-toggle="modal"
-                                                data-bs-target="#modalPedidos">  </a></td>
+                                            <td><a href="#!" className=" icon-eye" onClick={() => {
+                                                handleDetalleClick(pedidos.ID_Pedido)
+                                            }}>  </a></td>
                                             <td>{formatDate(pedidos.Feche_Entrega)}</td>
                                             <td>{pedidos.Direccion_Entrega}</td>
                                             <td>{formatPrice(pedidos.Precio_Total)}</td>
@@ -73,7 +90,11 @@ function Table() {
                     </div>
                 </div>
             </div>
-            <Detalle />
+            <Detalle
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+                selectedPedidoID={selectedPedidoID}
+            />
         </>
     );
 }

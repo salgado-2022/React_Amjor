@@ -83,9 +83,7 @@ function Form() {
                                             <div className="text-center pt-1 mb-5 pb-1">
                                                 <button className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit"
                                                 >Login</button>
-                                                <Link to="/reset">
-                                                    <a className="text-muted" href=" ">Olvidaste tu contraseña?</a>
-                                                </Link>
+                                                <Link to="/reset" className="text-muted">Olvidaste tu contraseña?</Link>
                                             </div>
 
                                             <div className="d-flex align-items-center justify-content-center pb-4">
