@@ -24,6 +24,7 @@ import { Configuracion } from '../views/Admin/Configuracion';
 import { PrivateRoute } from './PrivateRoute'
 import { PrivateNavbar } from './PrivateNavbar'
 import { UpdataPassword } from '../components/Register/updatePassword';
+import { EditarInsumo } from '../components/Admin/Insumos/Modals/editarInsumo';
 
 
 
@@ -56,6 +57,7 @@ function Rutas() {
                         <Insumos />
                     </PrivateRoute>} />
                 <Route path="*" element={<Error404/>} />
+                <Route path="/editarInsumo" element={<EditarInsumo />} />
 
                 <Route path='/admin/usuarios' element={
                     <PrivateRoute>
