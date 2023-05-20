@@ -1,19 +1,47 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { EditarInsumo } from './Modals/editarInsumo'
 
 function TablaInsumo(){
+    const [data, setData] = useState([])
+
+    const [modalShow, setModalShow] = React.useState(false);
+
+    const [selectedInsumoID, setSelectedInsumoID] = useState(null);
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const formatPrice = (price) => {
+        const options = { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }; // Puedes ajustar la moneda según tus necesidades
+        return price.toLocaleString(undefined, options);
+    };
+
+    const handleDetalleClick = (insumoID) => {
+        setSelectedInsumoID(insumoID);
+        setModalShow(true);
+    };
+
+    const fetchData = () => {
+        axios.get('http://localhost:4000/api/admin/insumos')
+        .then(res => setData(res.data))
+        .catch(err => console.log(err));
+    };
     return(
-                    <div id="styleTablaInsumos">
+        <>
+                    <div id="site-section">
                         <br/>
-                        <div class="row justify-content-end">
-                            <div class="input-group mb-3 col-6">
-                            <input type="text" class="form-control" placeholder="Buscar Insumo" />
-                            <div class="input-group-append">
-                                <button class="btn btn-outline" type="button"><a href="#!" class="icon-search"> </a></button>
+                        <div className="row justify-content-end">
+                            <div className="input-group mb-3 col-6">
+                            <input type="text" className="form-control" placeholder="Buscar Insumo" />
+                            <div className="input-group-append">
+                                <button className="btn btn-outline" type="button"><a href="#!" className="icon-search"> </a></button>
                             </div>
                         </div>
                     </div>
                     <br/>
-                    <table class="table">
+                    <table className="table">
                         <thead>
                             <tr>
                                 <th scope="col">ID</th>
@@ -26,36 +54,29 @@ function TablaInsumo(){
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Chocolate</td>
-                                <td>Chocolate Jumbo 100 gr</td>
-                                <td>3.000</td>
-                                <td>Disponible</td>
-                                <td><a href="#!" class="icon-edit" onclick="modificarInsumo()"> </a></td>
-                                <td><a href="#!" class="icon-trash" onclick="eliminarInsumo()"> </a></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Vino</td>
-                                <td>Vino tinto Casa Blanca 750 ml</td>
-                                <td>45.000</td>
-                                <td>Disponible</td>
-                                <td><a href="#!" class="icon-edit"> </a></td>
-                                <td><a href="#!" class="icon-trash" data-toggle="modal" data-target="#eliminarAncheta"> </a></td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Cerveza</td>
-                                <td>Cerveza corona 355 ml</td>
-                                <td>4.500</td>
-                                <td>Agotado</td>
-                                <td><a href="#!" class="icon-edit"> </a></td>
-                                <td><a href="#!" class="icon-trash" data-toggle="modal" data-target="#eliminarAncheta"> </a></td>
-                            </tr>
+                        {data.map((insumos, index) => {
+                                        return <tr key={index}>
+                                            <th scope="row">{insumos.ID_Insumo}</th>
+                                            <td>{insumos.NombreInsumo}</td>
+                                            <td>{insumos.Descripcion}</td>
+                                            <td>{formatPrice(insumos.PrecioUnitario)}</td>
+                                            <td>{insumos.Estado}</td>
+                                            <td><a href="#!" className=" icon-edit" onClick={() => {
+                                                handleDetalleClick(insumos.ID_Insumo)
+                                            }}></a></td>
+                                            <td><a href="#!" className=" icon-trash"></a></td>
+                                        </tr>
+                                    })}
                         </tbody>
                     </table>
-                    </div>
+                    </div> 
+                    <EditarInsumo
+                    show={modalShow}
+                    onHide={() => setModalShow(false)}
+                    selectedInsumoID={selectedInsumoID}
+                />
+            </>
+                           
     );
 }
 
