@@ -10,7 +10,7 @@ function CrearInsumo() {
         NombreInsumo: '', 
         Descripcion: '',
         PrecioUnitario: '',
-        ID_Estado: ''
+        ID_Estado: '2'
     })
 
     const [errors, setErrors] = useState({});   
