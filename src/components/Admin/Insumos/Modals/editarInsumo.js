@@ -1,66 +1,76 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "react-bootstrap";
 import Modal from 'react-bootstrap/Modal';
 import Swal from "sweetalert2";
-
 import axios from "axios";
 
-
 function EditarInsumo(props) {
+    const { selectedInsumoID, onHide, show } = props;
+    const id = selectedInsumoID;
 
-    const { selectedInsumoID, onHide, show, } = props
-    const id = selectedInsumoID
-    const checkbox = useRef();
-    const [estadoinsumo, setEstadoinsumo] = useState('')
-    
+    const [isChecked, setIsChecked] = useState(false); // false = 0
+
     const [values, setValues] = useState({
         NombreInsumo: '',
         Descripcion: '',
         PrecioUnitario: '',
-        ID_Estado: estadoinsumo
-    })
+        ID_Estado: ''
+    });
 
     const handleInput = (event) => {
-        setValues(prev => ({ ...prev, [event.target.name]: event.target.value}))
-        if (checkbox.current.checked) {
-            setEstadoinsumo('2')
-          } else {
-            setEstadoinsumo('1')
-          }
-    }
+        const { name, value, type, checked } = event.target;
+
+        if (type === 'checkbox') {
+            setIsChecked(checked);
+            setValues(prev => ({ ...prev, [name]: checked ? 1 : 2 }));
+        } else {
+            setValues(prev => ({ ...prev, [name]: value }));
+        }
+    };
 
     useEffect(() => {
-        axios.get('http://localhost:4000/api/admin/insumos/insullamada/'+ id)
-        .then(res => { 
-            console.log(res)
-            setValues({...values, NombreInsumo: res.data[0].NombreInsumo, Descripcion: res.data[0].Descripcion, PrecioUnitario: res.data[0].PrecioUnitario,ID_Estado: res.data[0].ID_Estado})
-        })
-        .catch(err => console.log(err));
-    }, [id])
-
-    const initialValues = {
-        ...values
-      };
+        if (show) {
+            axios.get('http://localhost:4000/api/admin/insumos/insullamada/' + id)
+                .then(res => {
+                    console.log(res);
+                    setValues(prevValues => ({
+                        ...prevValues,
+                        NombreInsumo: res.data[0].NombreInsumo,
+                        Descripcion: res.data[0].Descripcion,
+                        PrecioUnitario: res.data[0].PrecioUnitario,
+                        ID_Estado: res.data[0].ID_Estado
+                    }));
+                    setIsChecked(res.data[0].ID_Estado === 1);
+                })
+                .catch(err => console.log(err));
+        }
+    }, [id, show]);
 
     const handleCancel = () => {
-        setValues(initialValues);
-      };
+        setValues({
+            NombreInsumo: '',
+            Descripcion: '',
+            PrecioUnitario: '',
+            ID_Estado: ''
+        });
+    };
 
     const handleUpdate = (event) => {
         event.preventDefault();
-        axios.put('http://localhost:4000/api/admin/insumos/insumoedit/'+ id, values)
-        .then(res => {
-            console.log(res)
-            Swal.fire({
-                title: 'Modificado Correctamente',
-                text: "Tu insumo ha sido modificado correctamente",
-                icon: 'success',
-                showConfirmButton: false,
-                timer: 1500
+        axios.put('http://localhost:4000/api/admin/insumos/insumoedit/' + id, values)
+            .then(res => {
+                console.log(res);
+                Swal.fire({
+                    title: 'Modificado Correctamente',
+                    text: "Tu insumo ha sido modificado correctamente",
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 1500
+                });
+                setTimeout(function () { window.location = "insumos"; }, 670);
             })
-            setTimeout(function(){ window.location = "insumos"; }, 1000);
-        }).catch(err => console.log(err));
-    }
+            .catch(err => console.log(err));
+    };
 
     return (
         <Modal
@@ -71,7 +81,7 @@ function EditarInsumo(props) {
             centered
             style={{ zIndex: '2000' }}
         >
-            <Modal.Header >
+            <Modal.Header>
                 <Modal.Title id="contained-modal-title-vcenter">
                     Editar Insumo
                 </Modal.Title>
@@ -80,31 +90,31 @@ function EditarInsumo(props) {
                 </Button>
             </Modal.Header>
             <Modal.Body>
-            <div>
-            <form onSubmit={handleUpdate} id="editarInsumo">
-                            <div className="form-group">
-                                <label for="NombreInsumo">Nombre</label>
-                                <input type="text" className="form-control" id="NombreInsumo" name="NombreInsumo" value={values.NombreInsumo} onChange={handleInput} />
-                            </div>
-                            <div className="form-group">
-                                <label for="Descripcion">Descripción</label>
-                                <input type="text" className="form-control" id="Descripcion" name="Descripcion" value={values.Descripcion} onChange={handleInput} />
-                            </div>
-                            <div className="form-group">
-                                <label for="PrecioUnitario">Precio</label>
-                                <input type="text" className="form-control" id="PrecioUnitario" name="PrecioUnitario" value={values.PrecioUnitario} onChange={handleInput}/>
-                            </div>
-                            <div className="form-check" style={{marginBottom: '7px'}}>
-                                <input type="checkbox" className="form-check-input" id="ID_Estado" name="ID_Estado" value={estadoinsumo} ref={checkbox} onChange={handleInput}/>
-                                <label className="form-check-label" for="estadoInsumo">Disponible</label>
-                            </div>
-                            <button type="submit" className="btn btn-primary" id="modInsumo" style={{backgroundColor: "#d4728a", borderColor: "#d4728a"}} onClick={props.onHide}>Modificar</button> &nbsp;
-                            <button type="reset" className="btn btn-dark" id="cancelarInsumo" onClick={handleCancel}>Cancelar</button>
+                <div>
+                    <form onSubmit={handleUpdate} id="editarInsumo">
+                        <div className="form-group">
+                            <label htmlFor="NombreInsumo">Nombre</label>
+                            <input type="text" className="form-control" id="NombreInsumo" name="NombreInsumo" value={values.NombreInsumo} onChange={handleInput} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="Descripcion">Descripción</label>
+                            <input type="text" className="form-control" id="Descripcion" name="Descripcion" value={values.Descripcion} onChange={handleInput} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="PrecioUnitario">Precio</label>
+                            <input type="text" className="form-control" id="PrecioUnitario" name="PrecioUnitario" value={values.PrecioUnitario} onChange={handleInput} />
+                        </div>
+                        <div className="form-check" style={{ marginBottom: '7px' }}>
+                            <input type="checkbox" className="form-check-input" id="ID_Estado" name="ID_Estado" checked={isChecked} onChange={handleInput} />
+                            <label className="form-check-label" htmlFor="estadoInsumo">Disponible</label>
+                        </div>
+                        <button type="submit" className="btn btn-primary" id="modInsumo" style={{ backgroundColor: "#d4728a", borderColor: "#d4728a" }} onClick={props.onHide}>Modificar</button> &nbsp;
+                        <button type="reset" className="btn btn-dark" id="cancelarInsumo" onClick={handleCancel}>Cancelar</button>
                     </form>
-        </div>
+                </div>
             </Modal.Body>
         </Modal>
     );
 }
 
-export { EditarInsumo }
+export { EditarInsumo };
