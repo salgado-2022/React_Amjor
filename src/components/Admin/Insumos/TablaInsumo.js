@@ -46,7 +46,7 @@ function TablaInsumo() {
                     showConfirmButton: false,
                     timer: 1500
                 })
-                setTimeout(function () { window.location = "insumos"; }, 1000);
+                setTimeout(function () { window.location = "insumos"; }, 670);
             }).catch(err => console.log(err));
     };
 
