@@ -4,19 +4,20 @@ import { EditarInsumo } from './Modals/editarInsumo';
 import Swal from "sweetalert2";
 
 function TablaInsumo() {
-    const [data, setData] = useState([])
+    const [data, setData] = useState([]);
+    const [tabla, setTabla] = useState([]);
+    const [busqueda, setBusqueda] = useState("");
 
     const [modalShow, setModalShow] = React.useState(false);
 
     const [selectedInsumoID, setSelectedInsumoID] = useState(null);
 
-    useEffect(() => {
-        fetchData();
-    }, []);
-
     const formatPrice = (price) => {
-        const options = { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }; // Puedes ajustar la moneda según tus necesidades
-        return price.toLocaleString(undefined, options);
+        return price.toLocaleString('es-CO', {
+            style: 'currency',
+            currency: 'COP',
+            minimumFractionDigits: 0,
+        });
     };
 
     const handleDetalleClick = (insumoID) => {
@@ -27,7 +28,10 @@ function TablaInsumo() {
 
     const fetchData = () => {
         axios.get('http://localhost:4000/api/admin/insumos')
-            .then(res => setData(res.data))
+            .then(res => {
+                setData(res.data)
+                setTabla(res.data)
+            })
             .catch(err => console.log(err));
     };
 
@@ -46,13 +50,45 @@ function TablaInsumo() {
             }).catch(err => console.log(err));
     };
 
+    const handleChange = e => {
+        setBusqueda(e.target.value);
+        filtrar(e.target.value);
+    }
+
+    const filtrar = (terminoBusqueda) => {
+        var resultadosBusqueda = tabla.filter((elemento) => { 
+            if (
+                elemento.NombreInsumo.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
+                elemento.PrecioUnitario.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
+                elemento.Estado.toString().toLowerCase().includes(terminoBusqueda.toLowerCase())
+            ) {
+                return elemento;
+            }
+            return null; // Si no se cumple la condicion retorne un valor nulo
+        });
+        setData(resultadosBusqueda);
+    };
+
+
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+
     return (
         <>
             <div id="site-section">
                 <br />
                 <div className="row justify-content-end">
                     <div className="input-group mb-3 col-6">
-                        <input type="text" className="form-control" placeholder="Buscar Insumo" />
+                        <input
+                            type="text"
+                            className="form-control"
+                            value={busqueda}
+                            onChange={handleChange}
+                            placeholder="Buscar por nombre del insumo"
+                        />
                         <div className="input-group-append">
                             <button className="btn btn-outline" type="button"><a href="#!" className="icon-search"> </a></button>
                         </div>
@@ -72,21 +108,23 @@ function TablaInsumo() {
                         </tr>
                     </thead>
                     <tbody>
-                        {data.map((insumos, index) => {
-                            return <tr key={index}>
-                                <th scope="row">{insumos.ID_Insumo}</th>
-                                <td>{insumos.NombreInsumo}</td>
-                                <td>{insumos.Descripcion}</td>
-                                <td>{formatPrice(insumos.PrecioUnitario)}</td>
-                                <td>{insumos.Estado}</td>
-                                <td><a href="#!" className=" icon-edit" onClick={() => {
-                                    handleDetalleClick(insumos.ID_Insumo)
-                                }}> </a></td>
-                                <td><a href="#!" className=" icon-trash" onClick={() => {
-                                    handleDelete(insumos.ID_Insumo)
-                                }}> </a></td>
-                            </tr>
-                        })}
+                        {data &&
+                            data.map((insumos) => (
+                                <tr key={insumos.ID_Insumo}>
+                                    <th scope="row">{insumos.ID_Insumo}</th>
+                                    <td>{insumos.NombreInsumo}</td>
+                                    <td>{insumos.Descripcion}</td>
+                                    <td>{formatPrice(insumos.PrecioUnitario)}</td>
+                                    <td>{insumos.Estado}</td>
+                                    <td><a href="#!" className=" icon-edit" onClick={() => {
+                                        handleDetalleClick(insumos.ID_Insumo)
+                                    }}> </a></td>
+                                    <td><a href="#!" className=" icon-trash" onClick={() => {
+                                        handleDelete(insumos.ID_Insumo)
+                                    }}> </a></td>
+                                </tr>
+                            ))}
+
                     </tbody>
                 </table>
             </div>
