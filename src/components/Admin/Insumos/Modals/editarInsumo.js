@@ -46,15 +46,6 @@ function EditarInsumo(props) {
         }
     }, [id, show]);
 
-    const handleCancel = () => {
-        setValues({
-            NombreInsumo: '',
-            Descripcion: '',
-            PrecioUnitario: '',
-            ID_Estado: ''
-        });
-    };
-
     const handleUpdate = (event) => {
         event.preventDefault();
         axios.put('http://localhost:4000/api/admin/insumos/insumoedit/' + id, values)
@@ -109,7 +100,7 @@ function EditarInsumo(props) {
                             <label className="form-check-label" htmlFor="estadoInsumo">Disponible</label>
                         </div>
                         <button type="submit" className="btn btn-primary" id="modInsumo" style={{ backgroundColor: "#d4728a", borderColor: "#d4728a" }} onClick={props.onHide}>Modificar</button> &nbsp;
-                        <button type="reset" className="btn btn-dark" id="cancelarInsumo" onClick={handleCancel}>Cancelar</button>
+                        <button type="reset" className="btn btn-dark" id="cancelarInsumo" onClick={props.onHide}>Cancelar</button>
                     </form>
                 </div>
             </Modal.Body>
