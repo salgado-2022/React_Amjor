@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { EditarInsumo } from './Modals/editarInsumo'
+import { EditarInsumo } from './Modals/editarInsumo';
+import Swal from "sweetalert2";
 
 function TablaInsumo(){
     const [data, setData] = useState([])
@@ -23,11 +24,28 @@ function TablaInsumo(){
         setModalShow(true);
     };
 
+
     const fetchData = () => {
         axios.get('http://localhost:4000/api/admin/insumos')
         .then(res => setData(res.data))
         .catch(err => console.log(err));
     };
+
+    const handleDelete = (id) => {
+        axios.delete('http://localhost:4000/api/admin/insumos/insumodel/'+id)
+        .then(res => {
+            console.log(res)
+            Swal.fire({
+                title: 'Eliminado Correctamente',
+                text: "Tu insumo ha sido eliminado correctamente",
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            setTimeout(function(){ window.location = "insumos"; }, 1000);
+        }).catch(err => console.log(err));
+    };
+
     return(
         <>
                     <div id="site-section">
@@ -64,7 +82,9 @@ function TablaInsumo(){
                                             <td><a href="#!" className=" icon-edit" onClick={() => {
                                                 handleDetalleClick(insumos.ID_Insumo)
                                             }}></a></td>
-                                            <td><a href="#!" className=" icon-trash"></a></td>
+                                            <td><a href="#!" className=" icon-trash" onClick={() => {
+                                                handleDelete(insumos.ID_Insumo)
+                                            }}></a></td>
                                         </tr>
                                     })}
                         </tbody>

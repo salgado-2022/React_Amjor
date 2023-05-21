@@ -2,6 +2,7 @@ import React, {useState, useRef} from "react";
 import Swal from 'sweetalert2';
 import axios from "axios";
 import { ValidInsumos } from "./ValidInsumos";
+import { EditarInsumo } from './Modals/editarInsumo';
 
 
 function CrearInsumo() {
@@ -12,6 +13,13 @@ function CrearInsumo() {
         PrecioUnitario: '',
         ID_Estado: '2'
     })
+
+    const initialValues = {
+    NombreInsumo: '',
+    Descripcion: '',
+    PrecioUnitario: '',
+    ID_Estado: ''
+  };
 
     const [errors, setErrors] = useState({});   
 
@@ -32,11 +40,16 @@ function CrearInsumo() {
         setErrors(ValidInsumos(values));
     }
 
+    const handleReset = () => {
+        setValues(initialValues);
+      };
+
     const handleSubmit = (event) => {
         event.preventDefault();
         if (errors.NombreInsumo === "" && errors.Descripcion === "" && errors.PrecioUnitario === "") {
             axios.post('http://localhost:4000/api/crearInsumo', values)
                 .then(res => {
+
                     if (res.data.Status === "Success") {
                         Swal.fire({
                             title: 'Creado Correctamente',
@@ -59,12 +72,8 @@ function CrearInsumo() {
         }
     }
 
-    function refreshPage() {
-        window.location.reload(false);
-      }
-
-
     return(
+    <>
         <div>
             <form onSubmit={handleSubmit}>
                         <br/>
@@ -89,9 +98,13 @@ function CrearInsumo() {
                                 <label className="form-check-label" for="estadoInsumo">Disponible</label>
                             </div>
                             <button type="submit" className="btn btn-primary" id="crearInsumo">Crear</button> &nbsp;
-                            <input type="button" className="btn btn-dark" id="cancelarInsumo" onClick={refreshPage} value="Cancelar"/>
+                            <button type="reset" className="btn btn-dark" id="cancelarInsumo" onClick={handleReset}>Cancelar</button>
                     </form>
         </div>
+        <EditarInsumo
+        estado={estado}
+    />
+    </>
                     
     );
 }
