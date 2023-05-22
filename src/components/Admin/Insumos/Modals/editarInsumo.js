@@ -67,10 +67,10 @@ function EditarInsumo(props) {
         <Modal
             onHide={onHide}
             show={show}
-            size="lg"
+            size="lg" 
             aria-labelledby="contained-modal-title-vcenter"
             centered
-            style={{ zIndex: '2000' }}
+            style={{ zIndex: '2000', boxShadow: '0 0 10px MediumSlateBlue' }}
         >
             <Modal.Header>
                 <Modal.Title id="contained-modal-title-vcenter">
@@ -99,7 +99,7 @@ function EditarInsumo(props) {
                             <input type="checkbox" className="form-check-input" id="ID_Estado" name="ID_Estado" checked={isChecked} onChange={handleInput} />
                             <label className="form-check-label" htmlFor="estadoInsumo">Disponible</label>
                         </div>
-                        <button type="submit" className="btn btn-primary" id="modInsumo" style={{ backgroundColor: "#d4728a", borderColor: "#d4728a" }} onClick={props.onHide}>Modificar</button> &nbsp;
+                        <button type="submit" className="btn btn-primary" id="modInsumo" style={{ backgroundColor: "#d8b4ec", borderColor: "#d8b4ec" }} onClick={props.onHide}>Modificar</button> &nbsp;
                         <button type="reset" className="btn btn-dark" id="cancelarInsumo" onClick={props.onHide}>Cancelar</button>
                     </form>
                 </div>
