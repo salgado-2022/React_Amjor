@@ -6,6 +6,11 @@ import { valdesc } from "./Validations/valdesc";
 import { valprecio } from "./Validations/valprecio";
 
 function CrearInsumo() {
+
+    /* Definición de una variable de estado llamada `values` y una función para actualizarla llamada `setValues`. El
+    valor inicial de `valores` es un objeto con cuatro propiedades: `NombreInsumo`, `Descripcion`,
+    `Precio Unitario`, y `ID_Estado`. Estas propiedades se establecen inicialmente en cadenas vacías para
+    `NombreInsumo` y `Descripcion`, ya la cadena `'2'` para `ID_Estado`. */
     const [values, setValues] = useState({
         NombreInsumo: '',
         Descripcion: '',
@@ -13,6 +18,11 @@ function CrearInsumo() {
         ID_Estado: '2'
     });
 
+    /* `valoresiniciales` es una constante que contiene un objeto con los valores iniciales para los campos de entrada en
+    la forma. Estos valores son cadenas vacías para `NombreInsumo`, `Descripcion` y `PrecioUnitario`,
+    y la cadena `'2'` para `ID_Estado`. Esta constante se utiliza para comprobar si el formulario ha sido modificado.
+    por el usuario antes de enviarlo, y restablecer el formulario a sus valores iniciales cuando el usuario hace clic
+    el botón "Reiniciar".*/
     const initialValues = {
         NombreInsumo: '',
         Descripcion: '',
@@ -20,17 +30,28 @@ function CrearInsumo() {
         ID_Estado: '2'
     };
 
+    /* Estas líneas de código definen variables de estado y una referencia para el componente `CrearInsumo`. */
     const [errorname, setErrorname] = useState({});
     const [errordesc, setErrordesc] = useState({});
     const [errorprice, setErrorprice] = useState({});
     const [isChecked, setIsChecked] = useState(false);
     const checkbox = useRef();
 
+    /* Este bloque de código utiliza el enlace `useEffect` para actualizar el estado de la variable `isChecked` según
+    sobre el valor de `valores.ID_Estado`. Se activa cada vez que cambia el estado de los `valores`. El propósito
+    de este código es para asegurarse de que la casilla de verificación esté marcada o desmarcada según el valor inicial de
+    `ID_Estado` cuando el componente se renderiza por primera vez. */
     useEffect(() => {
         // Restablecer el estado del checkbox según los valores iniciales
         setIsChecked(values.ID_Estado === '1');
     }, [values]);
 
+    /**
+    * La función maneja los cambios de entrada y actualiza el estado en consecuencia, incluida la casilla de verificación de manejo
+      * entradas.
+      * @param event: el parámetro de evento es un objeto que contiene información sobre el evento que
+      * activó la función.
+     */
     const handleInput = (event) => {
         const { name, value, type, checked } = event.target;
 
@@ -42,18 +63,44 @@ function CrearInsumo() {
         }
     };
 
+    /**
+    * La función `handleBlurname` establece un mensaje de error para un campo de entrada de nombre en función de su valor.
+      * @param event: el parámetro de evento es un objeto que contiene información sobre el evento que
+      * activó la función.
+     */
     const handleBlurname = (event) => {
         setErrorname(valnombre(values));
     };
 
+    /**
+    * La función maneja el evento de desenfoque y establece un mensaje de error basado en el valor de entrada.
+      * @param event: el parámetro de evento es un objeto que contiene información sobre el evento que
+      * activó la función.
+     */
     const handleBlurdesc = (event) => {
         setErrordesc(valdesc(values));
     };
 
+    /**
+    * La función `handleBlurprice` establece un mensaje de error basado en el valor de `valprecio(values)` cuando
+      * un campo de entrada pierde el foco.
+      * @param event: el parámetro de evento es un objeto que contiene información sobre el evento que
+      * activó la función.
+     */
     const handleBlurprice = (event) => {
         setErrorprice(valprecio(values));
     };
 
+    /**
+    * Esta función maneja el envío de un formulario para crear un nuevo "insumo" (entrada) y envía un post
+      * request a un servidor usando axios.
+      * @param event: el parámetro event es un objeto que representa el evento que activó el
+      * función. En este caso, es el evento de envío del formulario. La función está usando preventDefault()
+      * método para evitar el comportamiento predeterminado de envío de formularios.
+      * @returns Si se cumplen las condiciones de la instrucción if, no se devuelve nada. Si las condiciones son
+      * no se cumple, se llama a la función axios.post() y se devuelve una promesa. Dependiendo del resultado de
+      * la promesa, ya sea un mensaje de éxito o de error, se muestra usando la función Swal.fire().
+     */
     const handleSubmit = (event) => {
         event.preventDefault();
         if (
@@ -94,9 +141,14 @@ function CrearInsumo() {
         }
     };
 
+    /**
+     * La función `handleReset` establece los valores de una variable de estado a sus valores iniciales.
+     */
     const handleReset = () => {
         setValues(initialValues);
     };
+
+    
 
     return (
         <div>

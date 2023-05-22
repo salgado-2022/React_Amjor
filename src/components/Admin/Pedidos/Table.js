@@ -61,7 +61,7 @@ function Table() {
                                         <th scope="col">#</th>
                                         <th scope="col">Nombre Cliente</th>
                                         <th scope="col">Detalle</th>
-                                        <th scope="col">Fecha</th>
+                                        <th scope="col">Fecha para Entrega</th>
                                         <th scope="col">Dirección Entrega</th>
                                         <th scope="col">Precio</th>
                                         <th scope="col"></th>
