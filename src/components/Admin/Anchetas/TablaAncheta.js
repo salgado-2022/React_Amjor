@@ -33,7 +33,7 @@ function TablaAncheta(){
                                             data-target="#modalAnchetaDetalle"> </a></td>
                                     <td>90.000</td>
                                     <td>Disponible</td>
-                                    <td><a href="#!" className="icon-edit" onclick="modificarAncheta()"> </a></td>
+                                    <td><a href="#!" className="icon-edit" onClick="modificarAncheta()"> </a></td>
                                     <td><a href="#!" className="icon-trash" id="eliminar" onclick="eliminarAncheta()"> </a>
                                     </td>
                                 </tr>
@@ -44,7 +44,7 @@ function TablaAncheta(){
                                             data-target="#modalAnchetaDetalle"> </a></td>
                                     <td>135.000</td>
                                     <td>Disponible</td>
-                                    <td><a href="#!" className="icon-edit" onclick="modificarAncheta()"> </a></td>
+                                    <td><a href="#!" className="icon-edit" onClick="modificarAncheta()"> </a></td>
                                     <td><a href="#!" className="icon-trash" id="eliminar" onclick="eliminarAncheta()"> </a>
                                     </td>
                                 </tr>
@@ -62,11 +62,11 @@ function TablaAncheta(){
                                 <tr>
                                     <th scope="row">4</th>
                                     <td>Ancheta Madres</td>
-                                    <td><a href="#!" className="icon-eye" id="eliminar" onclick="eliminarAncheta()"> </a></td>
+                                    <td><a href="#!" className="icon-eye" id="eliminar" onClick="eliminarAncheta()"> </a></td>
                                     <td>42.000</td>
                                     <td>Agotado</td>
-                                    <td><a href="#!" className="icon-edit" onclick="modificarAncheta()"> </a></td>
-                                    <td><a href="#!" className="icon-trash" id="eliminar" onclick="eliminarAncheta()"> </a>
+                                    <td><a href="#!" className="icon-edit" onClick="modificarAncheta()"> </a></td>
+                                    <td><a href="#!" className="icon-trash" id="eliminar" onClick="eliminarAncheta()"> </a>
                                     </td>
                                 </tr>
                                 <tr>
@@ -76,8 +76,8 @@ function TablaAncheta(){
                                             data-target="#modalAnchetaDetalle"> </a></td>
                                     <td>67.000</td>
                                     <td>Agotado</td>
-                                    <td><a href="#!" className="icon-edit" onclick="modificarAncheta()"> </a></td>
-                                    <td><a href="#!" className="icon-trash" id="eliminar" onclick="eliminarAncheta()"> </a>
+                                    <td><a href="#!" className="icon-edit" onClick="modificarAncheta()"> </a></td>
+                                    <td><a href="#!" className="icon-trash" id="eliminar" onClick="!"> </a>
                                     </td>
                                 </tr>
                             </tbody>

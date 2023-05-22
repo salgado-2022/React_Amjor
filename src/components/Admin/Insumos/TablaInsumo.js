@@ -87,7 +87,7 @@ function TablaInsumo() {
                             className="form-control"
                             value={busqueda}
                             onChange={handleChange}
-                            placeholder="Buscar por nombre del insumo"
+                            placeholder="Buscar Insumo"
                         />
                         <div className="input-group-append">
                             <button className="btn btn-outline" type="button"><a href="#!" className="icon-search"> </a></button>
