@@ -49,7 +49,7 @@ function UsuariosFormulario() {
       Swal.fire({
         icon: "error",
         title: "Error",
-        text: "Debes completar todos los campos",
+        text: "Debes completar todos los campos obligatoriamente",
       });
       return; // Detener la ejecución del submit
     }
@@ -79,7 +79,7 @@ function UsuariosFormulario() {
       // Registro exitoso
       Swal.fire({
         icon: "success",
-        title: "Registro exitoso",
+        title: "Registro del Uusario exitoso",
         text: "El usuario se ha registrado correctamente",
       });
 
