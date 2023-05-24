@@ -1,8 +1,24 @@
-import React from "react";
+import { useState } from "react";
+import Swal from "sweetalert2";
+import { Button } from "react-bootstrap";
+import { editarUsuario } from "./modal/editarUsuario";
+
 
 function ListaUsuarios(){
+
+    const [modalOpen, setModalOpen] = useState(false);
+
+  const handleOpenModal = () => {
+    setModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setModalOpen(false);
+  };
+
     return(
         <>
+        
         <div class="col-12">
         <div class="row justify-content-end">
             <div class="input-group mb-3 col-3">
@@ -12,6 +28,7 @@ function ListaUsuarios(){
             </div>
         </div>
     </div>
+    <div className={`modal fade ${modalOpen ? "show" : ""}`} id="myModal" tabIndex="-1" role="dialog"></div>
     <table class="table">
         <thead>
             <tr>
@@ -61,7 +78,7 @@ function ListaUsuarios(){
                         <input type="checkbox"/>
                         <span class="slider"></span>
                     </label></td>
-                    <td><a href="#!" class="icon-edit" onclick="modificarUsuario()"> </a></td>
+                    <td><a href= "#!" class="icon-edit" onclick={editarUsuario}> </a></td>
                     <td><a href="#!" class="icon-trash" onclick="eliminarUsuario()"> </a></td>
             </tr>
         </tbody>
