@@ -21,7 +21,7 @@ function CarritoProductos() {
     return (
         <>
             <div className="row mb-5">
-                <form className="col-md-12" method="post">
+                <form className="col-md-12">
                     <div className="site-blocks-table">
                         <table className="table table-bordered">
                             <thead>
