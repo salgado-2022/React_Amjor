@@ -47,12 +47,12 @@ function DetalleInsumo(props) {
                     Insumos
 
                 </Modal.Title>
-                <Button variant="secondary" onClick={props.onHide} className="close">
+                <Button variant="secondary" onClick={props.onHide} classNameName="close">
                     <span aria-hidden="true">&times;</span>
                 </Button>
             </Modal.Header>
             <Modal.Body>
-                <table class="table">
+                <table className="table">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -61,7 +61,7 @@ function DetalleInsumo(props) {
                             <th scope="col">Precio</th>
                         </tr>
                     </thead>
-                    <tbody class="table-group-divider">
+                    <tbody className="table-group-divider">
                         {data.map((insumo, index) => {
                             return <tr key={index}>
                                 <th scope="row">{insumo.ID_PedidoInsumo}</th>
