@@ -1,7 +1,7 @@
 
-
 function editarUsuario() {
     <> 
+    
     <div class="modal fade bd-example-modal-lg" id="modalUsua" tabindex="-1" role="dialog"/>
                     aria-labelledby="myLargeModalLabel" aria-hidden="true" style="!important;"  
                     <div class="modal-dialog modal-lg modal-dialog-centered"/>
@@ -55,14 +55,9 @@ function editarUsuario() {
                                                         <div class="modal-footer">
                                                             <button type="button" class="btn btn-secondary"
                                                                 data-dismiss="modal">Cancelar</button>
-                                                            <button type="button" class="btn btn-primary"
-                                                                onclick="modificadoCorrectamente()">Guardar
-                                                                cambios</button>
+                                                            <button type="button" class="btn btn-primary">Guardar cambios</button>
                                                             </div>  
-                                                    </form>
-                                                    
+                                                    </form>                                   
        </>
  }
-
-
 export {editarUsuario}

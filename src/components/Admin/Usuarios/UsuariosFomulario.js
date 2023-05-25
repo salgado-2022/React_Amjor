@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import "../../../assets/css/formunUsuarios.css";
 import Swal from "sweetalert2";
-import { validocumentoIdenti } from "./Validations/validocumentoIdenti";
-import { valinombre } from "./Validations/valinombre";
-import { valicorreo } from "./Validations/valicorreo";
-import { valcontraseña } from "./Validations/valcontraseña";
-import { valiconficontraseña } from "./Validations/valiconficontraseña";
 
 function UsuariosFormulario() {
-  const [documentoIdenti, setDocumentoIdenti] = useState("");
-  const [nombre, setNombre] = useState("");
-  const [correo, setCorreo] = useState("");
-  const [contraseña, setContraseña] = useState("");
-  const [conficontraseña, setConficontraseña] = useState("");
+  const [documentoIdenti, setDocumentoIdenti] = useState('');
+  const [nombre, setNombre] = useState('');
+  const [correo, setCorreo] = useState('');
+  const [contraseña, setContraseña] = useState('');
+  const [conficontraseña, setConficontraseña] = useState('');
+  const [selectedRoles, setSelectedRoles] = useState([]);
+  const [checkboxError, setCheckboxError] = useState(false);
+  
 
   const handleDocumentoIdentiChange = (e) => {
     setDocumentoIdenti(e.target.value);
@@ -34,58 +32,61 @@ function UsuariosFormulario() {
     setConficontraseña(e.target.value);
   };
 
+  const handleRoleChange = (e) => {
+    const { value, checked } = e.target;
+    if (checked) {
+      setSelectedRoles((prevRoles) => [...prevRoles, value]);
+    } else {
+      setSelectedRoles((prevRoles) => prevRoles.filter((role) => role !== value));
+    }
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
 
     // Validar campos vacíos
     if (
-      documentoIdenti.trim() === "" ||
-      nombre.trim() === "" ||
-      correo.trim() === "" ||
-      contraseña.trim() === "" ||
-      conficontraseña.trim() === ""
+      documentoIdenti.trim() === '' ||
+      nombre.trim() === '' ||
+      correo.trim() === '' ||
+      contraseña.trim() === '' ||
+      conficontraseña.trim() === ''
     ) {
       // Campos vacíos, mostrar SweetAlert de error
       Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Debes completar todos los campos obligatoriamente",
+        icon: 'error',
+        title: 'Error',
+        text: 'Debes completar todos los campos',
       });
       return; // Detener la ejecución del submit
     }
 
-    // Validaciones
-    const documentoIdentiErrors = validocumentoIdenti({ documentoIdenti });
-    const nombreErrors = valinombre(nombre);
-    const correoErrors = valicorreo(correo);
-    const contraseñaErrors = valcontraseña(contraseña);
-    const conficontraseñaErrors = valiconficontraseña(contraseña, conficontraseña);
-
-    // Verificar si existen errores en las validaciones
-    if (
-      Object.values(documentoIdentiErrors).some((error) => error !== "") ||
-      Object.values(nombreErrors).some((error) => error !== "") ||
-      Object.values(correoErrors).some((error) => error !== "") ||
-      Object.values(contraseñaErrors).some((error) => error !== "") ||
-      Object.values(conficontraseñaErrors).some((error) => error !== "")
-    ) {
-      // Mostrar SweetAlert de errores
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Verifica los campos e intenta nuevamente",
-      });
-    } else {
-      // Registro exitoso
-      Swal.fire({
-        icon: "success",
-        title: "Registro del Uusario exitoso",
-        text: "El usuario se ha registrado correctamente",
-      });
-
-      // Aquí puedes realizar la acción de guardar el nuevo usuario en tu base de datos
+    // Validar checkbox de roles
+    if (selectedRoles.length === 0) {
+      setCheckboxError(true);
+      return;
     }
+
+    // Validar coincidencia de contraseñas
+    if (contraseña !== conficontraseña) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'Las contraseñas ingresadas no coinciden',
+      });
+      return;
+    }
+
+    // Registro exitoso
+    Swal.fire({
+      icon: 'success',
+      title: 'Registro exitoso',
+      text: 'El usuario se ha registrado correctamente',
+    });
+
+    // Aquí puedes realizar la acción de guardar el nuevo usuario en tu base de datos
   };
+
     return (
       <>
         <div class="bg-light py-3">
@@ -161,21 +162,41 @@ function UsuariosFormulario() {
                   &nbsp;
                   <br></br>
                   <div id="Roles">
-                    <button>Seleccione el rol que está asociado</button>
-                    <br></br>
-                    <div>
-                      <div id="Roles-content">
-                        <input type="checkbox" id="option1" />
-                        <label for="option1">Administrador</label>
-                        <br></br>
-                        <input type="checkbox" id="option2" />
-                        <label for="option2">Empleado</label>
-                        <br></br>
-                        <input type="checkbox" id="option3" />
-                        <label for="option3">Cliente</label>
-                        <br></br>
-                      </div>
-                    </div>
+            <button>Seleccione el rol que está asociado</button>
+            <br />
+            <div>
+              <div id="Roles-content">
+                <input
+                  type="checkbox"
+                  id="option1"
+                  value="Administrador"
+                  checked={selectedRoles.includes('Administrador')}
+                  onChange={handleRoleChange}
+                />
+                <label htmlFor="option1">Administrador</label>
+                <br />
+                <input
+                  type="checkbox"
+                  id="option2"
+                  value="Empleado"
+                  checked={selectedRoles.includes('Empleado')}
+                  onChange={handleRoleChange}
+                />
+                <label htmlFor="option2">Empleado</label>
+                <br />
+                <input
+                  type="checkbox"
+                  id="option3"
+                  value="Cliente"
+                  checked={selectedRoles.includes('Cliente')}
+                  onChange={handleRoleChange}
+                />
+                <label htmlFor="option3">Cliente</label>
+                <br />
+                  </div>
+                 </div>
+                {checkboxError && <div className="text-danger">Debe seleccionar minimo un rol de loos que se han asignado</div>}
+              </div>
                   </div>
                   <div class="col-md-12">
                     <div class="form-group row">
@@ -230,7 +251,6 @@ function UsuariosFormulario() {
               </div>
             </div>
           </div>
-        </div>
       </>
     );
   }
