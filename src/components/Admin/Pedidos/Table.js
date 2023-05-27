@@ -18,10 +18,7 @@ function Table() {
 
     useEffect(() => {
         fetchData();
-        const interval = setInterval(fetchData, 1000); // Actualiza los datos cada 5 segundos (ajusta el intervalo según tus necesidades)
-
-        return () => clearInterval(interval);
-    }, []);
+    }, [data]);
 
     const fetchData = () => {
         axios.get('http://localhost:4000/api/admin/pedidos')
