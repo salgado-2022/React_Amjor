@@ -41,14 +41,8 @@ function Detalle(props) {
             };
 
             fetchData(); // Llama a la API al cargar el componente
-
-            const interval = setInterval(fetchData, 3000); // Llama a la API cada 10 segundos
-
-            return () => {
-                clearInterval(interval); // Limpia el intervalo al desmontar el componente
-            };
         }
-    }, [id]);
+    }, [id, data]);
 
     const formatPrice = (price) => {
         const options = { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }; // Puedes ajustar la moneda según tus necesidades
