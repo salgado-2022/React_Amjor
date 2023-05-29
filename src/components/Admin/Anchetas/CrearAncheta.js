@@ -4,6 +4,7 @@ import axios from "axios";
 import { valnomanch } from "./Validations/valnomanch";
 import { valdescanch } from "./Validations/valdescanch";
 import { valprecioanch } from "./Validations/valprecioanch";
+
 function CrearAncheta(){
 
     const [values, setValues] = useState({
@@ -25,6 +26,16 @@ function CrearAncheta(){
     const [errorprice, setErrorprice] = useState({});
     const [isChecked, setIsChecked] = useState(false);
     const checkbox = useRef();
+    const [file, setFile] = useState()
+    const [imageUrl, setImageUrl] = useState(null);
+
+    const handleFile = e => {
+        const selectedFile = e.target.files[0];
+        if (selectedFile) {
+            setFile(selectedFile);
+            setImageUrl(URL.createObjectURL(selectedFile));
+          }
+      }
 
     useEffect(() => {
         // Restablecer el estado del checkbox según los valores iniciales
@@ -60,8 +71,18 @@ function CrearAncheta(){
         if (
             errorname.NombreAncheta === "" &&
             errordesc.Descripcion === "" &&
-            errorprice.PrecioUnitario === ""
+            errorprice.PrecioUnitario === "" 
         ) {
+            if (!file) {
+                Swal.fire({
+                            title: 'Error',
+                            text: "Debes subir una imagen de la ancheta",
+                            icon: 'error',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        return;
+              }
             if (
                 JSON.stringify(values) === JSON.stringify(initialValues) ||
                 !values.NombreAncheta ||
@@ -92,16 +113,33 @@ function CrearAncheta(){
                     }
                 })
                 .then(err => console.log(err));
+                handleUpload();
         }
     };
 
+    const handleUpload = () =>{
+        const formdata = new FormData()
+        formdata.append('image', file);
+        axios.post('http://localhost:4000/api/upload', formdata)
+        .then(res => {
+            if(res.data.Status === "Success") {
+                console.log("Succeded")
+            } else {
+                console.log("Failed")
+            }
+        })
+        .catch(err => console.log(err));
+    }
+
     const handleReset = () => {
         setValues(initialValues);
+        setFile(null);
+        setImageUrl(null);
     };
 
     return(
                 <div>
-                    <form onSubmit={handleSubmit} onReset={handleReset}>
+                    <form onSubmit={handleSubmit} onReset={handleReset} encType="multipart/form-data">
                         <h2 className="text-black" id="title">Crear Ancheta</h2>
                         <div className="form-group">
                             <label for="nombreAncheta">Nombre</label>
@@ -117,6 +155,14 @@ function CrearAncheta(){
                             <label for="PrecioUnitario">Precio</label>
                             <input type="text" className="form-control" id="PrecioUnitario" name="PrecioUnitario" value={values.PrecioUnitario} onChange={handleInput} onBlur={handleBlurprice}/>
                             {errorprice.PrecioUnitario && <span className="text-danger"> {errorprice.PrecioUnitario}</span>}
+                        </div>
+                        <div className="form-group">
+                            <input type="file" className="form-control" id="image" name="image" onChange={handleFile} style={{display:"none"}}/>
+                                <label for="image" style={{color: "black", height: "50px", width: "180px", backgroundColor: "#feeb75", borderRadius: "8px", fontSize: "16px", display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                <i className="icon-image"></i>&nbsp;
+                                Imagen de la ancheta
+                                </label>
+                                {imageUrl && <img src={imageUrl} alt="Imagen de la ancheta" style={{ marginTop: "10px", maxWidth: "200px" }} />} {/* Mostrar la imagen si hay una URL */}
                         </div>
                         <h5 id="totalAncheta">Total: 0$</h5>
                         <div className="form-check" style={{marginBottom: '7px'}}>

@@ -99,7 +99,7 @@ function EditarAncheta(props) {
                             <input type="checkbox" className="form-check-input" id="ID_Estado" name="ID_Estado" checked={isChecked} onChange={handleInput} />
                             <label className="form-check-label" htmlFor="estadoInsumo">Disponible</label>
                         </div>
-                        <button type="submit" className="btn btn-primary" id="modInsumo" style={{ backgroundColor: "#d8b4ec", borderColor: "#d8b4ec" }} onClick={props.onHide}>Modificar</button> &nbsp;
+                        <button type="submit" className="btn btn-primary" id="modInsumo" onClick={props.onHide}>Modificar</button> &nbsp;
                         <button type="reset" className="btn btn-dark" id="cancelarInsumo" onClick={props.onHide}>Cancelar</button>
                     </form>
                 </div>
