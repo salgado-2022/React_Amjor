@@ -12,7 +12,7 @@ function CrearAncheta(){
         Descripcion: '',
         PrecioUnitario: '',
         ID_Estado: '2',
-        image: null 
+        image: '' 
     });
 
     const initialValues = {
@@ -20,7 +20,7 @@ function CrearAncheta(){
         Descripcion: '',
         PrecioUnitario: '',
         ID_Estado: '2',
-        image: null
+        image: ''
     };
 
     const [errorname, setErrorname] = useState({});
