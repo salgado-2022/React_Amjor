@@ -11,14 +11,16 @@ function CrearAncheta(){
         NombreAncheta: '',
         Descripcion: '',
         PrecioUnitario: '',
-        ID_Estado: '2'
+        ID_Estado: '2',
+        image: '' 
     });
 
     const initialValues = {
         NombreAncheta: '',
         Descripcion: '',
         PrecioUnitario: '',
-        ID_Estado: '2'
+        ID_Estado: '2',
+        image: ''
     };
 
     const [errorname, setErrorname] = useState({});
@@ -26,16 +28,7 @@ function CrearAncheta(){
     const [errorprice, setErrorprice] = useState({});
     const [isChecked, setIsChecked] = useState(false);
     const checkbox = useRef();
-    const [file, setFile] = useState()
     const [imageUrl, setImageUrl] = useState(null);
-
-    const handleFile = e => {
-        const selectedFile = e.target.files[0];
-        if (selectedFile) {
-            setFile(selectedFile);
-            setImageUrl(URL.createObjectURL(selectedFile));
-          }
-      }
 
     useEffect(() => {
         // Restablecer el estado del checkbox según los valores iniciales
@@ -44,12 +37,19 @@ function CrearAncheta(){
 
     const handleInput = (event) => {
         const { name, value, type, checked } = event.target;
-
         if (type === 'checkbox') {
             setIsChecked(checked);
             setValues(prev => ({ ...prev, [name]: checked ? '1' : '2' }));
-        } else {
+        } else{
             setValues(prev => ({ ...prev, [name]: value }));
+        }
+        
+        if (type === 'file'){
+            const selectedFile = event.target.files[0];
+            if (selectedFile) {
+                setImageUrl(URL.createObjectURL(selectedFile));
+                setValues((prev) => ({ ...prev, image: selectedFile })); // Set the image property in the values state
+              }
         }
     };
 
@@ -73,7 +73,7 @@ function CrearAncheta(){
             errordesc.Descripcion === "" &&
             errorprice.PrecioUnitario === "" 
         ) {
-            if (!file) {
+            if (!values.image) {
                 Swal.fire({
                             title: 'Error',
                             text: "Debes subir una imagen de la ancheta",
@@ -91,8 +91,13 @@ function CrearAncheta(){
             ) {
                 return;
             }
-
-            axios.post('http://localhost:4000/api/crearAncheta', values)
+            const formdata = new FormData();
+            formdata.append('NombreAncheta', values.NombreAncheta);
+            formdata.append('Descripcion', values.Descripcion);
+            formdata.append('PrecioUnitario', values.PrecioUnitario);
+            formdata.append('ID_Estado', values.ID_Estado);
+            formdata.append('image', values.image);
+            axios.post('http://localhost:4000/api/crearAncheta', formdata)
                 .then(res => {
                     if (res.data.Status === "Success") {
                         Swal.fire({
@@ -113,27 +118,11 @@ function CrearAncheta(){
                     }
                 })
                 .then(err => console.log(err));
-                handleUpload();
         }
     };
 
-    const handleUpload = () =>{
-        const formdata = new FormData()
-        formdata.append('image', file);
-        axios.post('http://localhost:4000/api/upload', formdata)
-        .then(res => {
-            if(res.data.Status === "Success") {
-                console.log("Succeded")
-            } else {
-                console.log("Failed")
-            }
-        })
-        .catch(err => console.log(err));
-    }
-
     const handleReset = () => {
         setValues(initialValues);
-        setFile(null);
         setImageUrl(null);
     };
 
@@ -157,7 +146,7 @@ function CrearAncheta(){
                             {errorprice.PrecioUnitario && <span className="text-danger"> {errorprice.PrecioUnitario}</span>}
                         </div>
                         <div className="form-group">
-                            <input type="file" className="form-control" id="image" name="image" onChange={handleFile} style={{display:"none"}}/>
+                            <input type="file" className="form-control" id="image" name="image" accept=".jpg, .png" onChange={handleInput} style={{display:"none"}}/>
                                 <label for="image" style={{color: "black", height: "50px", width: "180px", backgroundColor: "#feeb75", borderRadius: "8px", fontSize: "16px", display: "flex", justifyContent: "center", alignItems: "center"}}>
                                 <i className="icon-image"></i>&nbsp;
                                 Imagen de la ancheta
