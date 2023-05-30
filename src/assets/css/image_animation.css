@@ -1,0 +1,17 @@
+.image-animation-enter {
+    opacity: 0;
+  }
+  
+  .image-animation-enter-active {
+    opacity: 1;
+    transition: opacity 300ms;
+    
+  }
+  
+  .image-animation-exit {
+    opacity: 1;
+  }
+  
+  .image-animation-exit-active {
+    display: none;
+  }

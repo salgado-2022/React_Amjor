@@ -1,9 +1,11 @@
+import "../../../assets/css/image_animation.css";
 import React, { useState, useRef, useEffect } from "react";
 import Swal from 'sweetalert2';
 import axios from "axios";
 import { valnomanch } from "./Validations/valnomanch";
 import { valdescanch } from "./Validations/valdescanch";
 import { valprecioanch } from "./Validations/valprecioanch";
+import { CSSTransition } from "react-transition-group";
 
 function CrearAncheta() {
 
@@ -26,8 +28,9 @@ function CrearAncheta() {
     const [errorname, setErrorname] = useState({});
     const [errordesc, setErrordesc] = useState({});
     const [errorprice, setErrorprice] = useState({});
-    const [isChecked, setIsChecked] = useState(false);
     const checkbox = useRef();
+
+    const [isChecked, setIsChecked] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
 
     useEffect(() => {
@@ -151,7 +154,10 @@ function CrearAncheta() {
                         <i className="icon-image"></i>&nbsp;
                         Imagen de la ancheta
                     </label>
-                    {imageUrl && <img src={imageUrl} alt="Imagen de la ancheta" style={{ marginTop: "10px", maxWidth: "200px" }} />} {/* Mostrar la imagen si hay una URL */}
+                    <CSSTransition in={!!imageUrl} timeout={300} classNames="image-animation" unmountOnExit
+                    >
+                    <img src={imageUrl} alt="Imagen de la ancheta" style={{ marginTop: "10px", maxWidth: "200px" }}/>
+                    </CSSTransition>
                 </div>
                 <h5 id="totalAncheta">Total: 0$</h5>
                 <div className="form-check" style={{ marginBottom: '7px' }}>

@@ -9,7 +9,9 @@ function VerInsumos(props) {
 
     const [dataA, setDataA] = useState([]);
 
-    const [data, setInsumo] = useState([])
+    const [data, setInsumo] = useState([]);
+
+    const [isLoading, setIsLoading] = useState(true);
 
     const [totalPrecio, setTotalPrecio] = useState(0);
 
@@ -22,6 +24,7 @@ function VerInsumos(props) {
     };
 
     useEffect(() => {
+        setIsLoading(true);
         if (id) {
             const fetchData = async () => {
                 try {
@@ -32,8 +35,10 @@ function VerInsumos(props) {
                         total += insumo.Total;
                     });
                     setTotalPrecio(total);
+                    setIsLoading(false);
                 } catch (err) {
                     console.log(err);
+                    setIsLoading(false);
                 }
             };
 
@@ -46,7 +51,10 @@ function VerInsumos(props) {
                         image: res.data[0].image
                     }));
                 })
-                .catch(err => console.log(err));
+                .catch(err => {
+                    console.log(err);
+                    setIsLoading(false);
+                });
 
             fetchData();// Llama a la API al cargar el componente
         }
@@ -56,7 +64,7 @@ function VerInsumos(props) {
         <Modal
             onHide={onHide}
             show={show}
-            size="lg" 
+            size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
             style={{ zIndex: '2000', boxShadow: '0 0 10px MediumSlateBlue' }}
@@ -70,38 +78,53 @@ function VerInsumos(props) {
                 </Button>
             </Modal.Header>
             <Modal.Body>
-            <h6 style={{fontSize: '21px'}}>{dataA.NombreAncheta}</h6>
-            <p style={{fontSize: '15px'}}>{dataA.Descripcion}</p>
-            <img src={`http://localhost:4000/anchetas/`+ dataA.image} style={{width: "40px"}}/>
-            <div>
-                <div className="row justify-content-end">
-                </div>
-                <table className="table">
-                    <thead>
-                        <tr>
-                            <th scope="col">ID</th>
-                            <th scope="col">Insumo</th>
-                            <th scope="col">Cantidad</th>
-                            <th scope="col">Precio</th>
-                        </tr>
-                    </thead>
-                    <tbody className="table-group-divider">
-                            {data.map((insumos, index) => {
-                                return <tr key={index}>
-                                    <th scope="row">{insumos.ID_Insumos_Ancheta}</th>
-                                    <td>{insumos.NombreInsumo}</td>
-                                    <td>{insumos.Cantidad}</td>
-                                    <td>{formatPrice(insumos.Total)}</td>
-                                </tr>
-                            })}
-                        </tbody>
-                </table>
-            </div>
+                {isLoading ? (
+                    <div className="text-center">
+                        <h3>Espera un momento...</h3>
+                        {/* Puedes agregar un spinner o un mensaje de carga aquí */}
+                    </div>
+                ) : (
+                    <>
+                        <div className="section" style={{ display: "flex", justifyContent: "space-between", padding: "10px" }}>
+                            <div className="text">
+                                <br />
+                                <h1 style={{ margin: "0", fontSize: '24px' }}>{dataA.NombreAncheta}</h1>
+                                <p style={{ marginRight: "10px", fontSize: '15px' }}>{dataA.Descripcion}</p>
+                            </div>
+                            <img src={`http://localhost:4000/anchetas/` + dataA.image} alt="" style={{ marginTop: "30px", maxWidth: "450px" }} />
+                        </div>
+                        <div style={{ padding: "10px" }}>
+                            <br />
+                            <table className="table">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col">Insumo</th>
+                                        <th scope="col">Cantidad</th>
+                                        <th scope="col">Precio</th>
+                                    </tr>
+                                </thead>
+                                <tbody className="table-group-divider">
+                                    {data.map((insumos, index) => {
+                                        return (
+                                            <tr key={index}>
+                                                <th scope="row">{insumos.ID_Insumos_Ancheta}</th>
+                                                <td>{insumos.NombreInsumo}</td>
+                                                <td>{insumos.Cantidad}</td>
+                                                <td>{formatPrice(insumos.Total)}</td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                        <Modal.Footer>
+                            <h3>Total:</h3>
+                            <h3>{formatPrice(totalPrecio)}</h3>
+                        </Modal.Footer>
+                    </>
+                )}
             </Modal.Body>
-            <Modal.Footer>
-                    <h3>Total:</h3>
-                    <h3>{formatPrice(totalPrecio)}</h3>
-                </Modal.Footer>
         </Modal>
     );
 }
