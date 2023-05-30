@@ -8,6 +8,7 @@ import './assets/css/jquery-ui.css'
 import './assets/css/magnific-popup.css'
 import './assets/css/style.css'
 import './assets/fonts/icomoon/style.css'
+import './assets/css/image.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

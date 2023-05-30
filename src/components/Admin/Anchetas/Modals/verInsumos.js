@@ -39,24 +39,16 @@ function VerInsumos(props) {
 
             axios.get('http://localhost:4000/api/admin/anchetas/anchellamada/' + id)
                 .then(res => {
-                    console.log(res);
                     setDataA(prevValues => ({
                         ...prevValues,
                         NombreAncheta: res.data[0].NombreAncheta,
                         Descripcion: res.data[0].Descripcion,
-                        PrecioUnitario: res.data[0].PrecioUnitario,
-                        ID_Estado: res.data[0].ID_Estado
+                        image: res.data[0].image
                     }));
                 })
                 .catch(err => console.log(err));
 
             fetchData();// Llama a la API al cargar el componente
-
-            const interval = setInterval(fetchData, 3000); // Llama a la API cada 10 segundos
-
-            return () => {
-                clearInterval(interval); // Limpia el intervalo al desmontar el componente
-            };
         }
     }, [id]);
 
@@ -80,6 +72,7 @@ function VerInsumos(props) {
             <Modal.Body>
             <h6 style={{fontSize: '21px'}}>{dataA.NombreAncheta}</h6>
             <p style={{fontSize: '15px'}}>{dataA.Descripcion}</p>
+            <img src={`http://localhost:4000/anchetas/`+ dataA.image} style={{width: "40px"}}/>
             <div>
                 <div className="row justify-content-end">
                 </div>

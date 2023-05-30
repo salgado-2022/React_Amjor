@@ -5,6 +5,7 @@ import { VerInsumos } from '../Anchetas/Modals/verInsumos';
 import Swal from "sweetalert2";
 
 function TablaAncheta() {
+    
     const [data, setData] = useState([]);
     const [tabla, setTabla] = useState([]);
     const [busqueda, setBusqueda] = useState("");
@@ -109,6 +110,7 @@ function TablaAncheta() {
                     <thead>
                         <tr>
                             <th scope="col">ID</th>
+                            <th scope="col"></th>
                             <th scope="col">Nombre</th>
                             <th scope="col">Insumos</th>
                             <th scope="col">Precio</th>
@@ -122,6 +124,9 @@ function TablaAncheta() {
                             data.map((anchetas) => (
                                 <tr key={anchetas.ID_Ancheta}>
                                     <th scope="row">{anchetas.ID_Ancheta}</th>
+                                    <td>
+                                        <img src={`http://localhost:4000/anchetas/`+ anchetas.image} alt="" className="anchetas_img"/>
+                                    </td>
                                     <td>{anchetas.NombreAncheta}</td>
                                     <td><a href="#!" className=" icon-eye" onClick={() => {
                                         handleDetalleClick(anchetas.ID_Ancheta)
