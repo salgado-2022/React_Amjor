@@ -42,7 +42,7 @@ function Detalle(props) {
 
             fetchData(); // Llama a la API al cargar el componente
         }
-    }, [id, data]);
+    }, [id]);
 
     const formatPrice = (price) => {
         const options = { style: 'currency', currency: 'COP', minimumFractionDigits: 0 }; // Puedes ajustar la moneda según tus necesidades

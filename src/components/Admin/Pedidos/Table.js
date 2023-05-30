@@ -25,7 +25,7 @@ function Table() {
     los datos actualizados. */
     useEffect(() => {
         fetchData();
-    }, [data]);
+    }, []);
 
     /**
     * La función `fetchData` usa Axios para realizar una solicitud GET a un punto final API local y establece el
