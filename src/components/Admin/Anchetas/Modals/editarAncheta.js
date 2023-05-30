@@ -81,7 +81,7 @@ function EditarAncheta(props) {
                 </Button>
             </Modal.Header>
             <Modal.Body>
-                <div>
+                <div style={{padding: "10px"}}>
                     <form onSubmit={handleUpdate} id="editarAncheta">
                         <div className="form-group">
                             <label htmlFor="NombreInsumo">Nombre</label>
