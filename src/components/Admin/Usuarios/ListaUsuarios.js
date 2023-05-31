@@ -1,19 +1,39 @@
-import React, { useState } from "react";
-import { Modal, Button } from "react-bootstrap";
-import { EditarUsuario } from "../Usuarios/modal/EditarUsuario";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 function ListaUsuarios() {
-  const [modalShow, setModalShow] = useState(false);
-  const [usuarioData, setUsuarioData] = useState({});
+  const [data, setData] = useState([]);
+  const [tabla, setTabla] = useState([]);
 
-  const handleEditarUsuario = (id, nombre, correo) => {
-    setUsuarioData({ id, nombre, correo });
-    setModalShow(true);
-  };
+  const fetchData = () => {
+    axios.get('http://localhost:4000/api/admin/usuario')
+        .then(res => {
+            setData(res.data)
+            setTabla(res.data)
+        })
+        .catch(err => console.log(err));
+};
 
-  const eliminarUsuario = () => {
-    
-  };
+const handleDelete = (id) => {
+  axios.delete('http://localhost:4000/api/admin/usuarios/Usuariodel/' + id)
+      .then(res => {
+          console.log(res)
+          Swal.fire({
+              title: 'Eliminado Correctamente',
+              text: "Tu usuario ha sido eliminado correctamente",
+              icon: 'success',
+              showConfirmButton: false,
+              timer: 1500
+          })
+          setTimeout(function () { window.location = "usuario"; }, 670);
+      }).catch(err => console.log(err));
+};
+
+
+useEffect(() => {
+  fetchData();
+}, []);
 
   return (
     <>
@@ -26,85 +46,27 @@ function ListaUsuarios() {
         </div>
       </div>
       <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Rol</th>
-            <th scope="col">Correo</th>
-            <th scope="col">Contraseña</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Estado</th>
-            <th scope="col">Editar</th>
-            <th scope="col">Eliminar</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Administrador</td>
-            <td>juanpapas@misena.edu.co</td>
-            <td>*******</td>
-            <td>Activo</td>
-            <td>
-              <label className="switch">
-                <input type="checkbox" />
-                <span className="slider"></span>
-              </label>
-            </td>
-            <td>
-              <a href="#!" className="icon-edit" onClick={() => handleEditarUsuario(1, 'Juan', 'juanpapas@misena.edu.co')}></a>
-            </td>
-            <td>
-              <a href="#!" className="icon-trash" onClick={eliminarUsuario}></a>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Cliente</td>
-            <td>fabian@calditorico.com</td>
-            <td>*******</td>
-            <td>Desactivo</td>
-            <td>
-              <label className="switch">
-                <input type="checkbox" />
-                <span className="slider"></span>
-              </label>
-            </td>
-            <td>
-              <a href="#!" className="icon-edit" onClick={() => handleEditarUsuario(2, 'Fabian', 'fabian@calditorico.com')}></a>
-            </td>
-            <td>
-              <a href="#!" className="icon-trash" onClick={eliminarUsuario}></a>
-            </td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Empleado</td>
-            <td>sofiacarson@gmail.com</td>
-            <td>*******</td>
-            <td>Activa</td>
-            <td>
-              <label className="switch">
-                <input type="checkbox" />
-                <span className="slider"></span>
-              </label>
-            </td>
-            <td>
-              <a href="#!" className="icon-edit" onClick={() => handleEditarUsuario(3, 'Sofia', 'sofiacarson@gmail.com')}></a>
-            </td>
-            <td>
-              <a href="#!" className="icon-trash" onClick={eliminarUsuario}></a>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      {modalShow && (
-        <EditarUsuario
-          usuario={usuarioData}
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-        />
-      )}
+      <thead>
+                        <tr>
+                            <th scope="col">ID</th>
+                            <th scope="col">Correo </th>
+                            <th scope="col">Eliminar </th>
+                        </tr>
+                    </thead>
+                   <tbody>
+                        {data &&
+                            data.map((usuarios) => (
+                                <tr key={usuarios.ID_Usuario}>
+                                    <th scope="row">{usuarios.ID_Usuario}</th>
+                                    <td>{usuarios.correo}</td>
+                                    <td><a href="#!" className=" icon-trash" onClick={() => {
+                                        handleDelete(usuarios.ID_Usuario)
+                                    }}> </a></td>
+                                </tr>
+                            ))}
+
+                    </tbody>
+            </table>
     </>
   );
 }

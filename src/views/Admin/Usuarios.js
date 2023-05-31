@@ -1,6 +1,7 @@
 import React from "react";
-import { UsuariosFormulario } from "../../components/Admin/Usuarios/UsuariosFomulario";
+//import { UsuariosFormulario } from "../../components/Admin/Usuarios/UsuariosFomulario";
 import { ListaUsuarios } from "../../components/Admin/Usuarios/ListaUsuarios";
+import { UsuariosFormulario2 } from "../../components/Admin/Usuarios/UsuariosFormulario2";
 
 function Usuarios() {
     return (
@@ -8,7 +9,7 @@ function Usuarios() {
             <div className="Site-whap">
                 <div className="site-section">
                     <div className="container">
-                        <UsuariosFormulario />
+                        <UsuariosFormulario2 />
                         <div className="row">
                             <ListaUsuarios />
                         </div>
