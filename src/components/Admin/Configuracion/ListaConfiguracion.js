@@ -1,4 +1,5 @@
 import React from "react"
+import { EditarConfiguracion } from "./modal/EditarConfiguracion";
 
 function ListaConfiguracion (){
     return(
