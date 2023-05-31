@@ -3,23 +3,12 @@ import "../../../assets/css/formunUsuarios.css";
 import Swal from "sweetalert2";
 
 function UsuariosFormulario() {
-  const [documentoIdenti, setDocumentoIdenti] = useState('');
-  const [nombre, setNombre] = useState('');
   const [correo, setCorreo] = useState('');
   const [contraseña, setContraseña] = useState('');
   const [conficontraseña, setConficontraseña] = useState('');
   const [selectedRoles, setSelectedRoles] = useState([]);
   const [checkboxError, setCheckboxError] = useState(false);
   
-
-  const handleDocumentoIdentiChange = (e) => {
-    setDocumentoIdenti(e.target.value);
-  };
-
-  const handleNombreChange = (e) => {
-    setNombre(e.target.value);
-  };
-
   const handleCorreoChange = (e) => {
     setCorreo(e.target.value);
   };
@@ -46,8 +35,6 @@ function UsuariosFormulario() {
 
     // Validar campos vacíos
     if (
-      documentoIdenti.trim() === '' ||
-      nombre.trim() === '' ||
       correo.trim() === '' ||
       contraseña.trim() === '' ||
       conficontraseña.trim() === ''
@@ -82,9 +69,14 @@ function UsuariosFormulario() {
       icon: 'success',
       title: 'Registro exitoso',
       text: 'El usuario se ha registrado correctamente',
+      showConfirmButton: false,
+      timer: 1000 
+    }).then(() => {
+      setTimeout(() => {
+        window.location.reload(); 
+      }, 1000);
     });
-
-    // Aquí puedes realizar la acción de guardar el nuevo usuario en tu base de datos
+      
   };
 
     return (
@@ -109,41 +101,8 @@ function UsuariosFormulario() {
                 <div class="p-3 p-lg-12 border">
                   <div class="form-group row">
                     <div class="col-md-6">
-                      <label for="documentoIdenti" class="text-black">
-                        DOMUENTO DE IDENTIDAD{" "}
-                        <span class="text-danger">*</span>
-                      </label>
-                      <input
-                        type="number"
-                        class="form-control"
-                        id="documentoIdenti"
-                        name="documentoIdenti"
-                        placeholder="12456"
-                        
-                        value={documentoIdenti}
-                        onChange={handleDocumentoIdentiChange}
-                        />
-                      <span className="text-danger"></span>
-                    </div>
-                    <div class="col-md-6">
-                      <label for="nombre" class="text-black">
-                        NOMBRES COMPLETOS
-                        <span class="text-danger">*</span>
-                      </label>
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="nombre"
-                        name="nombre"
-                        placeholder="e.j: Juan Morales"
-                        value={nombre}
-                        onChange={handleNombreChange}/>
-                      <span className="text-danger"></span>
-                      <h6>Solo letras, puedes con espacios y acentos</h6>
-                    </div>
-                  </div>
                   <div class="form-group row">
-                    <div class="col-md-8">
+                    <div class="col-md-12">
                       <label for="correo" class="text-black">
                         CORREO ELECTRONICO{" "}
                         <span class="text-danger">*</span>
@@ -251,6 +210,8 @@ function UsuariosFormulario() {
               </div>
             </div>
           </div>
+        </div>
+      </div>
       </>
     );
   }
