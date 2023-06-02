@@ -1,164 +1,110 @@
-import React, { useState } from 'react';
-import { Modal } from 'react-bootstrap';
+import React, { useState, useEffect } from "react";
+import {Modal}  from 'react-bootstrap';
+import { Button } from "react-bootstrap";
 import Swal from 'sweetalert2';
+import axios from "axios";
 
-function EditarUsuario({ usuario }) {
-  const [email, setEmail] = useState('');
-  const [contrasena, setContrasena] = useState('');
-  const [confirmarContrasena, setConfirmarContrasena] = useState('');
-  const [selectedRole, setSelectedRole] = useState('');
-  const [modalVisible, setModalVisible] = useState(true);
-  
+function EditarUsuario(props) {
+  const { selectedUsuarioID, onHide, show  } =props;
+  const id = selectedUsuarioID;
 
-  const handleRoleChange = (e) => {
-    setSelectedRole(e.target.value);
+  const [isChecked, setIsChecked] = useState(false); // false = 0
+
+
+  const [values, setValues] = useState({
+    correo: '',
+    contrasena: '',
+    ID_Estado: '',
+    ID_Rol: ''
+  });
+
+  const handleInput = (event) => {
+    const { name, value, type, checked } = event.target;
+
+    if (type === 'checkbox') {
+        setIsChecked(checked);
+        setValues(prev => ({ ...prev, [name]: checked ? 1 : 2 }));
+    } else {
+        setValues(prev => ({ ...prev, [name]: value }));
+    }
   };
 
-  const guardarCambios = () => {
-    if (!email || !contrasena || !confirmarContrasena) {
-      Swal.fire('Error', 'Por favor completa todos los campos', 'error');
-      return;
+  useEffect(() => {
+    if (show) {
+        axios.get('http://localhost:4000/api/admin/usuario/usullamada/' + id)
+            .then(res => {
+                console.log(res);
+                setValues(prevValues => ({
+                    ...prevValues,
+                    correo: res.data[0].correo,
+                    contrasena: res.data[0].contrasena,
+                    ID_Estado: res.data[0].ID_Estado,
+                    ID_Rol: res.data[0].ID_Rol
+
+                }));
+                setIsChecked(res.data[0].ID_Estado === 1);
+            })
+            .catch(err => console.log(err));
     }
+  }, [id, show]);
 
-    if (contrasena !== confirmarContrasena) {
-      Swal.fire('Error', 'Las contraseñas no coinciden', 'error');
-      return;
-    }
-
-    if (!selectedRole) {
-      Swal.fire('Error', 'Debe seleccionar un rol', 'error');
-      return;
-    }
-
-    Swal.fire('Éxito', 'Los cambios han sido guardados correctamente', 'success').then(() => {
-      handleClose();
-      window.location.reload();
-    });
-  };
-
-  const handleClose = () => {
-    setEmail('');
-    setContrasena('');
-    setConfirmarContrasena('');
-    setSelectedRole('');
-    setModalVisible(false);
+  const handleUpdate = (event) => {
+    event.preventDefault();
+    axios.put('http://localhost:4000/api/admin/usuarios/usuariarioedit/' + id, values)
+        .then(res => {
+            console.log(res);
+            Swal.fire({
+                title: 'Modificado Correctamente',
+                text: "Tu Usuario se ha sido modificado correctamente",
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 1500
+            });
+            setTimeout(function () { window.location = "usuarios"; }, 670);
+        })
+        .catch(err => console.log(err));
   };
 
   return (
-    <Modal show={modalVisible} onHide={handleClose} dialogClassName="modal-full-width">
+    <Modal
+            onHide={onHide}
+            show={show}
+            size="lg" 
+            aria-labelledby="contained-modal-title-vcenter"
+            centered
+            style={{ zIndex: '2000', boxShadow: '0 0 10px MediumSlateBlue' }}
+        >
+          <Modal.Header>
+                <Modal.Title id="contained-modal-title-vcenter" className="text-black">
+                    Editar datos de Usuario
+                </Modal.Title>
+                <Button variant="secondary" onClick={props.onHide} className="close">
+                    <span aria-hidden="true">&times;</span>
+                </Button>
+            </Modal.Header>
       <Modal.Body>
-        <div className="modal-header">
-          <h5 className="modal-title" id="exampleModalLongTitle">
-            Información del Usuario
-          </h5>
-          <button type="button" className="close" onClick={handleClose} aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div className="modal-body">
-          <div className="container">
-            <div className="row mb-2">
-              <div className="col-md-12">
-                <div className="border p-4 rounded" role="alert">
-                  Aquí puedes hacer las modificaciones del Usuario.
+      <div>
+                    <form onSubmit={handleUpdate} id="editarInsumo">
+                        <div className="form-group">
+                            <label htmlFor="correo">Correo</label>
+                            <input type="text" className="form-control" id="correo" name="correo" value={values.correo} onChange={handleInput} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="contrasena">Contraseña</label>
+                            <input type="text" className="form-control" id="contrasena" name="contrasena" value={values.contrasena} onChange={handleInput} />
+                        </div>
+                        <div className="form-group">
+                            <label htmlFor="conficontrasena">Confirmar Contraseña</label>
+                            <input type="text" className="form-control" id="contrasena" name="contrasena" value={values.contrasena} onChange={handleInput} />
+                        </div>
+                        <div className="form-check" style={{ marginBottom: '7px' }}>
+                            <input type="checkbox" className="form-check-input" id="ID_Estado" name="ID_Estado" checked={isChecked} onChange={handleInput} />
+                            <label className="form-check-label" htmlFor="estadoUsuarios">Disponible</label>
+                        </div>
+                        <button type="submit" className="btn btn-primary" id="modUsuario" onClick={props.onHide}>Modificar</button> &nbsp;
+                        <button type="reset" className="btn btn-dark" id="cancelarUsuario" onClick={props.onHide}>Cancelar</button>
+                    </form>
                 </div>
-              </div>
-            </div>
-            <h2 className="h3 mb-7 text-black">Email</h2>
-            <form method="post" action="#">
-              <div className="mb-3">
-                <input
-                  type="email"
-                  className="form-control"
-                  id="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  required
-                />
-              </div>
-            </form>
-            <h2 className="h3 mb-7 text-black">Roles</h2>
-            <div className="mb-3">
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="roles"
-                  id="option1"
-                  value="Administrador"
-                  checked={selectedRole === 'Administrador'}
-                  onChange={handleRoleChange}
-                />
-                <label className="form-check-label" htmlFor="option1">
-                  Administrador
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="roles"
-                  id="option2"
-                  value="Empleado"
-                  checked={selectedRole === 'Empleado'}
-                  onChange={handleRoleChange}
-                />
-                <label className="form-check-label" htmlFor="option2">
-                  Empleado
-                </label>
-              </div>
-              <div className="form-check">
-                <input
-                  className="form-check-input"
-                  type="radio"
-                  name="roles"
-                  id="option3"
-                  value="Cliente"
-                  checked={selectedRole === 'Cliente'}
-                  onChange={handleRoleChange}
-                />
-                <label className="form-check-label" htmlFor="option3">
-                  Cliente
-                </label>
-              </div>
-            </div>
-            <h2 className="h3 mb-7 text-black">Contraseña</h2>
-            <form method="post" action="#">
-              <div className="mb-3">
-                <input
-                  type="password"
-                  className="form-control"
-                  id="Correo"
-                  value={contrasena}
-                  onChange={(e) => setContrasena(e.target.value)}
-                  required
-                />
-              </div>
-            </form>
-            <h2 className="h3 mb-7 text-black">Confirmar Contraseña</h2>
-            <form method="post" action="#">
-              <div className="mb-3">
-                <input
-                  type="password"
-                  className="form-control"
-                  id="Contraconfi"
-                  value={confirmarContrasena}
-                  onChange={(e) => setConfirmarContrasena(e.target.value)}
-                  required
-                />
-              </div>
-              <br />
-              <div className="modal-footer">
-                <button type="button" className="btn btn-secondary" onClick={() => { handleClose(); window.location.reload(); }}>
-                 Cancelar
-                </button>
-                <button type="button" className="btn btn-primary" onClick={guardarCambios}>
-                  Guardar cambios
-                </button>
-              </div>
-            </form>
-          </div>
-        </div>
       </Modal.Body>
     </Modal>
   );
