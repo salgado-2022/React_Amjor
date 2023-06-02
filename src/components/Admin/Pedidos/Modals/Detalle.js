@@ -96,7 +96,7 @@ function Detalle(props) {
                                     }}>  </a></td>
                                     <td>{anchetas.Cantidad}</td>
                                     <td>{formatPrice(anchetas.Total)}</td>
-                                    <td><a href="#!" class="icon-edit" data-toggle="modal" data-target="#modalModificar"
+                                    <td><a href="#!" className="icon-edit" data-toggle="modal" data-target="#modalModificar"
                                         data-dismiss="modal"> </a>
                                     </td>
                                     <td><a href="#!" className="icon-remove"> </a></td>

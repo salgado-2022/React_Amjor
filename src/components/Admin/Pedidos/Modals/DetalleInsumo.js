@@ -47,7 +47,7 @@ function DetalleInsumo(props) {
                     Insumos
 
                 </Modal.Title>
-                <Button variant="secondary" onClick={props.onHide} classNameName="close">
+                <Button variant="secondary" onClick={props.onHide} className="close">
                     <span aria-hidden="true">&times;</span>
                 </Button>
             </Modal.Header>
