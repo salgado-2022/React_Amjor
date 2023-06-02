@@ -33,7 +33,7 @@ function ListaUsuarios() {
           timer: 1500,
         });
         setTimeout(function () {
-          window.location = "usuario";
+          window.location = "usuarios";
         }, 670);
       })
       .catch((err) => console.log(err));
@@ -83,10 +83,7 @@ function ListaUsuarios() {
                 <td>{usuario.correo}</td>
                 <td>
                   <a
-                    href="#!"
-                    className="icon-trash"
-                    onClick={() => {
-                      handleDelete(usuario.ID_Usuario);
+                    href="#!"className="icon-trash" onClick={() => { handleDelete(usuario.ID_Usuario);
                     }}
                   ></a>
                 </td>
