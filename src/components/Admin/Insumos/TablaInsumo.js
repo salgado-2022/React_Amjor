@@ -52,6 +52,7 @@ function TablaInsumo() {
 
     const handleChange = e => {
         setBusqueda(e.target.value);
+        
         filtrar(e.target.value);
     }
 

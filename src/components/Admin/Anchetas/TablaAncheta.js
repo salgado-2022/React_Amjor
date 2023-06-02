@@ -80,8 +80,6 @@ function TablaAncheta() {
         setData(resultadosBusqueda);
     };
 
-
-
     useEffect(() => {
         fetchData();
     }, []);
