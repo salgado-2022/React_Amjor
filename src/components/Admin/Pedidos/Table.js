@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-
+import socket from '../../socket/config'
 
 //AXIOS
 import axios from "axios";
@@ -24,18 +24,10 @@ function Table() {
     efecto cada vez que cambia la variable de estado `datos`. Esto asegura que el componente se vuelve a renderizar con
     los datos actualizados. */
     useEffect(() => {
-        fetchData();
-    }, []);
-
-    /**
-    * La función `fetchData` usa Axios para realizar una solicitud GET a un punto final API local y establece el
-      * datos de respuesta a una variable de estado llamada `data`.
-     */
-    const fetchData = () => {
-        axios.get('http://localhost:4000/api/admin/pedidos')
-            .then(res => setData(res.data))
-            .catch(err => console.log(err));
-    };
+        socket.on('Pedidos', data =>{
+            setData(data)
+        })
+    }, [data]);
 
     /**
     * La función establece el ID del pedido seleccionado y muestra un modal cuando se hace clic en el botón detalle.
@@ -129,26 +121,31 @@ function Table() {
                                         </tr>
                                     </thead>
                                     <tbody className="table-group-divider">
-                                        {data.map((pedidos, index) => {
-                                            return <tr key={index}>
-                                                <th scope="row">{pedidos.ID_Pedido}</th>
-                                                <td>{pedidos.Nombre_Cliente}</td>
+
+                                        {
+                                            data.slice(0).reverse().map((pedido, index)=>{
+                                                return(
+                                                    <tr key={index}>
+                                                <th scope="row">{pedido.ID_Pedido}</th>
+                                                <td>{pedido.Nombre_Cliente}</td>
                                                 <td><a href="#!" className=" icon-eye" onClick={() => {
-                                                    handleDetalleClick(pedidos.ID_Pedido)
+                                                    handleDetalleClick(pedido.ID_Pedido)
                                                 }}>  </a></td>
-                                                <td>{formatDate(pedidos.Feche_Entrega)}</td>
-                                                <td>{pedidos.Direccion_Entrega}</td>
-                                                <td>{formatPrice(pedidos.Precio_Total)}</td>
+                                                <td>{formatDate(pedido.Feche_Entrega)}</td>
+                                                <td>{pedido.Direccion_Entrega}</td>
+                                                <td>{formatPrice(pedido.Precio_Total)}</td>
                                                 <td>
                                                     <a href="#/" className="icon-check"
                                                         onClick={() => {
-                                                            handleSuccessOrder(pedidos.ID_Pedido, pedidos.ID_Cliente);
+                                                            handleSuccessOrder(pedido.ID_Pedido, pedido.ID_Cliente);
                                                         }}
                                                     > </a>
                                                 </td>
                                                 <td><a href="#/" className="icon-remove" > </a></td>
                                             </tr>
-                                        })}
+                                                );
+                                            })
+                                        }
                                     </tbody>
                                 </table>
 
