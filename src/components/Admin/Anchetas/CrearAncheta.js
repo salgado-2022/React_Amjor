@@ -24,17 +24,17 @@ function CrearAncheta() {
         ID_Estado: '2',
         image: ''
     };
-
+    
     const [errorname, setErrorname] = useState({});
     const [errordesc, setErrordesc] = useState({});
     const [errorprice, setErrorprice] = useState({});
     const checkbox = useRef();
-
     const [isChecked, setIsChecked] = useState(false);
     const [imageUrl, setImageUrl] = useState(null);
+    const [imageHolder, setImageHolder] = useState(null);
+
 
     useEffect(() => {
-        // Restablecer el estado del checkbox según los valores iniciales
         setIsChecked(values.ID_Estado === '1');
     }, [values]);
 
@@ -51,7 +51,12 @@ function CrearAncheta() {
             const selectedFile = event.target.files[0];
             if (selectedFile) {
                 setImageUrl(URL.createObjectURL(selectedFile));
-                setValues((prev) => ({ ...prev, image: selectedFile })); // Set the image property in the values state
+                setValues((prev) => ({ ...prev, image: selectedFile }));
+                setImageHolder(selectedFile);
+            }
+
+            if(!selectedFile){
+                setValues((prev) => ({ ...prev, image: imageHolder }));
             }
         }
     };
@@ -154,9 +159,8 @@ function CrearAncheta() {
                         <i className="icon-image"></i>&nbsp;
                         Imagen de la ancheta
                     </label>
-                    <CSSTransition in={!!imageUrl} timeout={300} classNames="image-animation" unmountOnExit
-                    >
-                    <img src={imageUrl} alt="Imagen de la ancheta" style={{ marginTop: "10px", maxWidth: "200px" }}/>
+                    <CSSTransition in={!!imageUrl} timeout={300} classNames="image-animation" unmountOnExit>
+                    <img src={imageUrl} alt="" style={{ marginTop: "10px", maxWidth: "200px"}}/>
                     </CSSTransition>
                 </div>
                 <h5 id="totalAncheta">Total: 0$</h5>
