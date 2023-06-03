@@ -18,14 +18,10 @@ function Table() {
     const [modalShow, setModalShow] = React.useState(false);
     const [selectedPedidoID, setSelectedPedidoID] = useState(null);
 
-    /* El hook `useEffect` se usa para realizar efectos secundarios en un componente funcional. En este caso lo es
-    se usa para obtener datos de un punto final de API usando Axios y establecer los datos de respuesta en el estado `data`
-    variable. El segundo argumento `[data]` es una matriz de dependencias que le dice a React que vuelva a ejecutar el
-    efecto cada vez que cambia la variable de estado `datos`. Esto asegura que el componente se vuelve a renderizar con
-    los datos actualizados. */
+
     useEffect(() => {
-        socket.on('Pedidos', data =>{
-            setData(data)
+        socket.on('Pedidos', datosActualizados =>{
+            setData(datosActualizados)
         })
     }, [data]);
 
