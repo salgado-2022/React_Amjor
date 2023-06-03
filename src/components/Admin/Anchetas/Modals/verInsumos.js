@@ -91,7 +91,7 @@ function VerInsumos(props) {
                                 <h1 style={{ margin: "0", fontSize: '24px' }}>{dataA.NombreAncheta}</h1>
                                 <p style={{ marginRight: "10px", fontSize: '15px' }}>{dataA.Descripcion}</p>
                             </div>
-                            <img src={`http://localhost:4000/anchetas/` + dataA.image} alt="" style={{ marginTop: "30px", maxWidth: "450px" }} />
+                            <img src={`http://localhost:4000/anchetas/` + dataA.image} alt="" style={{ marginTop: "30px", maxWidth: "300px" }} />
                         </div>
                         <div style={{ padding: "10px" }}>
                             <br />
