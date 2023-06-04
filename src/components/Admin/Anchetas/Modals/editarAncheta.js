@@ -99,7 +99,7 @@ function EditarAncheta(props) {
             size="lg" 
             aria-labelledby="contained-modal-title-vcenter"
             centered
-            style={{ zIndex: '2000', boxShadow: '0 0 10px MediumSlateBlue' }}
+            style={{ zIndex: '2000' }}
         >
             <Modal.Header>
                 <Modal.Title id="contained-modal-title-vcenter" className="text-black">
@@ -126,7 +126,7 @@ function EditarAncheta(props) {
                         </div>
                         <div className="form-group">
                             <input type="file" className="form-control" id="imageEdit" name="imageEdit" accept=".jpg, .png" onChange={handleInput} style={{ display: "none" }} />
-                            <label htmlFor="imageEdit" style={{ color: "black", height: "50px", width: "180px", backgroundColor: "#feeb75", borderRadius: "8px", fontSize: "16px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                            <label htmlFor="imageEdit" className="btn btn-image">
                             <i className="icon-image"></i>&nbsp;
                             Imagen de la ancheta
                             </label>

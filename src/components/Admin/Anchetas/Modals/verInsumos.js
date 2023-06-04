@@ -67,7 +67,7 @@ function VerInsumos(props) {
             size="lg"
             aria-labelledby="contained-modal-title-vcenter"
             centered
-            style={{ zIndex: '2000', boxShadow: '0 0 10px MediumSlateBlue' }}
+            style={{ zIndex: '2000' }}
         >
             <Modal.Header>
                 <Modal.Title id="contained-modal-title-vcenter" className="text-black">

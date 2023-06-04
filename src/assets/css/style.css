@@ -55,7 +55,7 @@ a {
   -o-transition: 0.2s all ease-in-out !important;
   transition: 0.2s all ease-in-out !important;
   top: 0;
-  letter-spacing: .05em; }
+  letter-spacing: .02em; }
   .btn:hover, .btn:active, .btn:focus {
     outline: none;
     -webkit-box-shadow: none !important;
@@ -70,7 +70,31 @@ a {
   .btn.btn-primary {
     font-size: 17px;
     font-weight: 300;
-    letter-spacing: .2em; }
+    letter-spacing: .1em; }
+  .btn.btn-image {
+    text-transform: none;
+    letter-spacing: normal;
+    color: #080808;
+    height: 50px;
+    width: 180px;
+    background-color: #feeb75;
+    border-radius: 8px;
+    font-weight: 100;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
+  .btn.btn-add {
+    text-transform: none;
+    letter-spacing: normal;
+    color: mediumslateblue;
+    height: 50px;
+    width: 130px;
+    background-color: #d3cef3;
+    border-radius: 8px;
+    font-weight: 400;
+    display: flex;
+    justify-content: center;
+    align-items: center; }
   .btn:hover {
     -webkit-box-shadow: 0 5px 20px -7px rgba(0, 0, 0, 0.9) !important;
     box-shadow: 0 5px 20px -7px rgba(0, 0, 0, 0.9) !important;
