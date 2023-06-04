@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Swal from 'sweetalert2';
 import axios from "axios";
 import { valnombre } from "./Validations/valnombre";
@@ -34,16 +34,12 @@ function CrearInsumo() {
     const [errorname, setErrorname] = useState({});
     const [errordesc, setErrordesc] = useState({});
     const [errorprice, setErrorprice] = useState({});
-    const [isChecked, setIsChecked] = useState(false);
-    const checkbox = useRef();
 
     /* Este bloque de código utiliza el enlace `useEffect` para actualizar el estado de la variable `isChecked` según
     sobre el valor de `valores.ID_Estado`. Se activa cada vez que cambia el estado de los `valores`. El propósito
     de este código es para asegurarse de que la casilla de verificación esté marcada o desmarcada según el valor inicial de
     `ID_Estado` cuando el componente se renderiza por primera vez. */
     useEffect(() => {
-        // Restablecer el estado del checkbox según los valores iniciales
-        setIsChecked(values.ID_Estado === '1');
     }, [values]);
 
     /**
@@ -53,14 +49,8 @@ function CrearInsumo() {
       * activó la función.
      */
     const handleInput = (event) => {
-        const { name, value, type, checked } = event.target;
-
-        if (type === 'checkbox') {
-            setIsChecked(checked);
-            setValues(prev => ({ ...prev, [name]: checked ? '1' : '2' }));
-        } else {
-            setValues(prev => ({ ...prev, [name]: value }));
-        }
+        const { name, value } = event.target;
+        setValues(prev => ({ ...prev, [name]: value }));
     };
 
     /**
@@ -153,7 +143,7 @@ function CrearInsumo() {
     return (
         <div>
             <form onSubmit={handleSubmit} onReset={handleReset}>
-                <br />
+                &nbsp;
                 <h2 className="text-black" id="title">Crear Insumo</h2>
                 <div className="form-group">
                     <label htmlFor="NombreInsumo">Nombre</label>
@@ -169,10 +159,6 @@ function CrearInsumo() {
                     <label htmlFor="PrecioUnitario">Precio</label>
                     <input type="text" className="form-control" id="PrecioUnitario" name="PrecioUnitario" value={values.PrecioUnitario} onChange={handleInput} onBlur={handleBlurprice} />
                     {errorprice.PrecioUnitario && <span className="text-danger"> {errorprice.PrecioUnitario}</span>}
-                </div>
-                <div className="form-check" style={{ marginBottom: '7px' }}>
-                    <input type="checkbox" className="form-check-input" id="ID_Estado" name="ID_Estado" ref={checkbox} checked={isChecked} onChange={handleInput} />
-                    <label className="form-check-label" htmlFor="estadoInsumo">Disponible</label>
                 </div>
                 <button type="submit" className="btn btn-primary" id="crearInsumo">Crear</button> &nbsp;
                 <button type="reset" className="btn btn-dark" id="cancelarInsumo" >Cancelar</button>
