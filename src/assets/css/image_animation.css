@@ -1,10 +1,10 @@
-.image-animation-enter {
+  .image-animation-enter {
     opacity: 0;
   }
   
   .image-animation-enter-active {
     opacity: 1;
-    transition: opacity 300ms;
+    transition: opacity 600ms;
     
   }
   
