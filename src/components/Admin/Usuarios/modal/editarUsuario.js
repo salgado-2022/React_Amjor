@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {Modal}  from 'react-bootstrap';
+import Modal  from 'react-bootstrap/Modal';
 import { Button } from "react-bootstrap";
 import Swal from 'sweetalert2';
 import axios from "axios";
@@ -13,9 +13,7 @@ function EditarUsuario(props) {
 
   const [values, setValues] = useState({
     correo: '',
-    contrasena: '',
-    ID_Estado: '',
-    ID_Rol: ''
+    contrasena: ''
   });
 
   const handleInput = (event) => {
@@ -23,7 +21,7 @@ function EditarUsuario(props) {
 
     if (type === 'checkbox') {
         setIsChecked(checked);
-        setValues(prev => ({ ...prev, [name]: checked ? 1 : 2 }));
+        setValues(prev => ({ ...prev, [name]: checked ? 1 : 0 }));
     } else {
         setValues(prev => ({ ...prev, [name]: value }));
     }
@@ -37,12 +35,11 @@ function EditarUsuario(props) {
                 setValues(prevValues => ({
                     ...prevValues,
                     correo: res.data[0].correo,
-                    contrasena: res.data[0].contrasena,
-                    ID_Estado: res.data[0].ID_Estado,
-                    ID_Rol: res.data[0].ID_Rol
+                    contrasena: res.data[0].contrasena
+                   
 
                 }));
-                setIsChecked(res.data[0].ID_Estado === 1);
+                setIsChecked(res.data[0].ID_Usuario === 1);
             })
             .catch(err => console.log(err));
     }
@@ -50,7 +47,7 @@ function EditarUsuario(props) {
 
   const handleUpdate = (event) => {
     event.preventDefault();
-    axios.put('http://localhost:4000/api/admin/usuarios/usuariarioedit/' + id, values)
+    axios.put('http://localhost:4000/api/admin/usuario/usuariarioedit/' + id, values)
         .then(res => {
             console.log(res);
             Swal.fire({
@@ -84,18 +81,18 @@ function EditarUsuario(props) {
             </Modal.Header>
       <Modal.Body>
       <div>
-                    <form onSubmit={handleUpdate} id="editarInsumo">
+                    <form onSubmit={handleUpdate} id="editarUsuario">
                         <div className="form-group">
                             <label htmlFor="correo">Correo</label>
                             <input type="text" className="form-control" id="correo" name="correo" value={values.correo} onChange={handleInput} />
                         </div>
                         <div className="form-group">
                             <label htmlFor="contrasena">Contraseña</label>
-                            <input type="text" className="form-control" id="contrasena" name="contrasena" value={values.contrasena} onChange={handleInput} />
+                            <input type="password" className="form-control" id="contrasena" name="contrasena" value={values.contrasena} onChange={handleInput} />
                         </div>
                         <div className="form-group">
                             <label htmlFor="conficontrasena">Confirmar Contraseña</label>
-                            <input type="text" className="form-control" id="contrasena" name="contrasena" value={values.contrasena} onChange={handleInput} />
+                            <input type="password" className="form-control" id="contrasena" name="contrasena" value={values.contrasena} onChange={handleInput} />
                         </div>
                         <div className="form-check" style={{ marginBottom: '7px' }}>
                             <input type="checkbox" className="form-check-input" id="ID_Estado" name="ID_Estado" checked={isChecked} onChange={handleInput} />
