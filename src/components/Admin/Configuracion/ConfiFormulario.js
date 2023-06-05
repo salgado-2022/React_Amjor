@@ -3,6 +3,7 @@ import '../../../assets/css/configu.css';
 import Swal from "sweetalert2"; 
 import { useState } from "react";
 
+
 function ConfiFormulario(){
   const [rol, setRol] = useState('');
   const [permisos, setPermisos] = useState([]);
