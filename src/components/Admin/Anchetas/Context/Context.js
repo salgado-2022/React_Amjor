@@ -38,7 +38,8 @@ export const Context = (props) => {
                     (insumo)=>insumo.ID_Insumo !== action.payload.ID_Insumo
                 );
                 return tempstate3;
-                    
+            case 'ResetInsumos':
+                return [];        
             default:
                 return state;
 
