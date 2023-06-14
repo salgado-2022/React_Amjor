@@ -13,8 +13,6 @@ function VerInsumos(props) {
 
     const [isLoading, setIsLoading] = useState(true);
 
-    const [totalPrecio, setTotalPrecio] = useState(0);
-
     const formatPrice = (price) => {
         return price.toLocaleString('es-CO', {
             style: 'currency',
@@ -30,11 +28,6 @@ function VerInsumos(props) {
                 try {
                     const res = await axios.get(`http://localhost:4000/api/admin/anchetas/insancheta/` + id);
                     setInsumo(res.data);
-                    let total = 0;
-                    res.data.forEach(insumo => {
-                        total += insumo.Total;
-                    });
-                    setTotalPrecio(total);
                     setIsLoading(false);
                 } catch (err) {
                     console.log(err);
@@ -48,6 +41,7 @@ function VerInsumos(props) {
                         ...prevValues,
                         NombreAncheta: res.data[0].NombreAncheta,
                         Descripcion: res.data[0].Descripcion,
+                        PrecioUnitario: res.data[0].PrecioUnitario,
                         image: res.data[0].image
                     }));
                 })
@@ -119,8 +113,7 @@ function VerInsumos(props) {
                             </table>
                         </div>
                         <Modal.Footer>
-                            <h3>Total:</h3>
-                            <h3>{formatPrice(totalPrecio)}</h3>
+                            <h4>Total: {formatPrice(dataA.PrecioUnitario)}</h4>
                         </Modal.Footer>
                     </>
                 )}

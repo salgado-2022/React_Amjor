@@ -76,7 +76,7 @@ a {
     letter-spacing: normal;
     color: #080808;
     height: 50px;
-    width: 180px;
+    width: 105px;
     background-color: #feeb75;
     border-radius: 8px;
     font-weight: 100;
@@ -95,6 +95,14 @@ a {
     display: flex;
     justify-content: center;
     align-items: center; }
+  .btn.btn-counter {
+    font-size: 12px;
+    height: 40px;
+    width: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   }
   .btn:hover {
     -webkit-box-shadow: 0 5px 20px -7px rgba(0, 0, 0, 0.9) !important;
     box-shadow: 0 5px 20px -7px rgba(0, 0, 0, 0.9) !important;
@@ -107,6 +115,10 @@ a {
   .form-control:hover, .form-control:active, .form-control:focus {
     -webkit-box-shadow: none !important;
     box-shadow: none !important; }
+  .form-control.sm {
+    height: 40px;
+    font-size: 14px;
+  }
 
 .site-section {
   padding: 2.5em 0; }
