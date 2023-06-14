@@ -35,8 +35,10 @@ function CrearAncheta() {
     const [modalShow3, setModalShow3] = React.useState(false);
 
     const Globalstate = useContext(Insumoscontext);
-    const state = Globalstate.state
+    const state = Globalstate.state;
     const dispatch = Globalstate.dispatch;
+
+    console.log(state)
 
     const Precio = state.reduce((Precio, insumo)=>{
         return Precio + insumo.PrecioUnitario * insumo.Cantidad;
@@ -65,13 +67,14 @@ function CrearAncheta() {
             const selectedFile = event.target.files[0];
             if (selectedFile) {
                 setImageUrl(URL.createObjectURL(selectedFile));
-                setValues((prev) => ({ ...prev, image: selectedFile }));
                 setImageHolder(selectedFile);
+                setValues((prev) => ({ ...prev, image: selectedFile }));
                 setIsImageUploaded(true);
             }
-
+            
             if(!selectedFile){
                 setValues((prev) => ({ ...prev, image: imageHolder }));
+                setImageUrl(URL.createObjectURL(imageHolder));
                 setIsImageUploaded(false);  
             }
         }
@@ -153,6 +156,7 @@ function CrearAncheta() {
         setValues(initialValues);
         setImageUrl(null);
         setIsImageUploaded(false);
+        dispatch({ type: 'ResetInsumos' });
     };
 
     return (

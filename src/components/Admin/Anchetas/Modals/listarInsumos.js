@@ -12,6 +12,11 @@ function ListarInsumos(props) {
   const [tabla, setTabla] = useState([]);
   const [busqueda, setBusqueda] = useState("");
 
+  const Globalstate = useContext(Insumoscontext);
+  const dispatch = Globalstate.dispatch;
+  const { state: insumosState } = useContext(Insumoscontext);
+  const insumosAgregados = insumosState.map((insumo) => insumo.ID_Insumo);
+
   const formatPrice = (price) => {
     return price.toLocaleString("es-CO", {
       style: "currency",
@@ -54,10 +59,6 @@ function ListarInsumos(props) {
     fetchData();
   }, []);
 
-  const Globalstate = useContext(Insumoscontext);
-  const dispatch = Globalstate.dispatch;
-  console.log(Globalstate)
-
   return (
     <Modal
       onHide={onHide}
@@ -87,6 +88,10 @@ function ListarInsumos(props) {
           </div>
           <ul className="list-group list-group-flush">
           {data && data.map((insumo) => {
+            
+            if (insumosAgregados.includes(insumo.ID_Insumo)){
+              return null;
+            }
             insumo.Cantidad = 1;
             insumo.Precio = insumo.PrecioUnitario;
             return (
