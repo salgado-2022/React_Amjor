@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {Rutas} from './routes/Rutas';
+import { Context } from './components/Admin/Anchetas/Context/Context';
 
 // Importacion de hojas de estilos css
 import './assets/css/bootstrap.min.css'
@@ -12,7 +13,10 @@ import './assets/css/image.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <Rutas/>
+    <Context>
+        <Rutas/> 
+    </Context>
+    
 );
 
 // If you want to start measuring performance in your app, pass a function
