@@ -46,7 +46,7 @@ function FormRegister() {
                     if (res.data.Status === "Success") {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Usuario registrado correctamente',
+                            title: 'Te has registrado correctamente',
                             showConfirmButton: false,
                             timer: 1500
                         })
@@ -76,19 +76,20 @@ function FormRegister() {
 
                                         <div className="text-center">
 
-                                            <h4 className="mt-1 mb-5 pb-1">Registro</h4>
+                                            <h4 className="mt-1 mb-5 pb-1">Crear una cuenta</h4>
                                         </div>
 
                                         <form onSubmit={handleSubmit}>
-                                            <p>Porfavor ingrese sus datos </p>
+                                            <p>Correo electrónico</p>
                                             <div className="form-outline mb-4">
                                                 <input type="email" id="email" name="email" className="form-control"
-                                                    placeholder="Email" onChange={handleInput} onBlur={handleBlur}
+                                                    placeholder="tucorreo@gmail.com" onChange={handleInput} onBlur={handleBlur}
                                                 />
                                                 {errors.email && <span className="text-danger"> {errors.email}</span>}
                                             </div>
 
                                             <div className="form-outline mb-4">
+                                                <label>Contraseña</label>
                                                 <input type="password" id="password" name="password" className="form-control"
                                                     placeholder="Contraseña" onChange={handleInput} onBlur={handleBlurPass} />
                                                 {errorP.password && <span className="text-danger"> {errorP.password}</span>}
@@ -102,7 +103,7 @@ function FormRegister() {
 
                                             <div className="text-center  pt-1 mb-5 pb-1">
                                                 <button className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit"
-                                                >Registrar</button>
+                                                >Registrarse</button>
                                             </div>
                                         </form>
 

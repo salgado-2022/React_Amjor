@@ -92,4 +92,4 @@ function Informacion() {
     );
 }
 
-export {Informacion}
+export { Informacion }
