@@ -14,12 +14,16 @@ function VerInsumos(props) {
     const [isLoading, setIsLoading] = useState(true);
 
     const formatPrice = (price) => {
-        return price.toLocaleString('es-CO', {
-            style: 'currency',
-            currency: 'COP',
-            minimumFractionDigits: 0,
-        });
+        if (typeof price === 'number') {
+            return price.toLocaleString('es-CO', {
+                style: 'currency',
+                currency: 'COP',
+                minimumFractionDigits: 0,
+            });
+        }
+        return 'N/A'; // Otra opción es retornar un valor predeterminado en caso de que price no sea un número válido
     };
+    
 
     useEffect(() => {
         setIsLoading(true);
