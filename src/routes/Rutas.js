@@ -8,8 +8,9 @@ import { Nosotros } from '../views/Nosotros';
 import { Catalogo } from '../views/Catalogo';
 import { Error404 } from '../views/404';
 import { Carrito } from '../views/Carrito';
+import { Checkout } from '../views/Checkout';
+import { CompraThankYou } from '../views/ThankYou';
 import { Login } from '../views/Login';
-import { Payment } from '../views/Payment';
 import { Register } from '../views/Register';
 import { ResetPassword } from '../components/Reset-Password/Reset-Password';
 
@@ -36,7 +37,8 @@ function Rutas() {
                 <Route path="/nosotros" element={<Nosotros />} />
                 <Route path="/shop" element={<Catalogo />} />
                 <Route path="/carrito" element={<Carrito />} />
-                <Route path='/payment' element={<Payment />} />
+                <Route path='/checkout' element={<Checkout />} />
+                <Route path='/thankyou' element={<CompraThankYou />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
                 <Route path="/restore/password" element={<UpdataPassword />} />

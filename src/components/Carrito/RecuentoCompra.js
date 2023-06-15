@@ -1,5 +1,5 @@
 import React from "react";
-
+import { Link } from "react-router-dom";
 
 function Recuento(){
 
@@ -30,11 +30,11 @@ function Recuento(){
                 </div>
 
                 <div className="row">
+                    <Link exact to="/checkout"> 
                     <div className="col-md-12">
-                        <button className="btn btn-primary btn-lg py-3 btn-block"
-                            >Realizar
-                            pedido</button>
+                        <button className="btn btn-primary btn-lg py-3 btn-block">Realizar pedido</button>
                     </div>
+                    </Link>
                 </div>
             </div>
         </div>

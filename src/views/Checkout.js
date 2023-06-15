@@ -1,13 +1,15 @@
 import React from "react";
-import { Informacion } from "../components/Payments/Informacion";
+import { Informacion } from "../components/Carrito/CheckoutInformacion";
+import { CarritoPedido } from "../components/Carrito/CarritoPedido";
 
-function Payment() {
+function Checkout() {
     return (
         <>
             <div className="site-section">
                 <div className="container">
                     <div className="row">
                         <Informacion/>
+                        <CarritoPedido/>
                     </div>
                 </div>
             </div>
@@ -15,4 +17,4 @@ function Payment() {
     );
 }
 
-export{Payment}
+export{ Checkout }
