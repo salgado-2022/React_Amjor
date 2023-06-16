@@ -12,24 +12,24 @@ import Swal from 'sweetalert2';
 
 function UpdataPassword() {
 
+    /* Estas líneas de código usan hooks de la biblioteca `react-router-dom` para acceder y extraer el
+    parámetro `token` de los parámetros de búsqueda de URL. */
     const [searchParams] = useSearchParams();
     const navigate = useNavigate();
     const token = searchParams.get('token');
 
 
+    /* El hook `useEffect` se usa para realizar efectos secundarios en un componente funcional. En este caso lo es
+    comprobando si hay un `token` en los parámetros de búsqueda de URL. Si lo hay, envía una solicitud POST a
+    un punto final de la API de recuperación con el `token` como datos. Si la solicitud falla con un error 401, muestra
+    un mensaje de error SweetAlert2 y redirige al usuario a la página de inicio. Si no hay un `token`, es
+    redirige al usuario a la página de inicio. El gancho `useEffect` también depende del `token` y
+    `Navegar` variables, por lo que se volverá a ejecutar cada vez que cambie alguna de esas variables. */
     useEffect(() => {
         if (token) {
 
             axios.post('http://localhost:4000/api/recovery', { token })
-                .then(response => {
-                    if (response.data.mensaje === "Token válido") {
-
-                    } else {
-
-                    }
-                })
                 .catch(error => {
-                    //Manejo de errores por parte de la API
 
                     if (error.message === "Request failed with status code 401") {
                         Swal.fire({
@@ -46,34 +46,58 @@ function UpdataPassword() {
                     }
                 });
         } else {
-
-            // Manejar el caso cuando no se proporciona el token en la URL
-            // por ejemplo, redirigir a una página de error o mostrar un mensaje de error
             navigate('/')
             window.location.reload(true);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [token, navigate]);
+    }, [token]);
 
+    /* Inicializar la variable de estado `values` como un objeto con dos propiedades: `password` y `token`.
+    La propiedad `password` se establece inicialmente en una cadena vacía, y la propiedad `token` se establece en el
+    valor de la variable `token` extraída de los parámetros de URL usando el hook `useSearchParams`.
+    La función `setValues` se usa para actualizar el estado de la variable `values`. */
     const [values, setValues] = useState({
         password: '',
         token
     })
 
+    /* Inicializar una variable de estado `errorP` con un objeto vacío `{}` y una función `setErrorp` para
+    actualizar el estado de `errorP`. Esta variable de estado se utiliza para almacenar cualquier error de validación relacionado con
+    el campo de entrada de la contraseña. */
     const [errorP, setErrorp] = useState({})
 
+    /**
+      * Esta función actualiza los valores de estado con el nuevo valor de entrada.
+      * @param event: el parámetro de evento es un objeto que contiene información sobre el evento que
+      * activó la función. En este caso, es un objeto de evento que se genera cuando un usuario
+      * ingresa datos en un campo de formulario. Contiene información como el elemento de destino (el campo de formulario
+      * que fue cambiado), el tipo de evento
+      */
     const handleInput = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: event.target.value }))
     }
 
+    /**
+      * La función maneja el evento onblur en un campo de entrada de contraseña y establece un mensaje de error basado en el
+      * validación del valor de entrada.
+      * @param event: el parámetro de evento es un objeto que contiene información sobre el evento que
+      * activó la función. En este caso, es probable que se haya producido un evento de desenfoque en un campo de entrada. El
+      * El objeto de evento se puede utilizar para acceder a información como el elemento de destino, el tipo de evento y
+      * cualquier dato adicional relacionado con
+      */
     const handleBlurPass = (event) => {
         setErrorp(ValidationPass(values));
     }
-
+    /**
+          * La función handleSubmit evita el envío del formulario predeterminado, comprueba si hay un error en el
+          * campo de contraseña y envía una solicitud patch para actualizar la contraseña en una base de datos usando axios.
+          * @param event: el parámetro event es un objeto que representa el evento que activó el
+          * función. En este caso, es el evento de envío del formulario.
+          */
     const handleSubmit = (event) => {
         event.preventDefault();
         if (errorP.password === "") {
-            axios.patch('http://localhost:4000/api/actualizar',values)
+            axios.patch('http://localhost:4000/api/actualizar', values)
                 .then(res => {
                     if (res.data.Status === "Success") {
                         Swal.fire({

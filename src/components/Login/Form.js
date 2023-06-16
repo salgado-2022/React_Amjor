@@ -39,7 +39,6 @@ function Form() {
                     if (decodedToken.Status === 'Admin') {
                         navigate('/admin/pedidos');
                     }
-                    console.log(decodedToken)
                 } else {
                     Swal.fire({
                         title: 'Error!',
