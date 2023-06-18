@@ -1,15 +1,11 @@
 import React, { useState } from "react";
-import { EditarConfiguracion } from "./modal/EditarConfiguracion";
+import {Editarconfiguracion} from "../Configuracion/modal/editarconfiguracion"
 
 function ListaConfiguracion() {
-  const [showModal, setShowModal] = useState(false);
+  const [modalShow, setModalShow] = useState(false);
 
   const handleEditarClick = () => {
-    setShowModal(true);
-  };
-
-  const handleCloseModal = () => {
-    setShowModal(false);
+    setModalShow(true);
   };
 
   return (
@@ -44,7 +40,7 @@ function ListaConfiguracion() {
             <th scope="row">1</th>
             <td>Administrador</td>
             <td>Todo el aplicativo</td>
-            <td>Activo y listo pa dal</td>
+            <td>Activo</td>
             <td>
               <label className="switch">
                 <input type="checkbox" />
@@ -55,7 +51,7 @@ function ListaConfiguracion() {
               <a href="#!" className="icon-edit" onClick={handleEditarClick}> </a>
             </td>
             <td>
-              <a href="#!" className="icon-trash" onClick="eliminarUsuario()"> </a>
+              <a href="#!" className="icon-trash" onClick="eliminarRol()"> </a>
             </td>
           </tr>
           <tr>
@@ -73,14 +69,14 @@ function ListaConfiguracion() {
               <a href="#!" className="icon-edit" onClick={handleEditarClick}> </a>
             </td>
             <td>
-              <a href="#!" className="icon-trash" onClick="eliminarUsuario()"> </a>
+              <a href="#!" className="icon-trash" onClick="eliminarRol()"> </a>
             </td>
           </tr>
         </tbody>
       </table>
 
       {/* Ventana modal */}
-      {showModal && <EditarConfiguracion onClose={handleCloseModal} />}
+      {modalShow && <Editarconfiguracion/>}
     </>
   );
 }
