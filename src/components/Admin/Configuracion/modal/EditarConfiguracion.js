@@ -1,6 +1,6 @@
 import React from 'react';
 
-function EditarConfiguracion() {
+function Editarconfiguracion() {
   return (
     <div className="modal fade bd-example-modal-lg" id="modalconfiga" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
       <div className="modal-dialog modal-lg modal-dialog-centered">
@@ -64,4 +64,4 @@ function EditarConfiguracion() {
   );
 }
 
-export { EditarConfiguracion };
+export { Editarconfiguracion };
