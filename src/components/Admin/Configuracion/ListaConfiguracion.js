@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import {Editarconfiguracion} from "../Configuracion/modal/editarconfiguracion"
+import { Editarconfiguracion } from "./modal/EditarConfiguracion";
 
 function ListaConfiguracion() {
   const [modalShow, setModalShow] = useState(false);
