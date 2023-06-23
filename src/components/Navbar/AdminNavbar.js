@@ -87,7 +87,7 @@ function AdminNavbar() {
                             <Link to="/admin/pedidos">Pedidos</Link>
                         </li>
                         <li className="">
-                            <Link to="/contact">Ventas</Link>
+                            <Link to="/admin/ventas">Ventas</Link>
                         </li>
                     </ul>
                 </div>

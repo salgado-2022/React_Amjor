@@ -5,7 +5,7 @@ import { VerInsumos } from '../Anchetas/Modals/verInsumos';
 import Swal from "sweetalert2";
 
 function TablaAncheta() {
-    
+
     const [data, setData] = useState([]);
     const [tabla, setTabla] = useState([]);
     const [busqueda, setBusqueda] = useState("");
@@ -15,7 +15,11 @@ function TablaAncheta() {
     const [modalShow2, setModalShow2] = React.useState(false);
 
     const [selectedAnchetaID, setSelectedAnchetaID] = useState(null);
-    
+
+    const [itemsPerPage] = useState(5);
+    const [totalItems, setTotalItems] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+
 
     const formatPrice = (price) => {
         return price.toLocaleString('es-CO', {
@@ -41,6 +45,7 @@ function TablaAncheta() {
             .then(res => {
                 setData(res.data)
                 setTabla(res.data)
+                setTotalItems(res.data.length);
             })
             .catch(err => console.log(err));
     };
@@ -67,7 +72,7 @@ function TablaAncheta() {
     }
 
     const filtrar = (terminoBusqueda) => {
-        var resultadosBusqueda = tabla.filter((elemento) => { 
+        var resultadosBusqueda = tabla.filter((elemento) => {
             if (
                 elemento.NombreAncheta.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
                 elemento.PrecioUnitario.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
@@ -84,6 +89,9 @@ function TablaAncheta() {
         fetchData();
     }, []);
 
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
     return (
         <>
@@ -118,12 +126,12 @@ function TablaAncheta() {
                         </tr>
                     </thead>
                     <tbody>
-                        {data &&
-                            data.map((anchetas) => (
+                        {currentItems &&
+                            currentItems.map((anchetas) => (
                                 <tr key={anchetas.ID_Ancheta}>
                                     <th scope="row">{anchetas.ID_Ancheta}</th>
                                     <td>
-                                        <img src={`http://localhost:4000/anchetas/`+ anchetas.image} alt="" className="anchetas_img"/>
+                                        <img src={`http://localhost:4000/anchetas/` + anchetas.image} alt="" className="anchetas_img" />
                                     </td>
                                     <td>{anchetas.NombreAncheta}</td>
                                     <td><a href="#!" className=" icon-eye" onClick={() => {
@@ -142,6 +150,48 @@ function TablaAncheta() {
 
                     </tbody>
                 </table>
+                <nav>
+                    <ul className="pagination">
+                        <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                            <button
+                                className="page-link"
+                                onClick={() => setCurrentPage(currentPage - 1)}
+                            >
+                                Anterior
+                            </button>
+                        </li>
+                        {Array.from(
+                            { length: Math.ceil(totalItems / itemsPerPage) },
+                            (_, index) => (
+                                <li
+                                    className={`page-item ${currentPage === index + 1 ? "active" : ""
+                                        }`}
+                                    key={index + 1}
+                                >
+                                    <button
+                                        className="page-link"
+                                        onClick={() => setCurrentPage(index + 1)}
+                                    >
+                                        {index + 1}
+                                    </button>
+                                </li>
+                            )
+                        )}
+                        <li
+                            className={`page-item ${currentPage === Math.ceil(totalItems / itemsPerPage)
+                                ? "disabled"
+                                : ""
+                                }`}
+                        >
+                            <button
+                                className="page-link"
+                                onClick={() => setCurrentPage(currentPage + 1)}
+                            >
+                                Siguiente
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
             </div>
             <EditarAncheta
                 show={modalShow}

@@ -15,11 +15,12 @@ import { Register } from '../views/Register';
 import { ResetPassword } from '../components/Reset-Password/Reset-Password';
 
 //Rutas Admin
-import {Pedidos}  from '../views/Admin/Pedidos'
-import {Anchetas}  from '../views/Admin/Anchetas'
-import {Insumos}  from '../views/Admin/Insumos'
+import { Pedidos } from '../views/Admin/Pedidos'
+import { Anchetas } from '../views/Admin/Anchetas'
+import { Insumos } from '../views/Admin/Insumos'
 import { Usuarios } from '../views/Admin/Usuarios';
 import { Configuracion } from '../views/Admin/Configuracion';
+import { Ventas } from '../views/Admin/Ventas';
 
 //Rutas privadas
 import { PrivateRoute } from './PrivateRoute'
@@ -43,6 +44,7 @@ function Rutas() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/restore/password" element={<UpdataPassword />} />
                 <Route path="/reset" element={<ResetPassword />} />
+
                 <Route path="/admin/pedidos" element={
                     <PrivateRoute>
                         <Pedidos />
@@ -52,24 +54,30 @@ function Rutas() {
                     <PrivateRoute>
                         <Anchetas />
                     </PrivateRoute>} />
-                <Route path="*" element={<Error404/>} />
+                <Route path="*" element={<Error404 />} />
                 <Route path="/admin/insumos" element={
                     <PrivateRoute>
                         <Insumos />
                     </PrivateRoute>} />
-                <Route path="*" element={<Error404/>} />
+                <Route path="*" element={<Error404 />} />
 
                 <Route path='/admin/usuarios' element={
                     <PrivateRoute>
-                        <Usuarios/>
+                        <Usuarios />
                     </PrivateRoute>
-                }/>
+                } />
 
                 <Route path='/admin/configuracion' element={
                     <PrivateRoute>
-                        <Configuracion/>
+                        <Configuracion />
                     </PrivateRoute>
-                }/>
+                } />
+
+                <Route path='/admin/ventas' element={
+                    <PrivateRoute>
+                        <Ventas />
+                    </PrivateRoute>
+                } />
             </Routes>
 
         </BrowserRouter>
