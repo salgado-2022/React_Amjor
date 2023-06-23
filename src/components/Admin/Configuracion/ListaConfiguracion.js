@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { EditarConfi } from "./modal/editarConfiguracion";
 
 function ListaConfiguracion() {
   const [tabla, setTabla] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
   const [totalItems, setTotalItems] = useState(0);
+  const [selectedConfiguracionID, setselectedConfiguracionID] = useState(null);
+  const [modalShow, setModalShow] = useState(false);
+
+  const handleDetalleConfigClick = (usuarioID) => {
+    setselectedConfiguracionID(usuarioID);
+    setModalShow(true);
+  };
 
   const fetchData = () => {
     axios
@@ -77,7 +85,11 @@ function ListaConfiguracion() {
                 <th scope="row">{rol.ID_Rol}</th>
                 <td>{rol.Nombre_Rol}</td>
                 <td>
-                  <a href="#!" className="icon-edit"> </a>
+                  <a href="#!" className="icon-edit"
+                  onClick={() =>{
+                    handleDetalleConfigClick(rol.ID_Rol)
+                  }}
+                  > </a>
                 </td>
                 <td>
                   <a
@@ -137,6 +149,11 @@ function ListaConfiguracion() {
         </ul>
       </nav>
       {/* Ventana modal */}
+      <EditarConfi
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+          selectedConfiguracionID={selectedConfiguracionID}
+        />
     </>
   );
 }

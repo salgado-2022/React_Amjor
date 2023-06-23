@@ -90,7 +90,8 @@ function EditarUsuario(props) {
               <label className="form-check-label" htmlFor="estadoUsuarios">Disponible</label>
             </div>
             <button type="submit" className="btn btn-primary" id="modUsuario" onClick={props.onHide}>Guardar Cambios</button> &nbsp;
-            <button type="reset" className="btn btn-dark" id="cancelarUsuario" onClick={props.onHide}>Cancelar</button>
+            <button type="reset" className="btn btn-dark" id="cancelarUsuario" onClick={() => { props.onHide(); window.location.reload(); }}>Cancelar</button>
+
           </form>
         </div>
       </Modal.Body>
