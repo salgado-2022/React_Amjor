@@ -102,12 +102,16 @@ function EditarConfi(props) {
                                     </form>
                                 </div>
                             </div>
+                            <div className="form-check" style={{ marginBottom: '7px' }}>
+                            <input type="checkbox" className="form-check-input" id="ID_Estado" name="ID_Estado" checked={isChecked} onChange={handleInput} />
+                            <label className="form-check-label" htmlFor="estadoConfi">Disponible</label>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-secondary" data-dismiss="modal">Cancelar</button>
                                 <button type="button" className="btn btn-primary" onClick="()">Guardar cambios</button>
                             </div>
                         </div>
                     </div>
+                </div>
                 </form>
             </div>
             </Modal.Body>
