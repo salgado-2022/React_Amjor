@@ -12,6 +12,10 @@ function TablaInsumo() {
 
     const [selectedInsumoID, setSelectedInsumoID] = useState(null);
 
+    const [itemsPerPage] = useState(5);
+    const [totalItems, setTotalItems] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
+
     const formatPrice = (price) => {
         return price.toLocaleString('es-CO', {
             style: 'currency',
@@ -31,6 +35,7 @@ function TablaInsumo() {
             .then(res => {
                 setData(res.data)
                 setTabla(res.data)
+                setTotalItems(res.data.length);
             })
             .catch(err => console.log(err));
     };
@@ -52,12 +57,12 @@ function TablaInsumo() {
 
     const handleChange = e => {
         setBusqueda(e.target.value);
-        
+
         filtrar(e.target.value);
     }
 
     const filtrar = (terminoBusqueda) => {
-        var resultadosBusqueda = tabla.filter((elemento) => { 
+        var resultadosBusqueda = tabla.filter((elemento) => {
             if (
                 elemento.NombreInsumo.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
                 elemento.PrecioUnitario.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
@@ -76,6 +81,9 @@ function TablaInsumo() {
         fetchData();
     }, []);
 
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
     return (
         <>
@@ -109,8 +117,8 @@ function TablaInsumo() {
                         </tr>
                     </thead>
                     <tbody>
-                        {data &&
-                            data.map((insumos) => (
+                        {currentItems &&
+                            currentItems.map((insumos) => (
                                 <tr key={insumos.ID_Insumo}>
                                     <th scope="row">{insumos.ID_Insumo}</th>
                                     <td>{insumos.NombreInsumo}</td>
@@ -128,6 +136,48 @@ function TablaInsumo() {
 
                     </tbody>
                 </table>
+                <nav>
+                    <ul className="pagination">
+                        <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                            <button
+                                className="page-link"
+                                onClick={() => setCurrentPage(currentPage - 1)}
+                            >
+                                Anterior
+                            </button>
+                        </li>
+                        {Array.from(
+                            { length: Math.ceil(totalItems / itemsPerPage) },
+                            (_, index) => (
+                                <li
+                                    className={`page-item ${currentPage === index + 1 ? "active" : ""
+                                        }`}
+                                    key={index + 1}
+                                >
+                                    <button
+                                        className="page-link"
+                                        onClick={() => setCurrentPage(index + 1)}
+                                    >
+                                        {index + 1}
+                                    </button>
+                                </li>
+                            )
+                        )}
+                        <li
+                            className={`page-item ${currentPage === Math.ceil(totalItems / itemsPerPage)
+                                ? "disabled"
+                                : ""
+                                }`}
+                        >
+                            <button
+                                className="page-link"
+                                onClick={() => setCurrentPage(currentPage + 1)}
+                            >
+                                Siguiente
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
             </div>
             <EditarInsumo
                 show={modalShow}
