@@ -9,7 +9,6 @@ function EditarUsuario(props) {
   const id = selectedUsuarioID;
 
   const [isChecked, setIsChecked] = useState(false);
-
   const [values, setValues] = useState({
     correo: '',
     contrasena: ''
@@ -28,23 +27,22 @@ function EditarUsuario(props) {
 
   useEffect(() => {
     if (show) {
-      axios.get(`http://localhost:4000/api/admin/usuario/usullamada/${id}`)
+      axios.get(`http://localhost:4000/api/admin/usuario/usullamada/` + id)
         .then(res => {
           console.log(res);
           setValues(prevValues => ({
             ...prevValues,
-            correo: res.data[0].correo,
-            contrasena: res.data[0].contrasena
+            correo: res.data[0].Correo
           }));
           setIsChecked(res.data[0].ID_Usuario === 1);
         })
         .catch(err => console.log(err));
     }
-  }, [id, show]);
+  }, [id , show]);
 
   const handleUpdate = (event) => {
     event.preventDefault();
-    axios.put(`http://localhost:4000/api/admin/usuario/usuariarioedit/${id}`, values)
+    axios.put(`http://localhost:4000/api/admin/usuario/usuariarioedit/`, values)
       .then(res => {
         console.log(res);
         Swal.fire({
@@ -87,10 +85,6 @@ function EditarUsuario(props) {
               <label htmlFor="contrasena">Contraseña</label>
               <input type="password" className="form-control" id="contrasena" name="contrasena" value={values.contrasena} onChange={handleInput} />
             </div>
-            <div className="form-group">
-              <label htmlFor="conficontrasena">Confirmar Contraseña</label>
-              <input type="password" className="form-control" id="conficontrasena" name="conficontrasena" value={values.conficontrasena} onChange={handleInput} />
-            </div>
             <div className="form-check" style={{ marginBottom: '7px' }}>
               <input type="checkbox" className="form-check-input" id="ID_Estado" name="ID_Estado" checked={isChecked} onChange={handleInput} />
               <label className="form-check-label" htmlFor="estadoUsuarios">Disponible</label>
@@ -103,4 +97,5 @@ function EditarUsuario(props) {
     </Modal>
   );
 }
+
 export { EditarUsuario };
