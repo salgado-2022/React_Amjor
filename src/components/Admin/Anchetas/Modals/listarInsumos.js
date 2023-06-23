@@ -63,7 +63,6 @@ function ListarInsumos(props) {
     <Modal
       onHide={onHide}
       show={show}
-      size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
       style={{ zIndex: "2000" }}
@@ -79,7 +78,7 @@ function ListarInsumos(props) {
       <Modal.Body>
         <div id="site-section">
           <div className="row justify-content-end">
-            <div className="input-group mb-3 col-5">
+            <div className="input-group mb-3 col-12">
               <input type="text" className="form-control" value={busqueda} onChange={handleChange} placeholder="Buscar Insumo"/>
               <div className="input-group-append">
                 <button className="btn btn-outline" type="reset"><a href="#!" className="icon-search"> </a></button>
@@ -92,23 +91,18 @@ function ListarInsumos(props) {
             if (insumosAgregados.includes(insumo.ID_Insumo)){
               return null;
             }
+
+            if (insumo.Estado === 'Agotado'){
+              return null;
+            }
+
             insumo.Cantidad = 1;
             insumo.Precio = insumo.PrecioUnitario;
+
             return (
             <li key={insumo.ID_Insumo} className="list-group-item">
               <div className="row">
                 <div className="col-8" style={{display: "flex", alignItems: "center", fontSize: "18px"}}><a href="#!" className="icon-plus" style={{fontSize: "24px"}} onClick={()=>dispatch({type:'AddInsumo', payload: insumo})}> </a>&nbsp; &nbsp;{insumo.NombreInsumo}</div>
-                <div className="col-md-auto">
-                  <div className="input-group" style={{ maxWidth: "110px" }}>
-                    <div className="input-group-prepend">
-                      <button className="btn btn-outline-primary js-btn-minus" type="button" onClick={()=>dispatch({type: 'Decrement', payload: insumo})}>&minus;</button>
-                    </div>
-                    <input type="text" className="form-control text-center" value={insumo.Cantidad} placeholder=""/>
-                    <div className="input-group-append">
-                      <button className="btn btn-outline-primary js-btn-plus" type="button" onClick={()=>dispatch({type: 'Increment', payload: insumo})}>&#43;</button>
-                    </div>
-                  </div>
-                </div>
                 <div className="col-md-auto" style={{fontSize:"18px", display: "flex", alignItems: "center"}}>{formatPrice(insumo.Precio)}</div>
               </div>
             </li>

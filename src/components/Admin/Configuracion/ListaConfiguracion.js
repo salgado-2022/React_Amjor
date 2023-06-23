@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { EditarConfi } from "./modal/editarConfiguracion";
+import { EditarConfi } from "./Modals/editarConfiguracion";
 
 function ListaConfiguracion() {
   const [tabla, setTabla] = useState([]);

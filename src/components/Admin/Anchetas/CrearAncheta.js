@@ -4,7 +4,7 @@ import Swal from 'sweetalert2';
 import axios from "axios";
 import { valnomanch } from "./Validations/valnomanch";
 import { valdescanch } from "./Validations/valdescanch";
-import { ListarInsumos } from '../Anchetas/Modals/listarInsumos';
+import { ListarInsumos } from './Modals/listarInsumos';
 import { Insumoscontext } from "./Context/Context";
 
 function CrearAncheta() {
@@ -38,7 +38,7 @@ function CrearAncheta() {
     const state = Globalstate.state;
     const dispatch = Globalstate.dispatch;
 
-    const states = state.map(obj => ({ idInsumo: obj.ID_Insumo, cantidad: obj.Cantidad, precio: obj.Precio }));
+    const states = state.map(obj => ({ idInsumo: obj.ID_Insumo, cantidad: obj.Cantidad, precio: obj.PrecioUnitario * obj.Cantidad }));
 
     const Precio = state.reduce((Precio, insumo) => {
         return Precio + insumo.PrecioUnitario * insumo.Cantidad;
@@ -53,7 +53,10 @@ function CrearAncheta() {
     };
 
     useEffect(() => {
-    }, [values]);
+        return () => {
+          dispatch({ type: 'ResetInsumos' });
+        };
+      }, [dispatch]);
 
     const handleInsumoClick = () => {
         setModalShow3(true);
@@ -75,7 +78,6 @@ function CrearAncheta() {
             if (!selectedFile) {
                 setValues((prev) => ({ ...prev, image: imageHolder }));
                 setImageUrl(URL.createObjectURL(imageHolder));
-                setIsImageUploaded(false);
             }
         }
     };
@@ -159,6 +161,8 @@ function CrearAncheta() {
         setIsImageUploaded(false);
         dispatch({ type: 'ResetInsumos' });
     };
+
+    console.log(states)
 
     return (
         <>
