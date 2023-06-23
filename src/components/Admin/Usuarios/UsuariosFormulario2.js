@@ -9,15 +9,9 @@ function UsuariosFormulario2() {
   const [values, setValues] = useState({
     correo: "",
     contrasena: "",
-    conficontrasena: "",
     ID_Rol: "1",
   });
 
-  const initialValues = {
-    correo: "",
-    contrasena: "",
-    ID_Rol: "1",
-  };
 
   const handleCorreoChange = (event) => {
     const { name, value } = event.target;
@@ -27,7 +21,7 @@ function UsuariosFormulario2() {
     }));
   };
 
-  const handleContraseñaChange = (event) => {
+  const handleContrasenaChange = (event) => {
     const { name, value } = event.target;
     setValues((prevState) => ({
       ...prevState,
@@ -35,7 +29,7 @@ function UsuariosFormulario2() {
     }));
   };
 
-  const handleConficontraseñaChange = (event) => {
+  const handleConficontrasenaChange = (event) => {
     const { name, value } = event.target;
     setValues((prevState) => ({
       ...prevState,
@@ -78,10 +72,6 @@ function UsuariosFormulario2() {
       // Mostrar mensaje de error si no coinciden
       return;
     }
-
-    const handleReset = () => {
-      setValues(initialValues);
-  };
 
 
     axios
@@ -208,7 +198,7 @@ function UsuariosFormulario2() {
                           id="contraseña"
                           name="contrasena"
                           value={values.contrasena}
-                          onChange={handleContraseñaChange}
+                          onChange={handleContrasenaChange}
                         />
                         <span className="text-danger"></span>
                         <h6>Minimo de 5 caracteres</h6>
@@ -230,7 +220,7 @@ function UsuariosFormulario2() {
                               id="conficontraseña"
                               name="conficontrasena"
                               value={values.conficontrasena}
-                              onChange={handleConficontraseñaChange}
+                              onChange={handleConficontrasenaChange}
                             />
                             <span className="text-danger"></span>
                           </div>

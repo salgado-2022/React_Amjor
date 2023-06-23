@@ -148,13 +148,11 @@ function ListaUsuarios() {
           </li>
         </ul>
       </nav>
-      {modalShow && (
         <EditarUsuario
           show={modalShow}
           onHide={() => setModalShow(false)}
           selectedUsuarioID={selectedUsuarioID}
         />
-      )}
     </>
   );
 }

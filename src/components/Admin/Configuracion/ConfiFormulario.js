@@ -4,31 +4,26 @@ import Swal from "sweetalert2";
 import axios from "axios";
 
 function ConfiFormulario() {
-  const [rol, setRol] = useState('');
-  const [permisos, setPermisos] = useState([]);
+  const [rol, setRol] = useState("");
 
   const validarRolPermiso = () => {
     const rolRegex = /^[A-Za-z]+$/;
 
-    if (rol.trim() === '') {
+    if (rol.trim() === "") {
       Swal.fire({
-        title: 'Validación fallida',
-        text: 'Debes ingresar un rol.',
-        icon: 'error',
+        title: "Validación fallida",
+        text: "Debes ingresar un rol.",
+        icon: "error",
       });
-    } else if (!rol.match(rolRegex) || permisos.length === 0) {
+    } else if (!rol.match(rolRegex)) {
       Swal.fire({
-        title: 'Creación del rol y el permiso fallida',
-        text: 'El rol debe contener solo letras y debes seleccionar al menos un permiso.',
-        icon: 'error',
+        title: "Creación del rol y el permiso fallida",
+        text: "El rol debe contener solo letras",
+        icon: "error",
       });
     } else {
-      const values = {
-        rol: rol,
-        permisos: permisos
-      };
-
-      axios.post("http://localhost:4000/api/crearRol", values)
+      axios
+        .post("http://localhost:4000/api/crearRol", { rol })
         .then((res) => {
           if (res.data.Status === "Success") {
             Swal.fire({
@@ -39,7 +34,7 @@ function ConfiFormulario() {
               timer: 1500,
             });
             setTimeout(function () {
-              window.location = "rol";
+              window.location = "configuracion";
             }, 670);
           } else {
             Swal.fire({
@@ -51,15 +46,6 @@ function ConfiFormulario() {
           }
         })
         .catch((err) => console.log(err));
-    }
-  };
-
-  const handlePermisoChange = (e) => {
-    const permiso = e.target.value;
-    if (e.target.checked) {
-      setPermisos([...permisos, permiso]);
-    } else {
-      setPermisos(permisos.filter((p) => p !== permiso));
     }
   };
 
@@ -83,54 +69,9 @@ function ConfiFormulario() {
           />
         </div>
         <br />
-        <div id="dropdown">
-          <button>SELECCIONE LOS PERMISOS ASOCIADOS</button>
-          <br />
-          <div id="dropdown-content">
-            <input
-              type="checkbox"
-              id="option1"
-              value="Dashboard"
-              checked={permisos.includes('Dashboard')}
-              onChange={handlePermisoChange}
-            />
-            <label htmlFor="option1">Dashboard</label>
-            <br />
-            <input
-              type="checkbox"
-              id="option2"
-              value="Usuarios"
-              checked={permisos.includes('Usuarios')}
-              onChange={handlePermisoChange}
-            />
-            <label htmlFor="option2">Usuarios</label>
-            <br />
-            <input
-              type="checkbox"
-              id="option3"
-              value="Configuracion"
-              checked={permisos.includes('Configuracion')}
-              onChange={handlePermisoChange}
-            />
-            <label htmlFor="option3">Anchetas</label>
-            <br />
-            <input
-              type="checkbox"
-              id="option4"
-              value="Anchetas"
-              checked={permisos.includes('Anchetas')}
-              onChange={handlePermisoChange}
-            />
-            <label htmlFor="option4">Ventas</label>
-            <br />
-          </div>
-          &nbsp;
-        </div>
         <button
           type="submit"
-          className="btn-agregar mb-4 col-4"
-          id="btn-agregar"
-          onClick={validarRolPermiso}
+          className="btn-agregar mb-4 col-4" id="btn-agregar" onClick={validarRolPermiso}
         >
           AGREGAR
         </button>
