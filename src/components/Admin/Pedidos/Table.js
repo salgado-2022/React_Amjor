@@ -17,11 +17,15 @@ function Table() {
     const [data, setData] = useState([])
     const [modalShow, setModalShow] = React.useState(false);
     const [selectedPedidoID, setSelectedPedidoID] = useState(null);
+    const [itemsPerPage] = useState(5);
+    const [totalItems, setTotalItems] = useState(0);
+    const [currentPage, setCurrentPage] = useState(1);
 
 
     useEffect(() => {
-        socket.on('Pedidos', datosActualizados =>{
+        socket.on('Pedidos', datosActualizados => {
             setData(datosActualizados)
+            setTotalItems(datosActualizados.length);
         })
     }, [data]);
 
@@ -45,25 +49,29 @@ function Table() {
             cliente: cliente
         }
 
-        axios.get('http://localhost:4000/api/admin/pedidos/success',{ params: data })
-        .then(res => {
-            if(res.data.Success === true){
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Pedido aceptado correctamente',
+        axios.get('http://localhost:4000/api/admin/pedidos/success', { params: data })
+            .then(res => {
+                if (res.data.Success === true) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Pedido aceptado correctamente',
+                        confirmButtonText: 'OK'
+                    })
+                }
+            })
+            .catch(err => {
+                Swal.fire({ // Muestra la alerta de SweetAlert2
+                    title: 'Error!',
+                    text: err,
+                    icon: 'error',
                     confirmButtonText: 'OK'
-                })
-            }
-        })
-        .catch(err =>{
-            Swal.fire({ // Muestra la alerta de SweetAlert2
-                title: 'Error!',
-                text: err,
-                icon: 'error',
-                confirmButtonText: 'OK'
-            });
-        })
+                });
+            })
     }
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
 
     /**
@@ -119,32 +127,73 @@ function Table() {
                                     <tbody className="table-group-divider">
 
                                         {
-                                            data.slice(0).reverse().map((pedido, index)=>{
-                                                return(
+                                            currentItems.slice(0).reverse().map((pedido, index) => {
+                                                return (
                                                     <tr key={index}>
-                                                <th scope="row">{pedido.ID_Pedido}</th>
-                                                <td>{pedido.Nombre_Cliente}</td>
-                                                <td><a href="#!" className=" icon-eye" onClick={() => {
-                                                    handleDetalleClick(pedido.ID_Pedido)
-                                                }}>  </a></td>
-                                                <td>{formatDate(pedido.Feche_Entrega)}</td>
-                                                <td>{pedido.Direccion_Entrega}</td>
-                                                <td>{formatPrice(pedido.Precio_Total)}</td>
-                                                <td>
-                                                    <a href="#/" className="icon-check"
-                                                        onClick={() => {
-                                                            handleSuccessOrder(pedido.ID_Pedido, pedido.ID_Cliente);
-                                                        }}
-                                                    > </a>
-                                                </td>
-                                                <td><a href="#/" className="icon-remove" > </a></td>
-                                            </tr>
+                                                        <th scope="row">{pedido.ID_Pedido}</th>
+                                                        <td>{pedido.Nombre_Cliente}</td>
+                                                        <td><a href="#!" className=" icon-eye" onClick={() => {
+                                                            handleDetalleClick(pedido.ID_Pedido)
+                                                        }}>  </a></td>
+                                                        <td>{formatDate(pedido.Feche_Entrega)}</td>
+                                                        <td>{pedido.Direccion_Entrega}</td>
+                                                        <td>{formatPrice(pedido.Precio_Total)}</td>
+                                                        <td>
+                                                            <a href="#/" className="icon-check"
+                                                                onClick={() => {
+                                                                    handleSuccessOrder(pedido.ID_Pedido, pedido.ID_Cliente);
+                                                                }}
+                                                            > </a>
+                                                        </td>
+                                                        <td><a href="#/" className="icon-remove" > </a></td>
+                                                    </tr>
                                                 );
                                             })
                                         }
                                     </tbody>
                                 </table>
-
+                                <nav>
+                                    <ul className="pagination">
+                                        <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+                                            <button
+                                                className="page-link"
+                                                onClick={() => setCurrentPage(currentPage - 1)}
+                                            >
+                                                Anterior
+                                            </button>
+                                        </li>
+                                        {Array.from(
+                                            { length: Math.ceil(totalItems / itemsPerPage) },
+                                            (_, index) => (
+                                                <li
+                                                    className={`page-item ${currentPage === index + 1 ? "active" : ""
+                                                        }`}
+                                                    key={index + 1}
+                                                >
+                                                    <button
+                                                        className="page-link"
+                                                        onClick={() => setCurrentPage(index + 1)}
+                                                    >
+                                                        {index + 1}
+                                                    </button>
+                                                </li>
+                                            )
+                                        )}
+                                        <li
+                                            className={`page-item ${currentPage === Math.ceil(totalItems / itemsPerPage)
+                                                    ? "disabled"
+                                                    : ""
+                                                }`}
+                                        >
+                                            <button
+                                                className="page-link"
+                                                onClick={() => setCurrentPage(currentPage + 1)}
+                                            >
+                                                Siguiente
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
                     </div>
