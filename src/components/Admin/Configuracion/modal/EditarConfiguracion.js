@@ -75,6 +75,7 @@ function EditarConfi(props) {
             </Modal.Header>
             <Modal.Body>
                 <div className="modal fade bd-example-modal-lg" id="modalconfiga" tabIndex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style={{important: '!important'}}>
+                <form onSubmit={handleUpdate} id="editarUsuario">
                     <div className="modal-dialog modal-lg modal-dialog-centered">
                         <div className="modal-content">
                             <div className="modal-header">
@@ -95,34 +96,9 @@ function EditarConfi(props) {
                                     <h2 className="h3 mb-7 text-black">Nuevo rol.</h2>
                                     <form method="post" action="#">
                                         <div className="mb-3">
-                                            <input type="email" className="form-control" id="modalperro" aria-describedby="emailHelp" required placeholder="e.j: Empleado" />
-                                            <h6>recuerda, solo letras</h6>
+                                        <input type="text" className="form-control" id="rol" name="rol" value={values.Nombre_Rol} onChange={handleInput} />                                            <h6>recuerda, solo letras</h6>
                                         </div>
-                                        <br />
-                                        <div className="multiselect">
-                                            <h2 className="h3 mb-7 text-black">Nuevo Permisos.</h2>
-                                            <div className="form-check" id="malquitos">
-                                                <label className="form-check-label" htmlFor="one" id="selecta">
-                                                    <br />
-                                                    <input type="checkbox" id="one" />ventas</label>
-                                                <br />
-                                                <label className="form-check-label" htmlFor="two" id="selecta">
-                                                    <br />
-                                                    <input type="checkbox" id="two" />pedidos</label>
-                                                <br />
-                                                <label className="form-check-label" htmlFor="three" id="selecta">
-                                                    <br />
-                                                    <input type="checkbox" id="three" />catalogo</label>
-                                                <br />
-                                                <label className="form-check-label" htmlFor="four" id="selecta">
-                                                    <br />
-                                                    <input type="checkbox" id="four" />domicilios</label>
-                                                <br />
-                                                <label className="form-check-label" htmlFor="five" id="selecta">
-                                                    <br />
-                                                    <input type="checkbox" id="five" />editar datos</label>
-                                            </div>
-                                        </div>
+                                        <br/>
                                     </form>
                                 </div>
                             </div>
@@ -132,7 +108,8 @@ function EditarConfi(props) {
                             </div>
                         </div>
                     </div>
-                </div>
+                </form>
+            </div>
             </Modal.Body>
         </Modal>
     );

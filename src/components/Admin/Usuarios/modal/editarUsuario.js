@@ -79,7 +79,7 @@ function EditarUsuario(props) {
           <form onSubmit={handleUpdate} id="editarUsuario">
             <div className="form-group">
               <label htmlFor="correo">Correo</label>
-              <input type="text" className="form-control" id="correo" name="correo" value={values.correo} onChange={handleInput} />
+              <input type="email" className="form-control" id="correo" name="correo" value={values.correo} onChange={handleInput}/>
             </div>
             <div className="form-group">
               <label htmlFor="contrasena">Contraseña</label>
