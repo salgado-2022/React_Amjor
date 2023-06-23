@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import { EditarAncheta } from '../Anchetas/Modals/editarAncheta';
-import { VerInsumos } from '../Anchetas/Modals/verInsumos';
+import { EditarAncheta } from './Modals/editarAncheta';
+import { VerInsumos } from './Modals/verInsumos';
 import Swal from "sweetalert2";
 
 function TablaAncheta() {
