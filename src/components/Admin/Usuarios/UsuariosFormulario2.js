@@ -12,7 +12,6 @@ function UsuariosFormulario2() {
     ID_Rol: "1",
   });
 
-
   const handleCorreoChange = (event) => {
     const { name, value } = event.target;
     setValues((prevState) => ({
@@ -22,14 +21,6 @@ function UsuariosFormulario2() {
   };
 
   const handleContrasenaChange = (event) => {
-    const { name, value } = event.target;
-    setValues((prevState) => ({
-      ...prevState,
-      [name]: value,
-    }));
-  };
-
-  const handleConficontrasenaChange = (event) => {
     const { name, value } = event.target;
     setValues((prevState) => ({
       ...prevState,
@@ -53,26 +44,9 @@ function UsuariosFormulario2() {
       return;
     }
 
-    if (
-      values.correo === "" ||
-      values.contrasena === "" ||
-      values.conficontrasena === ""
-    ) {
+    if (values.correo === "" || values.contrasena === "") {
       return;
     }
-
-    if (values.contrasena.length < 5) {
-      // Verificar si la contraseña cumple con los requisitos mínimos
-      // Mostrar mensaje de error si no se cumple
-      return;
-    }
-
-    if (values.contrasena !== values.conficontrasena) {
-      // Verificar si las contraseñas coinciden
-      // Mostrar mensaje de error si no coinciden
-      return;
-    }
-
 
     axios
       .post("http://localhost:4000/api/crearUsuario", values)
@@ -99,7 +73,6 @@ function UsuariosFormulario2() {
       })
       .catch((err) => console.log(err));
   };
-
   return (
     <>
       <div className="bg-light py-3">
@@ -118,6 +91,8 @@ function UsuariosFormulario2() {
             <div className="col-md-6">
               <h1 className="h3 mb-3 text-black">Crear un nuevo Usuario.</h1>
             </div>
+          </div>
+          <div className="row">
             <div className="col-md-12">
               <div className="p-3 p-lg-12 border">
                 <div className="form-group row">
@@ -140,12 +115,9 @@ function UsuariosFormulario2() {
                         <span className="text-danger"></span>
                       </div>
                     </div>
-                    &nbsp;
-                    <br></br>
+                    <br />
                     <div id="Roles">
-                      <button>
-                        Seleccione el rol que está asociado
-                      </button>
+                      <button>Seleccione el rol que está asociado</button>
                       <br />
                       <div>
                         <div id="Roles-content">
@@ -180,14 +152,14 @@ function UsuariosFormulario2() {
                       </div>
                       {checkboxError && (
                         <div className="text-danger">
-                          Debe seleccionar mínimo un rol de los que se han asignado
+                          Debe seleccionar mínimo un rol de los asignados
                         </div>
                       )}
                     </div>
                   </div>
-                  <div className="col-md-12">
+                  <div className="col-md-6">
                     <div className="form-group row">
-                      <div className="col-md-9">
+                      <div className="col-md-12">
                         <label htmlFor="contraseña" className="text-black">
                           CONTRASEÑA{" "}
                           <span className="text-danger">*</span>
@@ -201,40 +173,23 @@ function UsuariosFormulario2() {
                           onChange={handleContrasenaChange}
                         />
                         <span className="text-danger"></span>
-                        <h6>Minimo de 5 caracteres</h6>
-                        <br></br>
-                      </div>
-                      <div className="col-md-12">
-                        <div className="form-group row">
-                          <div className="col-md-9">
-                            <label
-                              htmlFor="conficontraseña"
-                              className="text-black"
-                            >
-                              CONFIRMAR CONTRASEÑA{" "}
-                              <span className="text-danger">*</span>
-                            </label>
-                            <input
-                              type="password"
-                              className="form-control"
-                              id="conficontraseña"
-                              name="conficontrasena"
-                              value={values.conficontrasena}
-                              onChange={handleConficontrasenaChange}
-                            />
-                            <span className="text-danger"></span>
+                        {values.contrasena.length > 0 && (
+                          <div>
+                            <h6>Contraseña: {values.contrasena}</h6>
+                            <br />
                           </div>
-                          <br></br>&nbsp;
-                        </div>
-                        <button
-                          type="submit"
-                          className="save-button btn-btn col-7"
-                          id="UsuariosFormulario"
-                          onClick={handleSubmit}>
-                          Guardar el nuevo Usuario
-                        </button>
+                        )}
                       </div>
                     </div>
+                    &nbsp;
+                    <button
+                      type="submit"
+                      className="save-button btn-btn col-7"
+                      id="UsuariosFormulario"
+                      onClick={handleSubmit}
+                    >
+                      Guardar el nuevo Usuario
+                    </button>
                   </div>
                 </div>
               </div>
@@ -245,4 +200,5 @@ function UsuariosFormulario2() {
     </>
   );
 }
-  export { UsuariosFormulario2 };
+
+export { UsuariosFormulario2 };
