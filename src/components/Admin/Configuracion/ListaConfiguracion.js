@@ -11,10 +11,9 @@ function ListaConfiguracion() {
   const [selectedConfiguracionID, setselectedConfiguracionID] = useState(null);
   const [modalShow, setModalShow] = useState(false);
 
-  const handleDetalleConfigClick = (usuarioID) => {
-    setselectedConfiguracionID(usuarioID);
-    setModalShow(true);
-  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const fetchData = () => {
     axios
@@ -25,6 +24,11 @@ function ListaConfiguracion() {
         setTotalItems(res.data.length);
       })
       .catch((err) => console.log(err));
+  };
+
+  const handleDetalleConfigClick = (usuarioID) => {
+    setselectedConfiguracionID(usuarioID);
+    setModalShow(true);
   };
 
   const handleDelete = (id) => {
@@ -46,10 +50,6 @@ function ListaConfiguracion() {
       .catch((err) => console.log(err));
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
-
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentItems = tabla.slice(indexOfFirstItem, indexOfLastItem);
@@ -61,8 +61,11 @@ function ListaConfiguracion() {
       <div className="col-12">
         <div className="row justify-content-end">
           <div className="input-group mb-3 col-3">
-            <input type="text" className="form-control" placeholder="Buscar Rol" />
-            <div className="input-group-append"></div>
+            <input type="text" className="form-control" 
+            placeholder="Buscar Rol" />
+            <div className="input-group-append">
+            <button className="btn btn-outline" type="button"><a href="#!" className="icon-search"> </a></button>
+            </div>
           </div>
         </div>
       </div>
@@ -85,10 +88,12 @@ function ListaConfiguracion() {
                 <th scope="row">{rol.ID_Rol}</th>
                 <td>{rol.Nombre_Rol}</td>
                 <td>
-                  <a href="#!" className="icon-edit"
-                  onClick={() =>{
-                    handleDetalleConfigClick(rol.ID_Rol)
-                  }}
+                  <a
+                    href="#!"
+                    className="icon-edit"
+                    onClick={() => {
+                      handleDetalleConfigClick(rol.ID_Rol);
+                    }}
                   > </a>
                 </td>
                 <td>
@@ -150,10 +155,10 @@ function ListaConfiguracion() {
       </nav>
       {/* Ventana modal */}
       <EditarConfi
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          selectedConfiguracionID={selectedConfiguracionID}
-        />
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        selectedConfiguracionID={selectedConfiguracionID}
+      />
     </>
   );
 }

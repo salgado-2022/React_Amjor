@@ -37,6 +37,18 @@ function UsuariosFormulario2() {
     }
   };
 
+  const validateEmail = (email) => {
+    // Expresión regular para validar el correo electrónico
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const validatePassword = (password) => {
+    // Expresión regular para validar la contraseña
+    const passwordRegex = /^(?=.*[A-Z])(?=.{5,})/;
+    return passwordRegex.test(password);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (selectedRoles.length === 0) {
@@ -45,6 +57,26 @@ function UsuariosFormulario2() {
     }
 
     if (values.correo === "" || values.contrasena === "") {
+      return;
+    }
+
+    if (!validateEmail(values.correo)) {
+      Swal.fire({
+        title: "Error!",
+        text: "Ingrese un correo electrónico válido.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
+      return;
+    }
+
+    if (!validatePassword(values.contrasena)) {
+      Swal.fire({
+        title: "Error!",
+        text: "La contraseña debe tener al menos 5 caracteres, empezar con mayúscula y contener al menos un carácter especial.",
+        icon: "error",
+        confirmButtonText: "OK",
+      });
       return;
     }
 
