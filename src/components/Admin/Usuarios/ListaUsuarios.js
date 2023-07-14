@@ -5,25 +5,32 @@ import { EditarUsuario } from "./modal/editarUsuario";
 
 function ListaUsuarios() {
   const [tabla, setTabla] = useState([]);
+  const [data, setData] = useState([]);
+  const [busqueda, setBusqueda] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
   const [totalItems, setTotalItems] = useState(0);
   const [selectedUsuarioID, setSelectedUsuarioID] = useState(null);
   const [modalShow, setModalShow] = useState(false);
 
-  const handleDetalleUsuClick = (usuarioID) => {
-    setSelectedUsuarioID(usuarioID);
-    setModalShow(true);
-  };
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   const fetchData = () => {
     axios
       .get("http://localhost:4000/api/admin/usuario")
       .then((res) => {
+        setData(res.data)
         setTabla(res.data);
         setTotalItems(res.data.length);
       })
       .catch((err) => console.log(err));
+  };
+
+  const handleDetalleUsuClick = (usuarioID) => {
+    setSelectedUsuarioID(usuarioID);
+    setModalShow(true);
   };
 
   const handleDelete = (id) => {
@@ -45,13 +52,27 @@ function ListaUsuarios() {
       .catch((err) => console.log(err));
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  const handleChange = e => {
+    setBusqueda(e.target.value);
+    filtrar(e.target.value);
+  }
+
+  const filtrar = (terminoBusqueda) => {
+    const resultadosBusqueda = tabla.filter((elemento) => {
+      const correo = elemento.correo.toString().toLowerCase();
+      const terminoBusquedaLower = terminoBusqueda.toLowerCase();
+
+      return (
+        correo.includes(terminoBusquedaLower)
+      );
+    });
+
+    setData(resultadosBusqueda);
+  };
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = tabla.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <>
@@ -61,9 +82,13 @@ function ListaUsuarios() {
             <input
               type="text"
               className="form-control"
+              value={busqueda}
+              onChange={handleChange}
               placeholder="Buscar Usuario"
             />
-            <div className="input-group-append"></div>
+           <div className="input-group-append">
+            <button className="btn btn-outline" type="button"><a href="#!" className="icon-search"> </a></button>
+          </div>
           </div>
         </div>
       </div>
@@ -148,11 +173,11 @@ function ListaUsuarios() {
           </li>
         </ul>
       </nav>
-        <EditarUsuario
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-          selectedUsuarioID={selectedUsuarioID}
-        />
+      <EditarUsuario
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+        selectedUsuarioID={selectedUsuarioID}
+      />
     </>
   );
 }
