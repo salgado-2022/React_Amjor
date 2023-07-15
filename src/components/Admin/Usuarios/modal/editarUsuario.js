@@ -53,7 +53,7 @@ function EditarUsuario(props) {
     // Validar correo electrónico
     const correoValido = validateEmail(values.correo);
     setCorreoError(!correoValido);
-
+  
     // Validar contraseña solo si se ha ingresado una nueva
     if (values.contrasena) {
       const contrasenaValida = validatePassword(values.contrasena);
@@ -63,7 +63,9 @@ function EditarUsuario(props) {
         return;
       }
     }
-
+    if (!correoValido) {
+      return;
+    }
     axios.put(`http://localhost:4000/api/admin/usuario/usuariarioedit/${id}`, values)
       .then(res => {
         console.log(res);
@@ -110,12 +112,12 @@ function EditarUsuario(props) {
         <div>
           <form onSubmit={handleUpdate} id="editarUsuario">
             <div className="form-group">
-              <label htmlFor="correo">Correo</label>
+              <label htmlFor="correo">Cambia tu correo</label>
               <input type="email" className={`form-control ${correoError ? 'is-invalid' : ''}`} id="correo" name="correo" value={values.correo} onChange={handleInput} />
               {correoError && <div className="invalid-feedback">Por favor, ingresa un correo electrónico válido.</div>}
             </div>
             <div className="form-group">
-              <label htmlFor="contrasena">Contraseña</label>
+              <label htmlFor="contrasena">Cambia tu Contraseña</label>
               <div className="input-group">
                 <input type={showPassword ? "text" : "password"} className={`form-control ${contrasenaError ? 'is-invalid' : ''}`} id="contrasena" name="contrasena" value={values.contrasena} onChange={handleInput} />
                 <div className="input-group-append">
