@@ -73,7 +73,7 @@ function UsuariosFormulario2() {
     if (!validatePassword(values.contrasena)) {
       Swal.fire({
         title: "Error!",
-        text: "La contraseña debe tener al menos 5 caracteres, empezar con mayúscula y contener al menos un carácter especial.",
+        text: "La contraseña debe tener al menos 5 caracteres, empezar con mayúscula.",
         icon: "error",
         confirmButtonText: "OK",
       });
@@ -105,6 +105,7 @@ function UsuariosFormulario2() {
       })
       .catch((err) => console.log(err));
   };
+
   return (
     <>
       <div className="bg-light py-3">
@@ -214,13 +215,16 @@ function UsuariosFormulario2() {
                       </div>
                     </div>
                     &nbsp;
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12 d-flex justify-content-start">
                     <button
                       type="submit"
                       className="save-button btn-btn col-7"
                       id="UsuariosFormulario"
                       onClick={handleSubmit}
-                    >
-                      Guardar el nuevo Usuario
+                    >Guardar el nuevo Usuario
                     </button>
                   </div>
                 </div>
