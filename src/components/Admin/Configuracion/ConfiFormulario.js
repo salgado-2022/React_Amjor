@@ -128,7 +128,7 @@ function ConfiFormulario() {
           </Form.Group>
         </Col>
       </Row>
-      <Button variant="primary" className="mb-1 btn-lg" onClick={validarRolPermiso}>
+      <Button variant="primary" className="mb btn-lg" onClick={validarRolPermiso}>
         Crear el nuevo rol y permiso
       </Button>
     </Container>
