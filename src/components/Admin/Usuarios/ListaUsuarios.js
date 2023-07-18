@@ -12,6 +12,7 @@ function ListaUsuarios() {
   const [totalItems, setTotalItems] = useState(0);
   const [selectedUsuarioID, setSelectedUsuarioID] = useState(null);
   const [modalShow, setModalShow] = useState(false);
+  const [resultadosVacios, setResultadosVacios] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -21,7 +22,7 @@ function ListaUsuarios() {
     axios
       .get("http://localhost:4000/api/admin/usuario")
       .then((res) => {
-        setData(res.data)
+        setData(res.data);
         setTabla(res.data);
         setTotalItems(res.data.length);
       })
@@ -52,22 +53,21 @@ function ListaUsuarios() {
       .catch((err) => console.log(err));
   };
 
-  const handleChange = e => {
+  const handleChange = (e) => {
     setBusqueda(e.target.value);
     filtrar(e.target.value);
-  }
+  };
 
   const filtrar = (terminoBusqueda) => {
     const resultadosBusqueda = tabla.filter((elemento) => {
       const correo = elemento.correo.toString().toLowerCase();
       const terminoBusquedaLower = terminoBusqueda.toLowerCase();
 
-      return (
-        correo.includes(terminoBusquedaLower)
-      );
+      return correo.includes(terminoBusquedaLower);
     });
 
     setData(resultadosBusqueda);
+    setResultadosVacios(resultadosBusqueda.length === 0);
   };
 
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -86,49 +86,60 @@ function ListaUsuarios() {
               onChange={handleChange}
               placeholder="Buscar Usuario"
             />
-           <div className="input-group-append">
-            <button className="btn btn-outline" type="button"><a href="#!" className="icon-search"> </a></button>
-          </div>
+            <div className="input-group-append">
+              <button className="btn btn-outline" type="button">
+                <a href="#!" className="icon-search"> </a>
+              </button>
+            </div>
           </div>
         </div>
       </div>
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Correo </th>
-            <th scope="col">Editar </th>
-            <th scope="col">Eliminar </th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems &&
-            currentItems.map((usuario) => (
-              <tr key={usuario.ID_Usuario}>
-                <th scope="row">{usuario.ID_Usuario}</th>
-                <td>{usuario.correo}</td>
-                <td>
-                  <a
-                    href="#!"
-                    className="icon-edit"
-                    onClick={() => {
-                      handleDetalleUsuClick(usuario.ID_Usuario);
-                    }}
-                  > </a>
-                </td>
-                <td>
-                  <a
-                    href="#!"
-                    className="icon-trash"
-                    onClick={() => {
-                      handleDelete(usuario.ID_Usuario);
-                    }}
-                  > </a>
+      <div className="table-responsive">
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Correo</th>
+              <th scope="col">Editar</th>
+              <th scope="col">Eliminar</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentItems.length > 0 ? (
+              currentItems.map((usuario) => (
+                <tr key={usuario.ID_Usuario}>
+                  <th scope="row">{usuario.ID_Usuario}</th>
+                  <td>{usuario.correo}</td>
+                  <td>
+                    <a
+                      href="#!"
+                      className="icon-edit"
+                      onClick={() => {
+                        handleDetalleUsuClick(usuario.ID_Usuario);
+                      }}
+                    > </a>
+                  </td>
+                  <td>
+                    <a
+                      href="#!"
+                      className="icon-trash"
+                      onClick={() => {
+                        handleDelete(usuario.ID_Usuario);
+                      }}
+                    > </a>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4" className="text-center">
+                  {resultadosVacios ? "No se encontraron resultados" : "Cargando..."}
                 </td>
               </tr>
-            ))}
-        </tbody>
-      </table>
+            )}
+          </tbody>
+        </table>
+      </div>
       <nav>
         <ul className="pagination">
           <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>

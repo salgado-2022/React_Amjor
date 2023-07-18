@@ -5,11 +5,14 @@ import { EditarConfi } from "./Modals/editarConfiguracion";
 
 function ListaConfiguracion() {
   const [tabla, setTabla] = useState([]);
+  const [data, setData] = useState([]);
+  const [busqueda, setBusqueda] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
   const [totalItems, setTotalItems] = useState(0);
   const [selectedConfiguracionID, setselectedConfiguracionID] = useState(null);
   const [modalShow, setModalShow] = useState(false);
+  const [resultadosVacios, setResultadosVacios] = useState(false);
 
   useEffect(() => {
     fetchData();
@@ -20,7 +23,7 @@ function ListaConfiguracion() {
       .get("http://localhost:4000/api/admin/configuracion")
       .then((res) => {
         setTabla(res.data);
-        console.log(res.data);
+        setData(res.data);
         setTotalItems(res.data.length);
       })
       .catch((err) => console.log(err));
@@ -50,9 +53,26 @@ function ListaConfiguracion() {
       .catch((err) => console.log(err));
   };
 
+  const handleChange = (e) => {
+    setBusqueda(e.target.value);
+    filtrar(e.target.value);
+  };
+
+  const filtrar = (terminoBusqueda) => {
+    const resultadosBusqueda = tabla.filter((elemento) => {
+      const Nombre_Rol = elemento.Nombre_Rol.toString().toLowerCase();
+      const terminoBusquedaLower = terminoBusqueda.toLowerCase();
+
+      return Nombre_Rol.includes(terminoBusquedaLower);
+    });
+
+    setData(resultadosBusqueda);
+    setResultadosVacios(resultadosBusqueda.length === 0);
+  };
+
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = tabla.slice(indexOfFirstItem, indexOfLastItem);
+  const currentItems = data.slice(indexOfFirstItem, indexOfLastItem);
 
   return (
     <>
@@ -61,10 +81,17 @@ function ListaConfiguracion() {
       <div className="col-12">
         <div className="row justify-content-end">
           <div className="input-group mb-3 col-3">
-            <input type="text" className="form-control" 
-            placeholder="Buscar Rol" />
+            <input
+              type="text"
+              className="form-control"
+              value={busqueda}
+              onChange={handleChange}
+              placeholder="Buscar Rol"
+            />
             <div className="input-group-append">
-            <button className="btn btn-outline" type="button"><a href="#!" className="icon-search"> </a></button>
+              <button className="btn btn-outline" type="button">
+                <a href="#!" className="icon-search"> </a>
+              </button>
             </div>
           </div>
         </div>
@@ -72,43 +99,52 @@ function ListaConfiguracion() {
       <div className="row">
         <div></div>
       </div>
-      <table className="table">
-        <thead>
-          <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Rol</th>
-            <th scope="col">Editar</th>
-            <th scope="col">Eliminar</th>
-          </tr>
-        </thead>
-        <tbody>
-          {currentItems &&
-            currentItems.map((rol) => (
-              <tr key={rol.ID_Rol}>
-                <th scope="row">{rol.ID_Rol}</th>
-                <td>{rol.Nombre_Rol}</td>
-                <td>
-                  <a
-                    href="#!"
-                    className="icon-edit"
-                    onClick={() => {
-                      handleDetalleConfigClick(rol.ID_Rol);
-                    }}
-                  > </a>
-                </td>
-                <td>
-                  <a
-                    href="#!"
-                    className="icon-trash"
-                    onClick={() => {
-                      handleDelete(rol.ID_Rol);
-                    }}
-                  > </a>
+      <div className="table-responsive">
+        <table className="table">
+          <thead>
+            <tr>
+              <th scope="col">ID</th>
+              <th scope="col">Rol</th>
+              <th scope="col">Editar</th>
+              <th scope="col">Eliminar</th>
+            </tr>
+          </thead>
+          <tbody>
+            {currentItems.length > 0 ? (
+              currentItems.map((rol) => (
+                <tr key={rol.ID_Rol}>
+                  <th scope="row">{rol.ID_Rol}</th>
+                  <td>{rol.Nombre_Rol}</td>
+                  <td>
+                    <a
+                      href="#!"
+                      className="icon-edit"
+                      onClick={() => {
+                        handleDetalleConfigClick(rol.ID_Rol);
+                      }}
+                    > </a>
+                  </td>
+                  <td>
+                    <a
+                      href="#!"
+                      className="icon-trash"
+                      onClick={() => {
+                        handleDelete(rol.ID_Rol);
+                      }}
+                    > </a>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan="4" className="text-center">
+                  {resultadosVacios ? "No se encontraron resultados" : "Cargando..."}
                 </td>
               </tr>
-            ))}
-        </tbody>
-      </table>
+            )}
+          </tbody>
+        </table>
+      </div>
       <nav>
         <ul className="pagination">
           <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
