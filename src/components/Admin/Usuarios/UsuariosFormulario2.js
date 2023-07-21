@@ -1,5 +1,5 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from "react";
-import "../../../assets/css/formunUsuarios.css";
 import Swal from "sweetalert2";
 import axios from "axios";
 
@@ -11,6 +11,7 @@ function UsuariosFormulario2() {
     contrasena: "",
     ID_Rol: "1",
   });
+  const [showRoles, setShowRoles] = useState(false);
 
   const handleCorreoChange = (event) => {
     const { name, value } = event.target;
@@ -132,7 +133,7 @@ function UsuariosFormulario2() {
                   <div className="col-md-6">
                     <div className="form-group row">
                       <div className="col-md-12">
-                        <label htmlFor="correo" className="text-black">
+                        <label htmlFor="correo" className="text-black custom-font">
                           CORREO ELECTRONICO{" "}
                           <span className="text-danger">*</span>
                         </label>
@@ -150,42 +151,49 @@ function UsuariosFormulario2() {
                     </div>
                     <br />
                     <div id="Roles">
-                      <button>Seleccione el rol que está asociado</button>
+                      <button
+                        className="btn btn-rol"
+                        onClick={() => setShowRoles(!showRoles)}
+                      >
+                        Seleccione el rol que está asociado
+                      </button>
                       <br />
-                      <div>
-                        <div id="Roles-content">
-                          <input
-                            type="checkbox"
-                            id="option1"
-                            value="Administrador"
-                            checked={selectedRoles.includes("Administrador")}
-                            onChange={handleRoleChange}
-                          />
-                          <label htmlFor="option1">Administrador</label>
-                          <br />
-                          <input
-                            type="checkbox"
-                            id="option2"
-                            value="Empleado"
-                            checked={selectedRoles.includes("Empleado")}
-                            onChange={handleRoleChange}
-                          />
-                          <label htmlFor="option2">Empleado</label>
-                          <br />
-                          <input
-                            type="checkbox"
-                            id="option3"
-                            value="Cliente"
-                            checked={selectedRoles.includes("Cliente")}
-                            onChange={handleRoleChange}
-                          />
-                          <label htmlFor="option3">Cliente</label>
-                          <br />
-                        </div>
-                      </div>
-                      {checkboxError && (
-                        <div className="text-danger">
-                          Debe seleccionar mínimo un rol de los asignados
+                      {showRoles && (
+                        <div>
+                          <div id="Roles-content">
+                            <input
+                              type="checkbox"
+                              id="option1"
+                              value="Administrador"
+                              checked={selectedRoles.includes("Administrador")}
+                              onChange={handleRoleChange}
+                            />
+                            <label htmlFor="option1">Administrador</label>
+                            <br />
+                            <input
+                              type="checkbox"
+                              id="option2"
+                              value="Empleado"
+                              checked={selectedRoles.includes("Empleado")}
+                              onChange={handleRoleChange}
+                            />
+                            <label htmlFor="option2">Empleado</label>
+                            <br />
+                            <input
+                              type="checkbox"
+                              id="option3"
+                              value="Cliente"
+                              checked={selectedRoles.includes("Cliente")}
+                              onChange={handleRoleChange}
+                            />
+                            <label htmlFor="option3">Cliente</label>
+                            <br />
+                          </div>
+                          {checkboxError && (
+                            <div className="text-danger">
+                              Debe seleccionar mínimo un rol de los asignados
+                            </div>
+                          )}
                         </div>
                       )}
                     </div>
@@ -221,10 +229,11 @@ function UsuariosFormulario2() {
                   <div className="col-md-12 d-flex justify-content-start">
                     <button
                       type="submit"
-                      className="save-button btn-btn col-7"
+                      className="btn btn-primary2"
                       id="UsuariosFormulario"
                       onClick={handleSubmit}
-                    >Guardar el nuevo Usuario
+                    >
+                      Guardar el nuevo Usuario
                     </button>
                   </div>
                 </div>

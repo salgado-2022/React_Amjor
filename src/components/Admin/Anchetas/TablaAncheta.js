@@ -20,7 +20,6 @@ function TablaAncheta() {
     const [totalItems, setTotalItems] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
 
-
     const formatPrice = (price) => {
         return price.toLocaleString('es-CO', {
             style: 'currency',
@@ -39,12 +38,11 @@ function TablaAncheta() {
         setModalShow2(true);
     };
 
-
     const fetchData = () => {
         axios.get('http://localhost:4000/api/admin/anchetas')
             .then(res => {
-                setData(res.data)
-                setTabla(res.data)
+                setData(res.data);
+                setTabla(res.data);
                 setTotalItems(res.data.length);
             })
             .catch(err => console.log(err));
@@ -65,14 +63,13 @@ function TablaAncheta() {
             }).catch(err => console.log(err));
     };
 
-
     const handleChange = e => {
         setBusqueda(e.target.value);
         filtrar(e.target.value);
-    }
+    };
 
     const filtrar = (terminoBusqueda) => {
-        var resultadosBusqueda = tabla.filter((elemento) => {
+        const resultadosBusqueda = tabla.filter((elemento) => {
             if (
                 elemento.NombreAncheta.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
                 elemento.PrecioUnitario.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
@@ -80,7 +77,7 @@ function TablaAncheta() {
             ) {
                 return elemento;
             }
-            return null; // Si no se cumple la condicion retorne un valor nulo
+            return null;
         });
         setData(resultadosBusqueda);
     };
@@ -126,7 +123,7 @@ function TablaAncheta() {
                         </tr>
                     </thead>
                     <tbody>
-                        {currentItems &&
+                        {currentItems.length > 0 ? (
                             currentItems.map((anchetas) => (
                                 <tr key={anchetas.ID_Ancheta}>
                                     <th scope="row">{anchetas.ID_Ancheta}</th>
@@ -146,8 +143,14 @@ function TablaAncheta() {
                                         handleDelete(anchetas.ID_Ancheta)
                                     }}> </a></td>
                                 </tr>
-                            ))}
-
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="8" className="text-center">
+                                    {busqueda !== "" ? "No se encontraron resultados" : "Cargando..."}
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
                 <nav>
@@ -204,7 +207,6 @@ function TablaAncheta() {
                 selectedAnchetaID={selectedAnchetaID}
             />
         </>
-
     );
 }
 

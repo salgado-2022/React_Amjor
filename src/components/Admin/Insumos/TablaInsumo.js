@@ -59,10 +59,10 @@ function TablaInsumo() {
         setBusqueda(e.target.value);
 
         filtrar(e.target.value);
-    }
+    };
 
     const filtrar = (terminoBusqueda) => {
-        var resultadosBusqueda = tabla.filter((elemento) => {
+        const resultadosBusqueda = tabla.filter((elemento) => {
             if (
                 elemento.NombreInsumo.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
                 elemento.PrecioUnitario.toString().toLowerCase().includes(terminoBusqueda.toLowerCase()) ||
@@ -70,12 +70,10 @@ function TablaInsumo() {
             ) {
                 return elemento;
             }
-            return null; // Si no se cumple la condicion retorne un valor nulo
+            return null;
         });
         setData(resultadosBusqueda);
     };
-
-
 
     useEffect(() => {
         fetchData();
@@ -117,7 +115,7 @@ function TablaInsumo() {
                         </tr>
                     </thead>
                     <tbody>
-                        {currentItems &&
+                        {currentItems.length > 0 ? (
                             currentItems.map((insumos) => (
                                 <tr key={insumos.ID_Insumo}>
                                     <th scope="row">{insumos.ID_Insumo}</th>
@@ -132,8 +130,14 @@ function TablaInsumo() {
                                         handleDelete(insumos.ID_Insumo)
                                     }}> </a></td>
                                 </tr>
-                            ))}
-
+                            ))
+                        ) : (
+                            <tr>
+                                <td colSpan="7" className="text-center">
+                                    {busqueda !== "" ? "No se encontraron resultados" : "Cargando..."}
+                                </td>
+                            </tr>
+                        )}
                     </tbody>
                 </table>
                 <nav>
@@ -150,8 +154,7 @@ function TablaInsumo() {
                             { length: Math.ceil(totalItems / itemsPerPage) },
                             (_, index) => (
                                 <li
-                                    className={`page-item ${currentPage === index + 1 ? "active" : ""
-                                        }`}
+                                    className={`page-item ${currentPage === index + 1 ? "active" : ""}`}
                                     key={index + 1}
                                 >
                                     <button
@@ -164,10 +167,7 @@ function TablaInsumo() {
                             )
                         )}
                         <li
-                            className={`page-item ${currentPage === Math.ceil(totalItems / itemsPerPage)
-                                ? "disabled"
-                                : ""
-                                }`}
+                            className={`page-item ${currentPage === Math.ceil(totalItems / itemsPerPage) ? "disabled" : ""}`}
                         >
                             <button
                                 className="page-link"
@@ -185,7 +185,6 @@ function TablaInsumo() {
                 selectedInsumoID={selectedInsumoID}
             />
         </>
-
     );
 }
 

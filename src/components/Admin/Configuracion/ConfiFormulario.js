@@ -83,6 +83,16 @@ function ConfiFormulario() {
 
   return (
     <Container>
+     <div className="bg-light py-3">
+        <div className="container">
+          <div className="row">
+            <div className="col-md-10 mb-0">
+              <a href="/">Home</a> <span className="mx-2 mb-0">/</span>{" "}
+              <strong className="text-black">Nuevo Rol y Permiso</strong>
+            </div>
+          </div>
+        </div>
+      </div>
       <h2 className="mt-5 mb-4">CREAR UN NUEVO ROL Y PERMISOS</h2>
       <Row className="mb-3">
         <Col md={6}>
