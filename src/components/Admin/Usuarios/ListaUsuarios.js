@@ -104,15 +104,15 @@ function ListaUsuarios() {
         <tbody>
           {currentItems &&
             currentItems.map((usuario) => (
-              <tr key={usuario.ID_Usuario}>
-                <th scope="row">{usuario.ID_Usuario}</th>
+              <tr key={usuario.idUsuario}>
+                <th scope="row">{usuario.idUsuario}</th>
                 <td>{usuario.correo}</td>
                 <td>
                   <a
                     href="#!"
                     className="icon-edit"
                     onClick={() => {
-                      handleDetalleUsuClick(usuario.ID_Usuario);
+                      handleDetalleUsuClick(usuario.idUsuario);
                     }}
                   > </a>
                 </td>
@@ -121,7 +121,7 @@ function ListaUsuarios() {
                     href="#!"
                     className="icon-trash"
                     onClick={() => {
-                      handleDelete(usuario.ID_Usuario);
+                      handleDelete(usuario.idUsuario);
                     }}
                   > </a>
                 </td>

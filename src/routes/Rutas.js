@@ -24,15 +24,15 @@ import { Ventas } from '../views/Admin/Ventas';
 
 //Rutas privadas
 import { PrivateRoute } from './PrivateRoute'
-import { PrivateNavbar } from './PrivateNavbar'
 import { UpdataPassword } from '../components/Register/updatePassword';
+import { Navbar } from '../components/Navbar/Navbar';
 
 
 
 function Rutas() {
     return (
         <BrowserRouter>
-            <PrivateNavbar />
+            <Navbar/>
             <Routes>
                 <Route path="/" element={<Inicio />} />
                 <Route path="/nosotros" element={<Nosotros />} />

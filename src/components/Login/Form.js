@@ -37,7 +37,8 @@ function Form() {
                     const decodedToken = jwt_decode(token);
 
                     if (decodedToken.Status === 'Admin') {
-                        navigate('/admin/pedidos');
+                        const redirectTo = res.data.redirectTo;
+                        window.location.href = redirectTo;              
                     }
                 } else {
                     Swal.fire({
