@@ -36,12 +36,12 @@ function EditarUsuario(props) {
     if (show) {
       axios.get(`http://localhost:4000/api/admin/usuario/usullamada/${id}`)
         .then(res => {
-          console.log(res);
+          console.log("valores",res)
           setValues(prevValues => ({
             ...prevValues,
-            correo: res.data[0].Correo
+            correo: res.data[0].correo
           }));
-          setIsChecked(res.data[0].ID_Usuario === 1);
+          setIsChecked(res.data[0].idUsuario === 1);
         })
         .catch(err => console.log(err));
     }

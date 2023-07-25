@@ -3,9 +3,13 @@ import { Table } from "../../components/Admin/Pedidos/Table";
 
 function Pedidos() {
     return (
-                <div className="container">
-                    <Table />
-                </div>
+        <div className="site-section">
+            <div className="container">
+                <Table />
+            </div>
+        </div>
+
+
     );
 }
 export { Pedidos }
