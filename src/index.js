@@ -9,7 +9,7 @@ import './assets/css/jquery-ui.css'
 import './assets/css/magnific-popup.css'
 import './assets/css/style.css'
 import './assets/fonts/icomoon/style.css'
-import './assets/css/image.css'
+import './assets/css/anchetas.css'
 import './assets/css/scroll.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));

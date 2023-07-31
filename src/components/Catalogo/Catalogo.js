@@ -1,23 +1,37 @@
-import React from "react";
-
-//importación de imagenes del catalogo
-import img1 from '../../assets/img/ancheta1.jpg';
-import img2 from '../../assets/img/ancheta2.jpg';
-import img3 from '../../assets/img/ancheta3.jpg';
-import img4 from '../../assets/img/ancheta4.jpg';
-import img5 from '../../assets/img/ancheta5.jpg';
-import img6 from '../../assets/img/ancheta6.jpg';
-import img7 from '../../assets/img/ancheta7.jpg';
-import img8 from '../../assets/img/ancheta8.jpg';
-import img9 from '../../assets/img/ancheta9.jpg';
-
+import React, { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
+import axios from "axios";
 
 function ProductosCatalogo() {
+    const [data, setData] = useState([]);
+    const [selectedAnchetaID, setSelectedAnchetaID] = useState(null);
+
+    const formatPrice = (price) => {
+        return price.toLocaleString('es-CO', {
+            style: 'currency',
+            currency: 'COP',
+            minimumFractionDigits: 0,
+        });
+    };
+
+    const handleAnchetaClick = (anchetaID) => {
+        setSelectedAnchetaID(anchetaID);
+    };
+
+    const fetchData = () => {
+        axios.get('http://localhost:4000/api/admin/anchetas')
+            .then(res => {
+                setData(res.data);
+            })
+            .catch(err => console.log(err));
+    };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
-
         <div className="col-md-9 order-2">
-
             <div className="row">
                 <div className="col-md-12 mb-5">
                     <div className="float-md-left mb-4">
@@ -35,149 +49,24 @@ function ProductosCatalogo() {
                                 <a className="dropdown-item" href="#/">Promociones</a>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>
             <div className="row mb-5">
-
-                <div className="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                    <div className="block-4 text-center border">
-                        <figure className="block-4-image">
-                            <a href="shop-single"><img src={img9} alt="Imagen placeholder"
-                                className="img-fluid"/></a>
-                        </figure>
-                        <div className="block-4-text p-4">
-                            <h3><a href="shop-single">Ancheta casual</a></h3>
-                            <p className="mb-0">Perfecta para todo tipo de regalo</p>
-                            <p className="text-primary font-weight-bold">$40.000</p>
+                {data.map((anchetas) => (
+                    <div className="col-sm-6 col-lg-4 mb-4" data-aos="fade-up" key={anchetas.ID_Ancheta} onClick={fetchData}>
+                        <div className="block-4 card catalogue" onClick={() => {handleAnchetaClick(anchetas.ID_Ancheta)}} style={{borderRadius: "5%", boxShadow: "0 2px 15px rgba(0, 0, 0, 0.1)", border: "none", cursor: "pointer"}}>    
+                            <img src={`http://localhost:4000/anchetas/` + anchetas.image} alt="" className="card-img-top img-fluid size-catalog block-4-image"/>
+                            <div className="card-body">
+                                <h3 className="card-title" style={{color: "Black", fontSize: "16px" , marginTop: "5px"}}>{anchetas.NombreAncheta}</h3>
+                                <p className="card-text text-right font-weight-normal" style={{color: "MediumSlateBlue", fontSize: "18px"}}>{formatPrice(anchetas.PrecioUnitario)}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div className="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                    <div className="block-4 text-center border">
-                        <figure className="block-4-image">
-                            <a href="shop-single"><img src={img8} alt="Imagen placeholder"
-                                className="img-fluid"/></a>
-                        </figure>
-                        <div className="block-4-text p-4">
-                            <h3><a href="shop-single">Bandeja padre</a></h3>
-                            <p className="mb-0">Bandeja con producto varios</p>
-                            <p className="text-primary font-weight-bold">$40.000</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                    <div className="block-4 text-center border">
-                        <figure className="block-4-image">
-                            <a href="shop-single"><img src={img7} alt="Imagen placeholder"
-                                className="img-fluid"/></a>
-                        </figure>
-                        <div className="block-4-text p-4">
-                            <h3><a href="shop-single">Ancheta de grados</a></h3>
-                            <p className="mb-0">Ancheta perfecta para regalar en grados</p>
-                            <p className="text-primary font-weight-bold">$70.000</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                    <div className="block-4 text-center border">
-                        <figure className="block-4-image">
-                            <a href="shop-single"><img src={img6} alt="Imagen placeholder"
-                                className="img-fluid"/></a>
-                        </figure>
-                        <div className="block-4-text p-4">
-                            <h3><a href="shop-single">Bandeja halloween</a></h3>
-                            <p className="mb-0">Perfecta para regalar en fechas de octubre</p>
-                            <p className="text-primary font-weight-bold">$50.000</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                    <div className="block-4 text-center border">
-                        <figure className="block-4-image">
-                            <a href="shop-single"><img src={img5} alt="Imagen placeholder"
-                                className="img-fluid"/></a>
-                        </figure>
-                        <div className="block-4-text p-4">
-                            <h3><a href="shop-single">Ancheta de cumpleaños</a></h3>
-                            <p className="mb-0">Ancheta para regalar en cumpleaños </p>
-                            <p className="text-primary font-weight-bold">$60.000</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                    <div className="block-4 text-center border">
-                        <figure className="block-4-image">
-                            <a href="shop-single"><img src={img4} alt="Imagen placeholder"
-                                className="img-fluid"/></a>
-                        </figure>
-                        <div className="block-4-text p-4">
-                            <h3><a href="shop-single">Ancheta de amor y amistad</a></h3>
-                            <p className="mb-0">Para regalar en amor y amistad</p>
-                            <p className="text-primary font-weight-bold">$50</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                    <div className="block-4 text-center border">
-                        <figure className="block-4-image">
-                            <a href="shop-single"><img src={img3} alt="Imagen placeholder"
-                                className="img-fluid"/></a>
-                        </figure>
-                        <div className="block-4-text p-4">
-                            <h3><a href="shop-single">Ancheta casual</a></h3>
-                            <p className="mb-0">Perfecta para regalar en todo tipo de ocaciones</p>
-                            <p className="text-primary font-weight-bold">$40.000</p>
-                        </div>
-                    </div>
-                </div>
-                <div className="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                    <div className="block-4 text-center border">
-                        <figure className="block-4-image">
-                            <a href="shop-single"><img src={img2} alt="Imagen placeholder"
-                                className="img-fluid"/></a>
-                        </figure>
-                        <div className="block-4-text p-4">
-                            <h3><a href="shop-single">Ancheta dia de madres</a></h3>
-                            <p className="mb-0">Ancheta para rendir homenaje a las madres</p>
-                            <p className="text-primary font-weight-bold">$80.000</p>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="col-sm-6 col-lg-4 mb-4" data-aos="fade-up">
-                    <div className="block-4 text-center border">
-                        <figure className="block-4-image">
-                            <a href="shop-single"><img src={img1} alt="Imagen placeholder"
-                                className="img-fluid"/></a>
-                        </figure>
-                        <div className="block-4-text p-4">
-                            <h3><a href="shop-single">Ancheta elegante</a></h3>
-                            <p className="mb-0">Ancheta para situaciones formales</p>
-                            <p className="text-primary font-weight-bold">$100.000</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div className="row" data-aos="fade-up">
-                <div className="col-md-12 text-center">
-                    <div className="site-block-27">
-                        <ul>
-                            <li><a href="#/">&lt;</a></li>
-                            <li className="active"><span>1</span></li>
-                            <li><a href="#/">2</a></li>
-                            <li><a href="#/">3</a></li>
-                            <li><a href="#/">4</a></li>
-                            <li><a href="#/">5</a></li>
-                            <li><a href="#/">&gt;</a></li>
-                        </ul>
-                    </div>
-                </div>
+                ))}
             </div>
         </div>
     );
 }
 
-export {ProductosCatalogo}
+export { ProductosCatalogo };
