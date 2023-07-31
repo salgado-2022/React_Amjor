@@ -1,13 +1,8 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 //Axios 
 import axios from "axios";
-
-//JWT-Decode
-import jwt_decode from 'jwt-decode';
-
-import Cookies from 'js-cookie';
 
 //sweetalert2
 import Swal from 'sweetalert2';
@@ -21,7 +16,6 @@ function Form() {
         password: ''
     })
 
-    const navigate = useNavigate();
     axios.defaults.withCredentials = true;
 
     const handleSubmit = (event) => {
@@ -29,21 +23,15 @@ function Form() {
         axios.post('http://localhost:4000/api/login', values)
             .then(res => {
 
-                // Obtener el token de las cookies
-                const token = Cookies.get('token');
+                if (res.data.Status === "Success") {
 
-                if (token) {
-                    // Decodificar el token usando jwt-decode
-                    const decodedToken = jwt_decode(token);
+                    const redirectTo = res.data.redirectTo;
+                    window.location.href = redirectTo;
 
-                    if (decodedToken.Status === 'Admin') {
-                        const redirectTo = res.data.redirectTo;
-                        window.location.href = redirectTo;              
-                    }
                 } else {
                     Swal.fire({
                         title: 'Error!',
-                        text: res.data.Error,
+                        text: "Correo u contraseña invalidos",
                         icon: 'error',
                         confirmButtonText: 'OK'
                     });
@@ -102,7 +90,7 @@ function Form() {
                                     <div className="text-white px-3 py-4 p-md-5 mx-md-4">
                                         <h4 className="mb-4">¿Por qué crear una cuenta?</h4>
                                         <p className="small mb-0">Crear una cuenta le permitirá realizar una compra de cualquier
-                                        ancheta de forma fácil y rápida.</p>
+                                            ancheta de forma fácil y rápida.</p>
                                     </div>
                                 </div>
                             </div>
