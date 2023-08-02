@@ -19,4 +19,4 @@ function SeguirComprando() {
     );
 }
 
-export {SeguirComprando}
+export { SeguirComprando }
