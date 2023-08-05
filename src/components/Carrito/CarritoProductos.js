@@ -1,8 +1,6 @@
-import React from "react";
-
-//Importación de imagenes
-import ancheta1 from '../../assets/img/ancheta1.jpg';
-import ancheta2 from '../../assets/img/ancheta2.jpg';
+import {React, useContext} from "react";
+import { useCart } from '../../hooks/useCart' 
+import { CartProvider } from "../../context/cart";
 
 //Importación de componentes
 
@@ -11,12 +9,48 @@ import { useCounter } from '../../assets/js/btn';
 
 
 function CarritoProductos() {
+    const { cart, addToCart, clearCart } = useCart()
 
     const { count, setCount, increment, decrement } = useCounter();
 
     const handleChange = (e) => {
         setCount(e.target.value);
     };
+
+    function CartItem( { image, PrecioUnitario, NombreAncheta, quantity, addToCart, removeFromCart } ) {
+        return (
+            <tr>
+                                    <td className="product-thumbnail">
+                                        <img src={`http://localhost:4000/anchetas/` + image} alt="Imagen" className="img-fluid" />
+                                    </td>
+                                    <td className="product-name">
+                                        <h2 className="h5 text-black">{NombreAncheta}</h2>
+                                    </td>
+                                    <td>${PrecioUnitario}</td>
+                                    <td>
+                                        <div className="input-group mb-3 ml-4" style={{ maxWidth: '120px' }}>
+                                            <div className="input-group-prepend">
+                                                <button className="btn btn-outline-primary" onClick={removeFromCart}
+                                                    type="button">&minus;</button>
+                                            </div>
+                                            <input type="text" className="form-control text-center" value={quantity}
+                                                onChange={handleChange} placeholder="" aria-label="Example text with button addon"
+                                                aria-describedby="button-addon1" />
+                                            <div className="input-group-append">
+                                                <button className="btn btn-outline-primary " onClick={addToCart}
+                                                    type="button">&#43;</button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>${PrecioUnitario}</td>
+                                    <td><button type="button" className="btn btn-primary icon-edit" data-bs-toggle="modal"
+                                        data-bs-target="#modalInsumos" ></button></td>
+                                    <td><button type="button" className="btn btn-primary icon-trash"
+                                    ></button></td>
+                                </tr>
+
+        )
+    }
 
     return (
         <>
@@ -36,66 +70,14 @@ function CarritoProductos() {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td className="product-thumbnail">
-                                        <img src={ancheta1} alt="Imagen" className="img-fluid" />
-                                    </td>
-                                    <td className="product-name">
-                                        <h2 className="h5 text-black">Ancheta 1</h2>
-                                    </td>
-                                    <td>$49.00</td>
-                                    <td>
-                                        <div className="input-group mb-3 ml-4" style={{ maxWidth: '120px' }}>
-                                            <div className="input-group-prepend">
-                                                <button className="btn btn-outline-primary" onClick={decrement}
-                                                    type="button">&minus;</button>
-                                            </div>
-                                            <input type="text" className="form-control text-center" value={count}
-                                                onChange={handleChange} placeholder="" aria-label="Example text with button addon"
-                                                aria-describedby="button-addon1" />
-                                            <div className="input-group-append">
-                                                <button className="btn btn-outline-primary " onClick={increment}
-                                                    type="button">&#43;</button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>$49.900</td>
-                                    <td><button type="button" className="btn btn-primary icon-edit" data-bs-toggle="modal"
-                                        data-bs-target="#modalInsumos" ></button></td>
-                                    <td><button type="button" className="btn btn-primary icon-trash"
-                                    ></button></td>
-                                </tr>
+                                {cart.map(product => (
+                                    <CartItem key={product.ID_Ancheta}
+                                    addToCart = { () => addToCart(product)} 
+                                    {...product} />
+                                ))}
+                                
 
-                                <tr>
-                                    <td className="product-thumbnail">
-                                        <img src={ancheta2} alt="Imagen" className="img-fluid" />
-                                    </td>
-                                    <td className="product-name">
-                                        <h2 className="h5 text-black">Ancheta 2</h2>
-                                    </td>
-                                    <td>$55.000</td>
-                                    <td>
-                                        <div className="input-group mb-3 ml-4" style={{ maxWidth: '120px' }}>
-                                            <div className="input-group-prepend">
-                                                <button className="btn btn-outline-primary js-btn-minus"
-                                                    type="button">&minus;</button>
-                                            </div>
-                                            <input type="text" className="form-control text-center" value="1"
-                                                placeholder="" aria-label="Example text with button addon"
-                                                aria-describedby="button-addon1" />
-                                            <div className="input-group-append">
-                                                <button className="btn btn-outline-primary js-btn-plus"
-                                                    type="button">&#43;</button>
-                                            </div>
-                                        </div>
 
-                                    </td>
-                                    <td>$55.000</td>
-                                    <td><button type="button" className="btn btn-primary icon-edit" data-bs-toggle="modal"
-                                        data-bs-target=".bd-example-modal-lg"></button></td>
-                                    <td><button type="button" className="btn btn-primary icon-trash"
-                                    ></button></td>
-                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -107,3 +89,7 @@ function CarritoProductos() {
 }
 
 export { CarritoProductos }
+
+// Botón de prueba para limpiar carrito.
+// <td><button type="button" onlick={clearCart} className="btn btn-warning icon-trash"
+// >Limpiar carrito</button></td>

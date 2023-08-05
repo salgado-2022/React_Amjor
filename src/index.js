@@ -1,6 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import {Rutas} from './routes/Rutas';
+import { FiltersProvider } from './context/filters';
+import { CartProvider } from './context/cart';
 import { Context } from './components/Admin/Anchetas/Context/Context';
 
 // Importacion de hojas de estilos css
@@ -14,9 +16,11 @@ import './assets/css/scroll.css'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <Context>
+    <CartProvider>
+    <FiltersProvider>
         <Rutas/> 
-    </Context>
+    </FiltersProvider>
+    </CartProvider>
     
 );
 
