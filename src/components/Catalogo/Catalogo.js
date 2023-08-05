@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { products as initialProducts } from '../../mocks/products.json'
 import { Link } from 'react-router-dom';
 import { useCart } from '../../hooks/useCart'
 import axios from "axios";
