@@ -38,6 +38,7 @@ function ProductosCatalogo({ products }) {
         fetchData();
     }, []);
 
+
     console.log(data)
 
 
