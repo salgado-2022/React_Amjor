@@ -3,10 +3,11 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 
-function Filtro2 () {
+function Filtro2() {
 
     return (
-        <div className="row">
+        <>
+            <div className="row">
                 <div className="col-md-12 mb-5">
                     <div className="float-md-left mb-4">
                         <h2 className="text-black h5">Mira nuestros productos!</h2>
@@ -26,6 +27,7 @@ function Filtro2 () {
                     </div>
                 </div>
             </div>
+        </>
 
     );
 }

@@ -1,6 +1,19 @@
-import React from "react";
+import { React, useId } from "react";
+//import { ProductosCatalogo } from "../Catalogo/Catalogo";
+import { useFilters } from "../../hooks/useFilters";
 
 function Filtro() {
+  const { filters, setFilters } = useFilters()
+
+  const minPriceFilterId = useId()
+
+  const handleChangeMinPrice = (event) => {
+    setFilters(prevState => ({
+      ...prevState,
+      minPrice: event.target.value
+    }))
+  }
+
   return (
     <div className="col-md-3 order-1 mb-5 mb-md-0">
       <div className="border p-4 rounded mb-4">
@@ -9,16 +22,16 @@ function Filtro() {
             Filtrar por precio
           </h3>
           <div>
-            <label htmlFor="asd">Precio a partir de:</label>
+            <label htmlFor={minPriceFilterId}>Precio a partir de: </label>
             <input
               type="range"
-              id="2"
+              id={minPriceFilterId}
               min="0"
-              max="1000"
-              onChange=""
-              value="1000"
+              max="500000"
+              onChange={handleChangeMinPrice}
+              value={filters.minPrice}
             />
-            <span>$1000</span>
+            <span>${filters.minPrice}</span>
           </div>
         </div>
 
