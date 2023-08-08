@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { useCart } from '../../hooks/useCart';
 import { AnchetaDetalle } from "./AnchetaDetalle";
 
@@ -11,8 +10,6 @@ function ProductosCatalogo({ products }) {
         return cart.some(item => item.ID_Ancheta === product.ID_Ancheta)
     }
 
-
-    const [data, setData] = useState([]);
     const [selectedAnchetaID, setSelectedAnchetaID] = useState(null);
     const [modalShow, setModalShow] = React.useState(false);
 
@@ -29,20 +26,6 @@ function ProductosCatalogo({ products }) {
         setModalShow(true);
     };
 
-    const fetchData = () => {
-        axios.get('http://localhost:4000/api/admin/anchetas')
-            .then(res => {
-                setData(res.data);
-            })
-            .catch(err => console.log(err));
-    };
-
-    useEffect(() => {
-        fetchData();
-    }, []);
-
-    //console.log(data)
-
     return (
         <>
         <div className="row mb-5">
@@ -50,7 +33,7 @@ function ProductosCatalogo({ products }) {
                 const isProductInCart = checkProductInCart(product)
                 
                 return (
-                    <div className="col-sm-6 col-lg-4 mb-4" data-aos="fade-up" key={product.ID_Ancheta} onClick={fetchData}>
+                    <div className="col-sm-6 col-lg-4 mb-4" data-aos="fade-up" key={product.ID_Ancheta}>
                         <div className="block-4 card catalogue" onClick={() => { handleAnchetaClick(product.ID_Ancheta) }} style={{ borderRadius: "5%", boxShadow: "0 2px 15px rgba(0, 0, 0, 0.1)", border: "none", cursor: "pointer" }}>
                             <img src={`http://localhost:4000/anchetas/` + product.image} alt="" className="card-img-top img-fluid size-catalog block-4-image" />
                             <div className="card-body">
