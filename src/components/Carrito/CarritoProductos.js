@@ -10,23 +10,14 @@ import { useCounter } from '../../assets/js/btn';
 
 function CarritoProductos() {
     const { cart, addToCart, clearCart } = useCart()
-    // Console log del cart
-    console.log("Cart:", cart)
 
     const { count, setCount, increment, decrement } = useCounter();
 
-
-    // const handleChange = (e) => {
-    //     setCount(e.target.value);
-    // };
+    const handleChange = (e) => {
+        setCount(e.target.value);
+    };
 
     function CartItem( { image, PrecioUnitario, NombreAncheta, quantity, addToCart, removeFromCart } ) {
-        const handleChange = (e) => {
-            const newQuantity = parseInt(e.target.value, 10);
-            if (newQuantity >= 1) {
-                addToCart({ ...product, quantity: newQuantity });
-            }
-        };
         return (
             <tr>
                                     <td className="product-thumbnail">
@@ -43,7 +34,7 @@ function CarritoProductos() {
                                                     type="button">&minus;</button>
                                             </div>
                                             <input type="text" className="form-control text-center" value={quantity}
-                                                onChange={handleChange} min="1" placeholder="" aria-label="Example text with button addon"
+                                                onChange={handleChange} placeholder="" aria-label="Example text with button addon"
                                                 aria-describedby="button-addon1" />
                                             <div className="input-group-append">
                                                 <button className="btn btn-outline-primary " onClick={addToCart}

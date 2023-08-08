@@ -6,9 +6,6 @@ import { AnchetaDetalle } from "./AnchetaDetalle";
 function ProductosCatalogo({ products }) {
     const { addToCart, removeFromCart, cart } = useCart()
 
-    // Console log cart in catalog
-    console.log("Cart in Catalog", cart)
-
     const checkProductInCart = product => {
         return cart.some(item => item.ID_Ancheta === product.ID_Ancheta)
     }

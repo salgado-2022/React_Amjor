@@ -1,5 +1,5 @@
 import { React, useReducer } from 'react'
-import { createContext, useState } from 'react'
+import { createContext, useState, useEffect } from 'react'
 import { cartReducer, cartInitialState } from '../reducers/cart'
 
 // Se crea el context
@@ -10,7 +10,7 @@ export const CartContext = createContext()
 //     reducer([], { type: 'ADD_TO_CART', payload: { id: 1 } })
 // ).toEqual([{ id: 1, quantity: 1 }])
 
-export function useCartReducer () {
+export function useCartReducer() {
     const [state, dispatch] = useReducer(cartReducer, cartInitialState)
     //const [cart, setCart] = useState([])
 
@@ -20,30 +20,40 @@ export function useCartReducer () {
     })
 
     const removeFromCart = product => dispatch({
-            type: 'REMOVE_TO_CART',
-            payload: product
+        type: 'REMOVE_TO_CART',
+        payload: product
     })
 
     const clearCart = () => dispatch({
         type: 'CLEAR_CART'
     })
 
-    return { state, addToCart, removeFromCart, clearCart }
+    return { state, dispatch, addToCart, removeFromCart, clearCart }
 
 }
-// Se crea el CartProvider
-export function CartProvider ({ children }) {
-    const { state, addToCart, removeFromCart, clearCart } = useCartReducer()
+
+
+export function CartProvider({ children }) {
+    const { state, dispatch, addToCart, removeFromCart, clearCart } = useCartReducer();
+
+    useEffect(() => {
+        const storedCart = JSON.parse(window.localStorage.getItem('cart')) || [];
+        if (storedCart.length > 0) {
+            dispatch({ type: 'SET_CART', payload: storedCart });
+        }
+    }, [dispatch]);
 
     return (
-        <CartContext.Provider value={{
-            cart: state,
-            addToCart,
-            removeFromCart,
-            clearCart
-        }}
+        <CartContext.Provider
+            value={{
+                cart: state,
+                addToCart,
+                removeFromCart,
+                clearCart,
+            }}
         >
-            { children }
+            {children}
         </CartContext.Provider>
-    )
+    );
 }
+
