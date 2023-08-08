@@ -14,6 +14,7 @@ export const cartReducer = (state, action) => {
             if (productInCartIndex >= 0) {
                 const newState = structuredClone(state)
                 newState[productInCartIndex].quantity += 1
+                console.log("Product added to existing:", newState);
                 return newState
             }
 
@@ -33,15 +34,19 @@ export const cartReducer = (state, action) => {
         case 'REMOVE_TO_CART': {
             const { ID_Ancheta } = actionPayload
             const newState = state.filter(item => item.ID_Ancheta !== ID_Ancheta)
+            console.log("Product removed:", newState);
             updateLocalStorage(newState)
             return newState
         }
 
         case 'CLEAR_CART': {
             updateLocalStorage(cartInitialState)
+            console.log("Cart cleared");
             return cartInitialState
         }
+        
+        default:
+            return state
     }
 
-    return state
 }
