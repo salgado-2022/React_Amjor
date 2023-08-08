@@ -68,9 +68,6 @@ function AnchetaDetalle(props) {
             style={{ zIndex: '2000' }}
         >
             <Modal.Header>
-                <Modal.Title id="contained-modal-title-vcenter" className="text-black">
-                    Insumos de la Ancheta
-                </Modal.Title>
                 <Button variant="secondary" onClick={props.onHide} className="close">
                     <span aria-hidden="true">&times;</span>
                 </Button>
@@ -79,45 +76,43 @@ function AnchetaDetalle(props) {
                 {isLoading ? (
                     <div className="text-center">
                         <h3>Espera un momento...</h3>
-                        {/* Puedes agregar un spinner o un mensaje de carga aquí */}
                     </div>
                 ) : (
                     <>
-                        <div className="section" style={{ display: "flex", justifyContent: "space-between", padding: "10px" }}>
-                            <div className="text">
-                                <br />
-                                <h1 style={{ margin: "0", fontSize: '24px' }}>{dataA.NombreAncheta}</h1>
-                                <p style={{ marginRight: "10px", fontSize: '15px' }}>{dataA.Descripcion}</p>
+                        <div className="section" style={{ display: "flex", padding: "10px" }}>
+                            <div className="row">
+                                <div className="col-xl-6" style={{ marginTop: "20px" }}>
+                                    <div className="container modal-container">
+                                        <div className="image-container">
+                                            <img src={`http://localhost:4000/anchetas/` + dataA.image} className="rounded" alt=""/>
+                                        </div>
+                                    </div> 
+                                </div>
+                                <div className="col-xl-6" style={{ marginTop: "20px" }}>
+                                    <div className="container">
+                                        <h1 style={{ fontSize: '26px', fontWeight: "bold", color: "#2E2C36"}}>{dataA.NombreAncheta}</h1>
+                                        <p style={{fontWeight: "normal", fontSize: '16px', color: "MediumSlateBlue" }}>{formatPrice(dataA.PrecioUnitario)+"/u"}</p> 
+                                        {data.map((insumos, index) => {
+                                            return (
+                                                <li key={index}>
+                                                    <span>{insumos.Cantidad} {insumos.NombreInsumo}</span> 
+                                                </li>
+                                            );
+                                        })}
+                                    </div>
+                                </div>
                             </div>
-                            <img src={`http://localhost:4000/anchetas/` + dataA.image} alt="" style={{ marginTop: "30px", maxWidth: "300px" }} />
                         </div>
+                        <hr className="hr-blurry"></hr>
                         <div style={{ padding: "10px" }}>
-                            <br />
-                            <table className="table">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">ID</th>
-                                        <th scope="col">Insumo</th>
-                                        <th scope="col">Cantidad</th>
-                                        <th scope="col">Precio</th>
-                                    </tr>
-                                </thead>
-                                <tbody className="table-group-divider">
-                                    {data.map((insumos, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <th scope="row">{insumos.ID_Insumos_Ancheta}</th>
-                                                <td>{insumos.NombreInsumo}</td>
-                                                <td>{insumos.Cantidad}</td>
-                                                <td>{formatPrice(insumos.Total)}</td>
-                                            </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
+                            <h1 style={{ fontSize: '20px', fontWeight: "bold", color: "#2E2C36"}}>Descripción del producto</h1>
+                            <p style={{ fontSize: '16px', color: "#2E2C36"}}>{dataA.Descripcion}</p>
                         </div>
                         <Modal.Footer>
-                            <h4>Total: {formatPrice(dataA.PrecioUnitario)}</h4>
+                        <button type="submit" className="btn btn-cart" id="crearAncheta" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                            <span style={{fontWeight: "700"}}>Agregar</span><a>{formatPrice(dataA.PrecioUnitario)}</a>
+                        </button>
+                        {/* <button className="btn btn-cart" onClick={(e) => {e.stopPropagation(); isProductInCart ? removeFromCart(product) : addToCart(product)}} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: isProductInCart ? 'red' : 'MediumSlateBlue'}}><span style={{fontWeight: "700"}}>Agregar</span><a>{formatPrice(dataA.PrecioUnitario)}</a></button> */}
                         </Modal.Footer>
                     </>
                 )}
