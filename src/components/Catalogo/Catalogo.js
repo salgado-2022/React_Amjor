@@ -41,6 +41,8 @@ function ProductosCatalogo({ products }) {
         fetchData();
     }, []);
 
+    //console.log(data)
+
     return (
         <>
         <div className="row mb-5">
