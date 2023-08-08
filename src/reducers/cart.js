@@ -44,6 +44,10 @@ export const cartReducer = (state, action) => {
             console.log("Cart cleared");
             return cartInitialState
         }
+
+        case 'SET_CART':
+            // Aquí actualizamos el estado con los datos del carrito
+            return actionPayload;
         
         default:
             return state
