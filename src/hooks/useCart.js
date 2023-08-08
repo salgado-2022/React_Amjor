@@ -8,5 +8,8 @@ export const useCart = () => {
         throw new Error("useCart must be used within a CartProvider");
     }
 
+    // CONSOLE LOG CART hook useCart
+    console.log("Cart context:", context);
+
     return context;
 };
