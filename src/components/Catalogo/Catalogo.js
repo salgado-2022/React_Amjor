@@ -38,9 +38,7 @@ function ProductosCatalogo({ products }) {
         fetchData();
     }, []);
 
-
-    console.log(data)
-
+    //console.log(data)
 
     return (
         <div className="row mb-5">

@@ -31,8 +31,8 @@ export const cartReducer = (state, action) => {
         }
 
         case 'REMOVE_TO_CART': {
-            const { id } = actionPayload
-            const newState = state.filter(item => item.id !== id)
+            const { ID_Ancheta } = actionPayload
+            const newState = state.filter(item => item.ID_Ancheta !== ID_Ancheta)
             updateLocalStorage(newState)
             return newState
         }
