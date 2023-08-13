@@ -1,70 +1,58 @@
-# Getting Started with Create React App
+# Proyecto AMJOR - Anchetas, desarrollado con React y Node.js
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Este proyecto es una aplicación web para que los usuarios puedan comprar anchetas de catálogo, o puedan personalizar su propia ancheta. Los administrador pueden crear anchetas, insumos, usuarios y gestionar todos los pedidos de Amjor utilizando la pestaña administrativa de Amjor. 
 
-## Available Scripts
+Para el desarrollo de este sistema se utilizaron las tecnologías React y Node.js, y como motor de base de datos se usa MySQL.
 
-In the project directory, you can run:
+## Características para usuarios
 
-### `npm start`
+- Permite a los usuarios añadir una ancheta de catálogo o personalizar una ancheta preestablecida con insumos creados previamente por el administrador.
+- Proporciona una interfaz intuitiva y atractiva para agregar productos a las anchetas.
+- Permite a los usuarios visualizar el contenido y el costo total de la ancheta antes de finalizarla.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## Características para administrador
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+- Permite al administrador crear cuantas anchetas desee, y cuantos insumos desee.
+- Permite al administrador gestionar los estados de las anchetas e insumos en caso de que desee dejar de vender alguna de estas.
+- Permite al administrador obtener información general de la plataforma mediante el dashboard de la pestaña administrativa.
+- Permite al administrador gestionar todos los usuarios registrados dentro del sistema.
 
-### `npm test`
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Capturas de Pantalla
 
-### `npm run build`
+Aún no disponibles.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Tecnologías Utilizadas
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **Frontend:** React
+- **Backend:** Node.js
+- **Gestor de Paquetes:** npm
+- **Motor de base de datos:** MySQL
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Instalación e inicio de todo el aplicativo en localhost
 
-### `npm run eject`
+1. Clona este repositorio: `git clone https://github.com/salgado-2022/API-AMJOR.git`
+2. Clona el repositorio de la pestaña principal: `git clone https://github.com/salgado-2022/React_Amjor.git`
+3. Clona el repositorio de la pestaña administrativa: `git clone https://github.com/salgado-2022/Dashboard-AMJOR.git`
+4. Navega a la carpeta de cada repositorio descargado: `cd <carpeta del repositorio>`
+5. En la carpeta de cada repositorio instala las dependencias: `npm i`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Uso
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+1. Inicia primero el proyecto de *API-AMJOR*: `node app`
+2. Inicia de segundo el proyecto de *React_Amjor*: `npm start`
+3. Inicia de tercero el proyecto de *Dashboard-AMJOR*. Presiona **y** cuando te pregunte si deseas abrir ese proyecto en otro puerto: `npm start`
+4. Abre tu navegador web y visita: `http://localhost:3000`
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Contribuciones
 
-## Learn More
+Las contribuciones son bienvenidas. Si encuentras algún problema o tienes sugerencias para mejorar el proyecto, por favor crea un issue en este repositorio.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Autores
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+- Brandón Quintero Tobón
+- Juan David Morales Calderón
+- Juan David Salgado Gonzalez
+- Juan Fernando Cataño Posada
 
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)

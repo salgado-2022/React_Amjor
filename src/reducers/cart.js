@@ -23,7 +23,8 @@ export const cartReducer = (state, action) => {
                 ... state,
                 {
                     ... actionPayload,
-                    quantity: 1
+                    quantity: 1,
+                    insumos: actionPayload.insumos || [],
                 }
             ]
 
