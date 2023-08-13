@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCart } from '../../hooks/useCart';
 import { AnchetaDetalle } from "./AnchetaDetalle";
+import axios from "axios";
 
 
 function ProductosCatalogo({ products }) {
@@ -42,17 +43,33 @@ function ProductosCatalogo({ products }) {
                                     <h3 className="card-title" style={{ color: "Black", fontSize: "16px", marginTop: "5px" }}>{product.NombreAncheta}</h3>
                                     <p className="card-text text-right font-weight-normal" style={{ color: "MediumSlateBlue", fontSize: "18px" }}>{formatPrice(product.PrecioUnitario)}</p>
                                     <button
-                                        className="btn"
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            isProductInCart
-                                                ? removeFromCart(product)
-                                                : addToCart({ ...product, quantity: 1 }); // Agregar producto con cantidad 1 al carrito
-                                        }}
-                                        style={{ backgroundColor: isProductInCart ? 'red' : 'MediumSlateBlue' }}
-                                    >
-                                        Añadir al carrito
-                                    </button>
+                                    className="btn"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        if (isProductInCart) {
+                                            removeFromCart(product);
+                                        } else {
+                                            axios
+                                                .get(`http://localhost:4000/api/admin/anchetas/insancheta/${product.ID_Ancheta}`)
+                                                .then((response) => {
+                                                    const insumos = response.data;
+
+                                                    addToCart({
+                                                        ...product,
+                                                        insumos: insumos,
+                                                    });
+                                                })
+                                                .catch((error) => {
+                                                    console.error('Error al obtener insumos:', error);
+                                                });
+                                        }
+                                    }}
+                                    style={{ backgroundColor: isProductInCart ? 'red' : 'MediumSlateBlue' }}
+                                >
+                                    {isProductInCart ? 'Eliminar del carrito' : 'Añadir al carrito'}
+                                </button>
+                                    
+                                    
                                 </div>
                             </div>
                         </div>
