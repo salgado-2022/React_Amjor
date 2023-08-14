@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useCart } from '../../hooks/useCart';
 import { AnchetaDetalle } from "./AnchetaDetalle";
 import axios from "axios";

@@ -110,7 +110,7 @@ function AnchetaDetalle(props) {
                         </div>
                         <Modal.Footer>
                         <button type="submit" className="btn btn-cart" id="crearAncheta" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                            <span style={{fontWeight: "700"}}>Agregar</span><a>{formatPrice(dataA.PrecioUnitario)}</a>
+                            <span style={{fontWeight: "700"}}>Agregar</span> <a href="!#">{formatPrice(dataA.PrecioUnitario)}</a>
                         </button>
                         {/* <button className="btn btn-cart" onClick={(e) => {e.stopPropagation(); isProductInCart ? removeFromCart(product) : addToCart(product)}} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: isProductInCart ? 'red' : 'MediumSlateBlue'}}><span style={{fontWeight: "700"}}>Agregar</span><a>{formatPrice(dataA.PrecioUnitario)}</a></button> */}
                         </Modal.Footer>
