@@ -1,7 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { useCart } from '../../hooks/useCart'; 
+import axios from 'axios'
+
 
 function CarritoPedido() {
+  
+  const { cart, clearCart } = useCart();
+  const [pedidoData, setPedidoData] = useState({
+      ID_Cliente: 1, // Reemplaza con el ID real del cliente
+      Direccion_Entrega: "Dirección de prueba: Cra 60A #70A - 80 Int 2106",
+      Fecha_Entrega: "2023-08-15", // Fecha de entrega en formato YYYY-MM-DD
+      Precio_Total: calcularPrecioTotal(cart), // Implementa una función para calcular el precio total del carrito
+      Anchetas: cart.map(producto => ({
+          ID_Ancheta: producto.ID_Ancheta,
+          Cantidad: producto.quantity,
+          Insumos: producto.insumos.map(insumo => ({
+              ID_Insumo: insumo.ID_Insumos_Ancheta,
+              Cantidad: insumo.Cantidad
+          }))
+      }))
+  });
+
+  function calcularPrecioTotal(cart) {
+    let total = 0;
+  
+    cart.forEach(producto => {
+        total += producto.PrecioUnitario * producto.quantity; // Sumar el precio del producto
+        producto.insumos.forEach(insumo => {
+            total += insumo.Total; // Sumar el precio total del insumo
+        });
+    });
+  
+    return total;
+  }
+
+  const enviarPedido = () => {
+      // Realizar la solicitud HTTP POST al servidor
+      axios.post("http://localhost:4000/api/enviarPedido", pedidoData)
+          .then(response => {
+              console.log("Pedido enviado con éxito:", response.data);
+              clearCart(); // Limpiar el carrito después de enviar el pedido
+              // Realizar cualquier otra acción necesaria después de enviar el pedido
+          })
+          .catch(error => {
+              console.error("Error al enviar el pedido:", error);
+          });
+  }; 
     
     
     return(
@@ -78,8 +123,8 @@ function CarritoPedido() {
                   <Link exact to="/thankyou"> 
                   <div className="form-group">
                     
-                    <button className="btn btn-primary btn-lg py-3 btn-block" id="boton-realizarPedido" >Realizar
-                      pedido</button>
+                    <button className="btn btn-primary btn-lg py-3 btn-block" id="boton-realizarPedido" onClick={() => enviarPedido(cart)}
+                    >Realizar pedido</button>
                   </div>
                   </Link>
 
