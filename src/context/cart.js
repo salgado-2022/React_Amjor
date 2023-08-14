@@ -1,5 +1,5 @@
 import { React, useReducer } from 'react'
-import { createContext, useState, useEffect } from 'react'
+import { createContext, useEffect } from 'react'
 import { cartReducer, cartInitialState } from '../reducers/cart'
 
 // Se crea el context
