@@ -4,6 +4,8 @@ import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
 
 function AnchetaDetalle(props) {
+    const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
+    
     const { selectedAnchetaID, onHide, show } = props;
     const id = selectedAnchetaID;
 
@@ -30,7 +32,7 @@ function AnchetaDetalle(props) {
         if (id) {
             const fetchData = async () => {
                 try {
-                    const res = await axios.get(`http://localhost:4000/api/admin/anchetas/insancheta/` + id);
+                    const res = await axios.get(`${apiUrl}/api/admin/anchetas/insancheta/` + id);
                     setInsumo(res.data);
                     setIsLoading(false);
                 } catch (err) {
@@ -39,7 +41,7 @@ function AnchetaDetalle(props) {
                 }
             };
 
-            axios.get('http://localhost:4000/api/admin/anchetas/anchellamada/' + id)
+            axios.get(`${apiUrl}/api/admin/anchetas/anchellamada/` + id)
                 .then(res => {
                     setDataA(prevValues => ({
                         ...prevValues,
@@ -84,7 +86,7 @@ function AnchetaDetalle(props) {
                                 <div className="col-xl-6" style={{ marginTop: "20px" }}>
                                     <div className="container modal-container">
                                         <div className="image-container">
-                                            <img src={`http://localhost:4000/anchetas/` + dataA.image} className="rounded" alt=""/>
+                                            <img src={`${apiUrl}/anchetas/` + dataA.image} className="rounded" alt=""/>
                                         </div>
                                     </div> 
                                 </div>

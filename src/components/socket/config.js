@@ -1,5 +1,5 @@
 import io from "socket.io-client";
 
-let socket = io('//localhost:4000');
+let socket = io('//34.173.120.70:4000');
 
 export default socket;

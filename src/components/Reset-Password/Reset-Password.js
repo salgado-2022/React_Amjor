@@ -7,13 +7,15 @@ import Swal from 'sweetalert2';
 import axios from "axios";
 
 function ResetPassword() {
+    const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
+    
     const [email, setEmail] = useState("");
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         axios
-            .post("http://localhost:4000/api/recuperar", { email })
+            .post(`${apiUrl}/api/recuperar`, { email })
             .then((response) => {
                 if (response.data.existe === true) {
                     Swal.fire({

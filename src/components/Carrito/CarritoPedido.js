@@ -5,6 +5,7 @@ import axios from 'axios'
 
 
 function CarritoPedido() {
+  const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
   
   const { cart, clearCart } = useCart();
   const [pedidoData, setPedidoData] = useState({
@@ -37,7 +38,7 @@ function CarritoPedido() {
 
   const enviarPedido = () => {
       // Realizar la solicitud HTTP POST al servidor
-      axios.post("http://localhost:4000/api/enviarPedido", pedidoData)
+      axios.post(`${apiUrl}/api/enviarPedido`, pedidoData)
           .then(response => {
               console.log("Pedido enviado con éxito:", response.data);
               clearCart(); // Limpiar el carrito después de enviar el pedido

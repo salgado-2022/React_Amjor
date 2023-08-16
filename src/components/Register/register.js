@@ -16,6 +16,7 @@ import '../../assets/css/alertas.css'
 
 
 function FormRegister() {
+    const apiUrl = process.env.REACT_APP_AMJOR_API_URL
 
     const [values, setValues] = useState({
         email: '',
@@ -41,7 +42,7 @@ function FormRegister() {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (errors.email === "" && errorP.password === "") {
-            axios.post('http://localhost:4000/api/register', values)
+            axios.post(`${apiUrl}/api/register`, values)
                 .then(res => {
                     if (res.data.Status === "Success") {
                         Swal.fire({
