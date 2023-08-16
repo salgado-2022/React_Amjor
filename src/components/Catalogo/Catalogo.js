@@ -8,6 +8,8 @@ import Alert from '@mui/material/Alert';
 
 
 function ProductosCatalogo({ products }) {
+    const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
+    
     const { addToCart, removeFromCart, cart } = useCart()
 
     const [snackbarOpen, setSnackbarOpen] = useState(false);
@@ -50,7 +52,7 @@ function ProductosCatalogo({ products }) {
           removeFromCart(product);
         } else {
           axios
-            .get(`http://localhost:4000/api/admin/anchetas/insancheta/${product.ID_Ancheta}`)
+            .get(`${apiUrl}/api/admin/anchetas/insancheta/${product.ID_Ancheta}`)
             .then((response) => {
               const insumos = response.data;
     
@@ -78,7 +80,7 @@ function ProductosCatalogo({ products }) {
                     return (
                         <div className="col-sm-6 col-lg-4 mb-4" data-aos="fade-up" key={product.ID_Ancheta} >
                             <div className="block-4 card catalogue" onClick={() => { handleAnchetaClick(product.ID_Ancheta) }} style={{ borderRadius: "5%", boxShadow: "0 2px 15px rgba(0, 0, 0, 0.1)", border: "none", cursor: "pointer" }}>
-                                <img src={`http://localhost:4000/anchetas/` + product.image} alt="" className="card-img-top img-fluid size-catalog block-4-image" />
+                                <img src={`${apiUrl}/anchetas/` + product.image} alt="" className="card-img-top img-fluid size-catalog block-4-image" />
                                 <div className="card-body">
                                     <h3 className="card-title" style={{ color: "Black", fontSize: "16px", marginTop: "5px" }}>{product.NombreAncheta}</h3>
                                     <p className="card-text text-right font-weight-normal" style={{ color: "MediumSlateBlue", fontSize: "18px" }}>{formatPrice(product.PrecioUnitario)}</p>

@@ -9,6 +9,8 @@ import { useCounter } from '../../assets/js/btn';
 
 
 function CarritoProductos() {
+    const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
+    
     const { cart, addToCart, clearCart } = useCart()
 
     const { count, setCount, increment, decrement } = useCounter();
@@ -21,7 +23,7 @@ function CarritoProductos() {
         return (
             <tr>
                                     <td className="product-thumbnail">
-                                        <img src={`http://localhost:4000/anchetas/` + image} alt="Imagen" className="img-fluid" />
+                                        <img src={`${apiUrl}/anchetas/` + image} alt="Imagen" className="img-fluid" />
                                     </td>
                                     <td className="product-name">
                                         <h2 className="h5 text-black">{NombreAncheta}</h2>
