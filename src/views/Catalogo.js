@@ -52,7 +52,6 @@ function Catalogo() {
 }
 
 
-
 // function Catalogo() {
 //     return (
 //             <div className="site-wrap">
