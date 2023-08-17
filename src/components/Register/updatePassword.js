@@ -11,6 +11,7 @@ import Swal from 'sweetalert2';
 
 
 function UpdataPassword() {
+    const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
 
     /* Estas líneas de código usan hooks de la biblioteca `react-router-dom` para acceder y extraer el
     parámetro `token` de los parámetros de búsqueda de URL. */
@@ -28,7 +29,7 @@ function UpdataPassword() {
     useEffect(() => {
         if (token) {
 
-            axios.post('http://localhost:4000/api/recovery', { token })
+            axios.post(`${apiUrl}/api/recovery`, { token })
                 .catch(error => {
 
                     if (error.message === "Request failed with status code 401") {
@@ -97,7 +98,7 @@ function UpdataPassword() {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (errorP.password === "") {
-            axios.patch('http://localhost:4000/api/actualizar', values)
+            axios.patch(`${apiUrl}/api/actualizar`, values)
                 .then(res => {
                     if (res.data.Status === "Success") {
                         Swal.fire({

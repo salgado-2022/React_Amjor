@@ -10,6 +10,7 @@ import Swal from 'sweetalert2';
 //Importación de imagenes
 
 function Form() {
+    const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
 
     const [values, setValues] = useState({
         email: '',
@@ -20,7 +21,7 @@ function Form() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post('http://localhost:4000/api/login', values)
+        axios.post(`${apiUrl}/api/login`, values)
             .then(res => {
 
                 if (res.data.Status === "Success") {

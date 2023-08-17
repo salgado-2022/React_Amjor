@@ -9,6 +9,8 @@ import { ProductosCatalogo } from '../components/Catalogo/Catalogo'
 import { CartProvider } from '../context/cart';
 
 function Catalogo() {
+    const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
+    
     const [products, setProducts] = useState([]);
     const { filterProducts } = useFilters();
     const filteredProducts = filterProducts(products);
@@ -17,7 +19,7 @@ function Catalogo() {
         // Función para obtener los datos desde la API
         const fetchProducts = async () => {
             try {
-                const response = await axios.get("http://localhost:4000/api/admin/anchetas");
+                const response = await axios.get(`${apiUrl}/api/admin/anchetas`);
                 setProducts(response.data);
             } catch (error) {
                 console.error("Error fetching products:", error);
@@ -48,7 +50,6 @@ function Catalogo() {
         </CartProvider>
     );
 }
-
 
 
 // function Catalogo() {

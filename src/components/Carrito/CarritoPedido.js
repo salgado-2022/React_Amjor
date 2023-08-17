@@ -6,6 +6,7 @@ import { clear } from "i/lib/inflections";
 
 
 function CarritoPedido() {
+  const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
   
   const {  clearCart } = useCart();
   const storedCart = JSON.parse(window.localStorage.getItem('cart')) || [];
@@ -38,7 +39,7 @@ function CarritoPedido() {
   const enviarPedido = () => {
     console.log(pedidoData)
       // Realizar la solicitud HTTP POST al servidor
-      axios.post("http://localhost:4000/api/enviarPedido", pedidoData)
+      axios.post(`${apiUrl}/api/enviarPedido`, pedidoData)
           .then(response => {
               console.log("Pedido enviado con éxito:", response.data);
               console.log(storedCart)
