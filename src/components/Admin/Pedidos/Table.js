@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import socket from '../../socket/config'
 
 //AXIOS
 import axios from "axios";
@@ -23,11 +22,8 @@ function Table() {
 
 
     useEffect(() => {
-        socket.on('Pedidos', datosActualizados => {
-            setData(datosActualizados)
-            setTotalItems(datosActualizados.length);
-        })
-    }, [data]);
+    
+    });
 
     /**
     * La función establece el ID del pedido seleccionado y muestra un modal cuando se hace clic en el botón detalle.
