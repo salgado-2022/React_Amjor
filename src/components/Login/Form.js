@@ -21,7 +21,7 @@ function Form() {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post(`${apiUrl}/api/login`, values)
+        axios.post(`http://localhost:4000/api/login`, values)
             .then(res => {
 
                 if (res.data.Status === "Success") {
