@@ -13,6 +13,9 @@ import './assets/fonts/icomoon/style.css'
 import './assets/css/anchetas.css'
 import './assets/css/scroll.css'
 
+import ReactGA from "react-ga4";
+ReactGA.initialize(`${process.env.REACT_APP_AMJOR_GA_ID}`);
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <CartProvider>

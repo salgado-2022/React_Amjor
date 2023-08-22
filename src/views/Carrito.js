@@ -1,11 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Recuento } from "../components/Carrito/RecuentoCompra";
 import { Footer } from "../components/Footer/footer";
 import { SeguirComprando } from "../components/Carrito/SeguirComprando";
 import { CarritoProductos } from "../components/Carrito/CarritoProductos";
 import { CartProvider } from '../context/cart';
 
+import ReactGA from "react-ga4";
+
+
 function Carrito() {
+    useEffect(() => {
+        ReactGA.send({ hitType: "pageview", page: window.location.pathname, title: "Carrito" });
+      });
 
     return (
         <CartProvider>

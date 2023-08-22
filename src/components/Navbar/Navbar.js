@@ -73,7 +73,7 @@ function Navbar() {
                                             </Link>
                                         </li>
                                         <li className="d-inline-block d-md-none ml-md-0">
-                                            <a href="#" className={`site-menu-toggle ${mobileMenuOpen ? 'active' : ''}`} onClick={toggleMobileMenu}>
+                                            <a href="#!" className={`site-menu-toggle ${mobileMenuOpen ? 'active' : ''}`} onClick={toggleMobileMenu}>
                                                 <span className="icon-menu"></span>
                                             </a>
                                         </li>

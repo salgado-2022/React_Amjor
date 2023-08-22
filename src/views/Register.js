@@ -1,11 +1,18 @@
-import React from "react";
-import {FormRegister} from "../components/Register/register"
-function Register(){
-    return(
+import React, { useEffect } from "react";
+import FormRegister from "../components/Register/register2"
+
+import ReactGA from "react-ga4";
+
+function Register() {
+    useEffect(() => {
+        ReactGA.send({ hitType: "pageview", page: window.location.pathname, title: "Register" });
+    });
+
+    return (
         <>
-        <FormRegister/>
+            <FormRegister />
         </>
     );
 }
 
-export {Register}
+export { Register }
