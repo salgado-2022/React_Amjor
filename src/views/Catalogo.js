@@ -8,7 +8,13 @@ import { useFilters } from '../hooks/useFilters';
 import { ProductosCatalogo } from '../components/Catalogo/Catalogo'
 import { CartProvider } from '../context/cart';
 
+import ReactGA from "react-ga4";
+
 function Catalogo() {
+    useEffect(() => {
+        ReactGA.send({ hitType: "pageview", page: window.location.pathname, title: "Catalogo" });
+      });
+
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
     
     const [products, setProducts] = useState([]);

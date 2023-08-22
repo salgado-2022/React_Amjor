@@ -11,6 +11,8 @@ import Iconify from '../components/iconify';
 // sections
 import { LoginForm } from '../sections/auth/login';
 
+import ReactGA from "react-ga4";
+
 
 // ----------------------------------------------------------------------
 
@@ -29,6 +31,7 @@ const StyledContent = styled('div')(({ theme }) => ({
 export default function Login() {
 
     useEffect(() => {
+        ReactGA.send({ hitType: "pageview", page: window.location.pathname, title: "Inicia sesión" });
         // Al entrar al componente, cambia el estilo del body
         document.body.style.backgroundColor = "#f0f0f0"; // Cambia esto al color deseado
 
