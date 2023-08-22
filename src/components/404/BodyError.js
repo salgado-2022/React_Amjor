@@ -13,7 +13,7 @@ function BodyError() {
                             <div className="clip"><div className="shadow"><span className="digit firstDigit">4</span></div></div>
                             <div className="msg">OH!<span className="triangle"></span></div>
                         </div>
-                        <h2 className="h1">Sorry! Page not found</h2>
+                        <h2 className="h1">Estás buscando un lugar en el que no hay nada...</h2>
                     </div>
                 </div>
             </div>
