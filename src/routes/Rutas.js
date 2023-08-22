@@ -11,9 +11,9 @@ import { Error404 } from '../views/404';
 import { Carrito } from '../views/Carrito';
 import { Checkout } from '../views/Checkout';
 import { CompraThankYou } from '../views/ThankYou';
-import { Login } from '../views/Login';
+import  Login  from '../views/Login';
 import { Register } from '../views/Register';
-import { ResetPassword } from '../components/Reset-Password/Reset-Password';
+import  ResetPassword  from '../components/Reset-Password/Reset-Password2';
 
 //Rutas Admin
 import { Pedidos } from '../views/Admin/Pedidos'
