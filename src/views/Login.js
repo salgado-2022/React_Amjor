@@ -45,14 +45,14 @@ export default function Login() {
         <>
                 <Container maxWidth="sm" style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', borderRadius: 10, marginTop: 40, backgroundColor: '#FFFFFF' }}>
                     <StyledContent>
-                        <Typography variant="h4" gutterBottom color="textPrimary" fontFamily={'Mukta'}>
-                            Iniciar Sesión
+                        <Typography variant="h4" display="flex" justifyContent="center" gutterBottom color="textPrimary" fontFamily={'Mukta'}>
+                            Iniciar sesión
                         </Typography>
-                        <br />
+                        {/* <br /> */}
 
-                        <Typography variant="body2" fontFamily={'Mukta'} sx={{ mb: 5 }} style={{ fontSize: 16 }} color="textPrimary">
+                        <Typography variant="body2" display="flex" justifyContent="center" fontFamily={'Mukta'} sx={{ mb: 5 }} style={{ fontSize: 16 }} color="textPrimary">
                             ¿No tienes una cuenta? {''}
-                            <Link to="/register"  style={{ fontSize: 16, fontWeight: 'bold', color: '#9C27B0'}}>Crea una</Link>
+                            <Link to="/register" style={{ fontSize: 16, fontWeight: 'bold', color: '#9C27B0', marginLeft: '5px'}}>Regístrate ahora</Link>
                         </Typography>
 
                         <Stack direction="row" spacing={2}>
