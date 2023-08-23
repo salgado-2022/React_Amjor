@@ -3,6 +3,8 @@ import { Link } from "react-router-dom";
 
 import { useCart } from '../../hooks/useCart';
 
+import { Card, CardHeader, Typography, Button, Box, Grid } from '@mui/material';
+
 function Recuento(){
     const { cart } = useCart();
 
@@ -12,42 +14,33 @@ function Recuento(){
     }, 0);
 
     return(
-        <div className="col-md-6 pl-5">
-        <div className="row justify-content-end">
-            <div className="col-md-7">
-                <div className="row">
-                    <div className="col-md-12 text-right border-bottom mb-5">
-                        <h3 className="text-black h4 text-uppercase">TOTALES</h3>
-                    </div>
-                </div>
-                <div className="row mb-3">
-                    <div className="col-md-6">
-                        <span className="text-black">Subtotal</span>
-                    </div>
-                    <div className="col-md-6 text-right">
-                        <strong className="text-black">${totalPrice.toFixed(2)}</strong>
-                    </div>
-                </div>
-                <div className="row mb-5">
-                    <div className="col-md-6">
-                        <span className="text-black">Total</span>
-                    </div>
-                    <div className="col-md-6 text-right">
-                        <strong className="text-black">${totalPrice.toFixed(2)}</strong>
-                    </div>
-                </div>
-
-                <div className="row">
-                    <Link exact to="/checkout"> 
-                    <div className="col-md-12">
-                        <button className="btn btn-primary btn-lg py-3 btn-block">Realizar pedido</button>
-                    </div>
-                    </Link>
-                </div>
-            </div>
-        </div>
-    </div>
+        <Grid container direction="column" alignItems="stretch">
+            <Card sx={{ border: '1px solid #FFFFF', borderRadius: '16px', width: '100%' }}>
+                <CardHeader
+                    title={
+                        <Typography variant="h4" sx={{ fontFamily: 'Mukta', margin: '0px 0px 24px', padding: '24px 24px 0px', fontSize: '20px', fontWeight: 'bold' }}>
+                            Resumen de la compra
+                        </Typography>
+                    }
+                />
+                <Box sx={{ padding: '24px' }}>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px' }}>
+                        <Typography variant="body1">Subtotal</Typography>
+                        <Typography variant="body1">${totalPrice.toFixed(2)}</Typography>
+                    </Box>
+                    <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px' }}>
+                        <Typography variant="body1">Total</Typography>
+                        <Typography variant="body1">${totalPrice.toFixed(2)}</Typography>
+                    </Box>
+                </Box>
+            </Card>
+            <Grid item xs={12}>
+                <Button sx={{ borderRadius: "8px", textTransform: "none", marginTop: '20px', fontFamily: "'Public Sans', sans serif", fontSize: "15px", fontWeight: "400"}} variant="contained" color="secondary" fullWidth size="large" >
+                    Realizar pedido
+                </Button>
+            </Grid>
+        </Grid>
     );
 }
 
-export {Recuento}
+export { Recuento }
