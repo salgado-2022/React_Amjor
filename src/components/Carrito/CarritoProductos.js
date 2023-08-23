@@ -8,7 +8,7 @@ import { ModalEditarCarrito } from "../Modals/CarritoEditar";
 import { useCounter } from '../../assets/js/btn';
 
 
-function CarritoProductos() {
+function CarritoProductos2() {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
     
     const { cart, addToCart, clearCart } = useCart()
@@ -90,7 +90,7 @@ function CarritoProductos() {
     );
 }
 
-export { CarritoProductos }
+export { CarritoProductos2 }
 
 // Botón de prueba para limpiar carrito.
 // <td><button type="button" onlick={clearCart} className="btn btn-warning icon-trash"
