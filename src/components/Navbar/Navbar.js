@@ -19,11 +19,11 @@ function Navbar() {
     return (
         <>
             <header className="site-navbar" role="banner">
-                <div className="site-navbar-top" style={{paddingBottom:20, paddingTop:20}}>
+                <div className="site-navbar-top" style={{ paddingBottom: 20, paddingTop: 20 }}>
                     <div className="container">
                         <div className="row align-items-center ">
 
-                            <div className="col-2 site-search-icon text-left">
+                            <div className="col-1 site-search-icon text-left">
                                 <div className="">
                                     <Link to="/">
                                         <img src={logo} style={{ width: '95px' }} alt="logo" />
@@ -32,38 +32,38 @@ function Navbar() {
                             </div>
 
                             <div className="col-8 text-center">
-                                <div className="container">
-                                    <div className="row">
-                                        <div className="col-12">
-                                            <nav className="site-navigation text-center" role="navigation">
-                                                <div className="container">
-                                                    <ul className="site-menu  d-none d-md-block">
-                                                        <li>
-                                                            <Link to="/">Inicio</Link>
-                                                        </li>
-                                                        <li>
-                                                            <Link to="/nosotros">Nosotros</Link>
-                                                        </li>
-                                                        <li>
-                                                            <Link to="/shop">Catálogo</Link>
-                                                        </li>
-                                                        <li className="">
-                                                            <Link to="/contact">Contacto</Link>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </nav>
-                                        </div>
+                                <div className="row">
+                                    <div className="col-12">
+                                        <nav className="site-navigation text-center" role="navigation">
+                                            <div className="container">
+                                                <ul className="site-menu  d-none d-md-block">
+                                                    <li>
+                                                        <Link to="/">Inicio</Link>
+                                                    </li>
+                                                    <li>
+                                                        <Link to="/nosotros">Nosotros</Link>
+                                                    </li>
+                                                    <li>
+                                                        <Link to="/shop">Catálogo</Link>
+                                                    </li>
+                                                    <li className="">
+                                                        <Link to="/contact">Contacto</Link>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </nav>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className="col-2 text-right">
+                            <div className="col-3 text-right">
                                 <div className="site-top-icons">
                                     <ul>
-                                        <li>
+                                        <li style={{ marginRight: '5px'}}>
                                             <Link to="/login" >
+                                                <span className="textLogin" style={{fontSize: '15px'}}>INICIAR SESIÓN</span>
                                                 <span className="icon icon-person"></span>
+
                                             </Link>
                                         </li>
                                         <li>
