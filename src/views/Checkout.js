@@ -1,8 +1,10 @@
 import React, { useEffect } from "react";
 import { Informacion } from "../components/Carrito/CheckoutInformacion";
-import { CarritoPedido } from "../components/Carrito/CarritoPedido";
+import { CarritoPedido } from "../components/Carrito/CarritoCheckout";
 
 import ReactGA from "react-ga4";
+import { CartProvider } from "../context/cart";
+import { Grid, Box, Container } from "@mui/material";
 
 function Checkout() {
     useEffect(() => {
@@ -11,14 +13,21 @@ function Checkout() {
 
     return (
         <>
-            <div className="site-section">
-                <div className="container">
-                    <div className="row">
-                        <Informacion/>
-                        <CarritoPedido/>
-                    </div>
-                </div>
-            </div>
+        <CartProvider>
+            <Container sx={{ marginTop: "50px"}} >
+                <Grid container spacing={2}>
+                    <Grid item xs>
+                    <Informacion/>
+
+                    </Grid>
+                    <Grid item xs={12} md={4}>
+                    <CarritoPedido/>
+                    </Grid>
+                </Grid>
+
+            </Container>
+        </CartProvider>
+
         </>
     );
 }
