@@ -19,18 +19,14 @@ function Carrito() {
             <Container sx={{ marginTop: "50px"}} >
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={8}>
-
                         <CarritoProductos />
-                    
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <Recuento />
                     </Grid>
                 </Grid>
-
                 <SeguirComprando />
                 <Footer />
-
             </Container>
         </CartProvider>
     );
