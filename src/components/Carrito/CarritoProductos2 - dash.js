@@ -10,6 +10,8 @@ function CarritoProductos() {
 
     const { cart, addToCart, clearCart, removeFromCart } = useCart()
 
+    const totalItems = cart.reduce((total, product) => total + product.quantity, 0);
+
     const { count, setCount, increment, decrement } = useCounter();
 
     const handleChange = (e) => {
@@ -25,10 +27,10 @@ function CarritoProductos() {
         return (
             <TableRow style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.1)' }}>
                 <TableCell style={{ border: 'none' }}>
-                    <img src={`${apiUrl}/anchetas/` + image} alt="Imagen" className="img-fluid" style={{ border: '0px solid #ddd', borderRadius: '10px' }} />
+                    <img src={`${apiUrl}/anchetas/` + image} alt="Imagen" className="img-fluid" style={{ width: '100px', border: '0px solid #ddd', borderRadius: '10px' }} />
                 </TableCell>
                 <TableCell style={{ border: 'none' }}>
-                    <Typography style={{ fontWeight: 600}} variant="subtitle2" noWrap>
+                    <Typography style={{ fontWeight: 600 }} variant="subtitle2" noWrap>
                         {NombreAncheta}
                     </Typography>
                 </TableCell>
@@ -58,16 +60,18 @@ function CarritoProductos() {
 
     return (
         <>
-            <Card sx={{ border: '1px solid #FFFFF', borderRadius: '16px', width: 'fit-content', marginBottom: '20px' }}>
+            <Card sx={{ width: '100%', border: 'none', borderRadius: '16px', marginBottom: '25px', boxShadow: 'rgba(145, 158, 171, 0.2) 0px 0px 2px 0px, rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;' }}>
                 <CardHeader
                     title={
-                        <Typography variant="h4" sx={{ fontFamily: 'Mukta', margin: '0px 0px 24px', padding: '24px 24px 0px', fontSize: '20px', fontWeight: 'bold' }}>
-                            Tu carrito
+                        <Typography variant="h4" sx={{ fontFamily: 'Mukta', margin: '0px 0px 24px', padding: '24px 24px 0px', fontSize: '20px', fontWeight: '700' }}>
+                            Tu carrito <Typography component="span" variant="h4" sx={{ fontWeight: '400', fontFamily: 'Mukta', fontSize: '18px', color: 'rgb(99, 115, 129)' }}>
+                                ({totalItems} {totalItems === 1 ? 'producto' : 'productos'})
+                            </Typography>
                         </Typography>
                     }
                 />
-                <Table sx={{ maxWidth: 700, borderSpacing: '10px 0' }}>
-                    <TableHead sx={{ backgroundColor: 'rgb(244, 246, 248)' }}>
+                <Table sx={{ width: '100%', borderSpacing: '10px 0' }}>
+                    <TableHead sx={{ padding: '16px', backgroundColor: 'rgb(244, 246, 248)' }}>
                         <TableRow>
                             <TableCell sx={{ fontWeight: 600, borderBottom: 'none', fontSize: '14px', color: 'rgb(99, 115, 129)', fontFamily: 'Public Sans, sans-serif' }}>Producto</TableCell>
                             <TableCell sx={{ fontWeight: 600, borderBottom: 'none', fontSize: '14px', color: 'rgb(99, 115, 129)', fontFamily: 'Public Sans, sans-serif' }}></TableCell>

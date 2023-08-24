@@ -2,11 +2,13 @@ import React, { useState } from "react";
 import { Link } from 'react-router-dom';
 import logo from '../../assets/img/logos/logomoradoclaro.png';
 import '../../assets/css/media.css'
-
+import { useCart } from '../../hooks/useCart';
 
 function Navbar() {
-
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+    
+    const { cart } = useCart();
+    const totalItems = cart.reduce((total, product) => total + product.quantity, 0);
 
     const toggleMobileMenu = () => {
         setMobileMenuOpen(!mobileMenuOpen);
@@ -59,9 +61,9 @@ function Navbar() {
                             <div className="col-3 text-right">
                                 <div className="site-top-icons">
                                     <ul>
-                                        <li style={{ marginRight: '5px'}}>
+                                        <li style={{ marginRight: '5px' }}>
                                             <Link to="/login" >
-                                                <span className="textLogin" style={{fontSize: '15px'}}>INICIAR SESIÓN</span>
+                                                <span className="textLogin" style={{ fontSize: '15px' }}>INICIAR SESIÓN</span>
                                                 <span className="icon icon-person"></span>
 
                                             </Link>
@@ -69,7 +71,7 @@ function Navbar() {
                                         <li>
                                             <Link to="/carrito" className="site-cart">
                                                 <span className="icon icon-shopping_cart"></span>
-                                                <span className="count">2</span>
+                                                <span className="count">{totalItems}</span>
                                             </Link>
                                         </li>
                                         <li className="d-inline-block d-md-none ml-md-0">
