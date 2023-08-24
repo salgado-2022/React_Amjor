@@ -1,4 +1,4 @@
-/* Navbar.css */
+Navbar.css
 
 .mobile-menu {
     display: none;
@@ -21,54 +21,7 @@
 
 }
 
-
-.mobile-menu {
-    display: none;
-    transition: transform 0.3s ease-in-out;
-}
-
-.mobile-menu.active {
-    display: block;
-    transform: translateX(0%);
-}
-
-.mobile-menu-container {
-    position: fixed;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background-color: rgb(255, 16, 16);
-    z-index: 1000;
-    overflow-y: auto;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    transition: left 0.3s ease-in-out;
-}
-
-.mobile-menu.active .mobile-menu-container {
-    left: 0;
-}
-
-.mobile-menu-overlay {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity 0.3s ease-in-out, visibility 0s linear 0.3s;
-    z-index: 999;
-}
-
-.mobile-menu-overlay.active {
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.3s ease-in-out, visibility 0s linear;
-}
-
+/* ajusta el tamaño del componente desplegable */
 .mobile-menu {
     position: fixed;
     top: 0;
@@ -89,15 +42,36 @@
 /* Estilo para quitar la decoración de enlace y cambiar el color del texto */
 .menu-link {
     text-decoration: none;
-    color: black; /* Puedes ajustar el color a tu preferencia */
+    color: black;
+    /* Puedes ajustar el color a tu preferencia */
 }
 
 
 .site-menu-mobile li {
     list-style: none;
-    margin: 0; /* Asegúrate de que no haya margen */
-    padding: 0; /* Asegúrate de que no haya relleno */
-    text-transform: uppercase; 
-    font-size: 20px; 
+    margin: 0;
+    /* Asegúrate de que no haya margen */
+    padding: 0;
+    /* Asegúrate de que no haya relleno */
+    text-transform: uppercase;
+    font-size: 20px;
     margin-bottom: 15px;
+}
+
+
+.textLogin {
+    display: inline-block;
+    /* Mostrar el texto */
+    vertical-align: middle;
+    margin-bottom: 3px;
+    /* Agregar un espacio entre el ícono y el texto */
+}
+
+
+/* Media query para pantallas pequeñas */
+@media (max-width: 1000px) {
+    .textLogin {
+        display: none;
+        /* Ocultar el texto */
+    }
 }
