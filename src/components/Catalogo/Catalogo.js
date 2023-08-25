@@ -6,14 +6,19 @@ import axios from "axios";
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 
+import { useCartContext } from '../../context/contador'
+
 
 function ProductosCatalogo({ products }) {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
-    
+
     const { addToCart, removeFromCart, cart } = useCart()
 
     const [snackbarOpen, setSnackbarOpen] = useState(false);
     const [snackbarMessage, setSnackbarMessage] = useState('');
+
+    const { items, setItems } = useCartContext();
+
 
 
     const checkProductInCart = product => {
@@ -42,34 +47,41 @@ function ProductosCatalogo({ products }) {
 
     const handleSnackbarClose = (event, reason) => {
         if (reason === 'clickaway') {
-          return;
+            return;
         }
         setSnackbarOpen(false);
-      };
-    
-      const handleAddToCart = (product) => {
-        if (checkProductInCart(product)) {
-          removeFromCart(product);
-        } else {
-          axios
-            .get(`${apiUrl}/api/admin/anchetas/insancheta/${product.ID_Ancheta}`)
-            .then((response) => {
-              const insumos = response.data;
-    
-              addToCart({
-                ...product,
-                insumos: insumos,
-              });
-    
-              setSnackbarMessage('Producto añadido al carrito');
-              setSnackbarOpen(true); // Mostrar la Snackbar
+    };
 
-            })
-            .catch((error) => {
-              console.error('Error al obtener insumos:', error);
-            });
+    const handleAddToCart = (product) => {
+        if (checkProductInCart(product)) {
+            removeFromCart(product);
+            setItems(items - 1);
+            // Actualizar el valor en localStorage
+            localStorage.setItem('cartItemCount', items - 1);
+        } else {
+            axios
+                .get(`${apiUrl}/api/admin/anchetas/insancheta/${product.ID_Ancheta}`)
+                .then((response) => {
+                    const insumos = response.data;
+
+                    addToCart({
+                        ...product,
+                        insumos: insumos,
+                    });
+
+                    setSnackbarMessage('Producto añadido al carrito');
+                    setSnackbarOpen(true); // Mostrar la Snackbar
+                    setItems(items + 1);
+
+                    // Almacenar el valor en localStorage
+                    localStorage.setItem('cartItemCount', items + 1);
+
+                })
+                .catch((error) => {
+                    console.error('Error al obtener insumos:', error);
+                });
         }
-      };
+    };
 
     return (
         <>
@@ -84,22 +96,22 @@ function ProductosCatalogo({ products }) {
                                 <div className="card-body">
                                     <h3 className="card-title" style={{ color: "Black", fontSize: "16px", marginTop: "5px" }}>{product.NombreAncheta}</h3>
                                     <p className="card-text text-right font-weight-normal" style={{ color: "MediumSlateBlue", fontSize: "18px" }}>{formatPrice(product.PrecioUnitario)}</p>
-                                    
+
                                     <button
                                         className="btn"
                                         onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleAddToCart(product);
+                                            e.stopPropagation();
+                                            handleAddToCart(product);
                                         }}
                                         style={{
-                                        backgroundColor: isProductInCart
-                                            ? 'red'
-                                            : 'MediumSlateBlue',
+                                            backgroundColor: isProductInCart
+                                                ? 'red'
+                                                : 'MediumSlateBlue',
                                         }}
                                     >
                                         {isProductInCart ? 'Eliminar del carrito' : 'Añadir al carrito'}
                                     </button>
-                                    
+
                                 </div>
                             </div>
                         </div>
@@ -118,7 +130,7 @@ function ProductosCatalogo({ products }) {
                 onClose={handleSnackbarClose}
             >
                 <Alert onClose={handleSnackbarClose} severity="success">
-                Producto añadido al carrito
+                    Producto añadido al carrito
                 </Alert>
             </Snackbar>
         </>
