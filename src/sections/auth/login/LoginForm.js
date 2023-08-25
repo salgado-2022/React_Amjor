@@ -15,11 +15,16 @@ import { Link } from "react-router-dom";
 
 //Axios
 import axios from "axios";
+import { useFormContext } from "../../../context/formContext";
+import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
 export default function LoginForm() {
   const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
+
+  const { checkoutUrl } = useFormContext();
+  const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
 
@@ -78,8 +83,12 @@ export default function LoginForm() {
         .post(`${apiUrl}/api/login`, values)
         .then((res) => {
           if (res.data.Status === "Success") {
+            if (checkoutUrl === "/checkout") {
+              navigate('/checkout');
+            } else {
             const redirectTo = res.data.redirectTo;
             window.location.href = redirectTo;
+            }
           } else {
             setCorreoInput("Correo incorrecto");
             setPasswordInput("Contraseña incorrecta");
