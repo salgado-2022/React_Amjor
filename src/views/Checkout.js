@@ -20,7 +20,7 @@ function Checkout() {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
     const rutaCheckout = window.location.pathname;
 
-    const [ formValues, setFormValues ] = useState();
+    const [ formSearchValues, setFormSearchValues ] = useState([]);
     const { setCheckoutUrl } = useFormContext();
 
 
@@ -41,9 +41,10 @@ function Checkout() {
         }
 
         if (user) {
-            axios.get(`${apiUrl}/checkout/searchUserInfo/${user}`)
-                .then(response => {
-                    setFormValues(response.data);
+            axios.get(`${apiUrl}/api/checkout/searchuserinfo/${user}`)
+                .then(res => {
+                    setFormSearchValues(res.data);
+                    //console.log(res.data);
                 })
                 .catch(error => {
                     console.error("Error al obtener la información del usuario:", error);
@@ -57,7 +58,7 @@ function Checkout() {
             <Container sx={{ marginTop: "50px"}} >
                 <Grid container spacing={2}>
                     <Grid item xs>
-                    <Informacion/>
+                    <Informacion formSearchValues={formSearchValues} />
 
                     </Grid>
                     <Grid item xs={12} md={4}>
