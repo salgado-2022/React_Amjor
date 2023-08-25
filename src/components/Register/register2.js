@@ -89,8 +89,9 @@ export default function FormRegister() {
     const documentoRegex = /^\d{1,10}$/;
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-
-    const textRegex = /^[a-zA-Z0-9]+$/;
+    
+    //Validacion para que acepte ñ y espacios en blanco
+    const textRegex = /^[a-zA-Z0-9ñÑ\s]+$/;
 
     const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
 
