@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from "react";
+import { useContext } from 'react';
+import { FormContext } from '../../context/formContext';
 
 // @mui
 import { styled } from '@mui/material/styles';
@@ -17,6 +19,21 @@ import axios from "axios";
 
 //sweetalert2
 import Swal from 'sweetalert2';
+
+
+////////////////////////////////
+// FECHAS - INPUTS DE FECHAS
+
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { DateField } from '@mui/x-date-pickers/DateField';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+
+import { createTheme } from '@mui/material/styles';
+import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon'
+
+
+////////////////////////////////
 
 
 const StyledContent = styled('div')(({ theme }) => ({
@@ -50,22 +67,24 @@ const CustomWidthTooltip = styled(({ className, ...props }) => (
 
 
 function Informacion() {
-
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
 
     const navigate = useNavigate()
 
-    const [showPassword, setShowPassword] = useState(false);
-
     const [values, setValues] = useState({
-        Documento: '',
-        Nombre: '',
+        Nombres: '',
         Apellidos: '',
+        Documento: '',
         Telefono: '',
         Email: '',
-        Password: '',
-        PasswordVerify: ''
+        Municipio: '',
+        Pais: '',
+        Direccion_Entrega: '',
+        Barrio: '',
+        Notas_Adicionales: '',
+        Fecha_Entrega: '',
     });
+
 
     const municipios = [
         {
@@ -116,19 +135,28 @@ function Informacion() {
             label: 'Colombia',
         }
     ];
-    const [documentoInput, setDocumentoInput] = useState(null);
 
     const [nameInput, setNameInput] = useState(null)
 
     const [lastName, setLastName] = useState(null)
 
-    const [telInput, setTelInput] = useState(null)
+    const [documentoInput, setDocumentoInput] = useState(null);
+
+    const [telefonoInput, setTelefonoInput] = useState(null)
 
     const [emailInput, setEmailInput] = useState(null);
 
-    const [passwordInput, setPasswordInput] = useState(null);
+    const [municipioInput, setMunicipioInput] = useState(null);
 
-    const [passwordVerify, setPasswordVerify] = useState(null);
+    const [paisInput, setPaisInput] = useState(null);
+
+    const [direccionInput, setDireccionInput] = useState(null);
+
+    const [barrioInput, setBarrioInput] = useState(null);
+
+    const [notas_adicionalesInput, setNotas_AdicionalesInput] = useState(null);
+
+    const [fecha_entregaInput, setFecha_EntregaInput] = useState(null);
 
     const documentoRegex = /^\d{1,10}$/;
 
@@ -136,12 +164,12 @@ function Informacion() {
 
     const textRegex = /^[a-zA-Z0-9]+$/;
 
-    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/
+    const { setFormValues } = useContext(FormContext);
 
     const handleInput = (event) => {
         const { name, value } = event.target;
         setValues(prev => ({ ...prev, [name]: value }));
-
+        setFormValues(prev => ({ ...prev, [name]: value })); // Almacena los valores en el contexto
     }
 
     const handleBlur = (event) => {
@@ -153,45 +181,30 @@ function Informacion() {
             } else if (!documentoRegex.test(value)) {
                 setDocumentoInput('Documento invalido')
             } else {
-                setDocumentoInput(null);
-                axios.post(`${apiUrl}/api/validate/documento`, values)
-                    .then(res => {
-                        if (res.data.Status === "Success") {
-                            setDocumentoInput(null)
-                        } else if (res.data.Status === "Exists") {
-                            setDocumentoInput('El documento ya se encuentra registrado')
-                        }
-                    })
+                setDocumentoInput(null)
             }
         }
+
         if (name === 'Email') {
             if (!value) {
                 setEmailInput('Campo obligatorio')
             } else if (!emailRegex.test(value)) {
                 setEmailInput('Correo invalido')
             } else {
-                setEmailInput(null);
-
-                axios.post(`${apiUrl}/api/validate/email`, values)
-                    .then(res => {
-                        if (res.data.Status === "Success") {
-                            setEmailInput(null)
-                        } else if (res.data.Status === "Exists") {
-                            setEmailInput('El correo ya esta registrado')
-                        }
-                    })
+                setEmailInput(null)
             }
         }
+
         if (name === 'Telefono') {
             if (!value) {
-                setTelInput('Campo obligatorio')
+                setTelefonoInput('Campo obligatorio')
             } else if (!documentoRegex.test(value)) {
-                setTelInput('Telefono invalido')
+                setTelefonoInput('Telefono invalido')
             } else {
-                setTelInput(null)
+                setTelefonoInput(null)
             }
         }
-        if (name === 'Nombre') {
+        if (name === 'Nombres') {
             if (!value) {
                 setNameInput('Campo obligatorio')
             } else if (!textRegex.test(value)) {
@@ -209,50 +222,38 @@ function Informacion() {
                 setLastName(null)
             }
         }
-        if (name === 'Password') {
-            if (!value) {
-                setPasswordInput('Campo obligatorio')
-            } else if (!passwordRegex.test(value)) {
-                setPasswordInput('Contraseña invalida')
-            } else {
-                setPasswordInput(null)
-            }
-        }
-        if (name === 'PasswordVerify') {
-            if (!passwordRegex.test(value)) {
-                setPasswordVerify('Contraseña invalida')
-            }
-            else if (values.Password !== values.PasswordVerify) {
-                setPasswordVerify('Las contraseñas no coinciden');
-            } else {
-                setPasswordVerify(null)
-            }
-        }
-
     }
 
     const handleSubmit = (event) => {
-        event.preventDefault();
+        console.log('El botón realizar pedido funciona, lo demás aún no lo sé.')
 
-        handleBlur({ target: { name: 'Documento', value: values.Documento } });
-        handleBlur({ target: { name: 'Nombre', value: values.Nombre } });
+        event.preventDefault();
+        console.log('El botón realizar pedido funciona, lo demás aún no lo sé.')
+
+        handleBlur({ target: { name: 'Nombres', value: values.Nombres } });
         handleBlur({ target: { name: 'Apellidos', value: values.Apellidos } });
+        handleBlur({ target: { name: 'Documento', value: values.Documento } });
         handleBlur({ target: { name: 'Telefono', value: values.Telefono } });
         handleBlur({ target: { name: 'Email', value: values.Email } });
-        handleBlur({ target: { name: 'Password', value: values.Password } });
-        handleBlur({ target: { name: 'PasswordVerify', value: values.PasswordVerify } });
 
-        if (documentoInput === null && nameInput === null && lastName === null && telInput === null && emailInput === null && passwordInput === null && passwordVerify === null) {
-            axios.post(`${apiUrl}/api/register`, values)
+        handleBlur({ target: { name: 'Municipio', value: values.Municipio } });
+        handleBlur({ target: { name: 'Pais', value: values.Pais } });
+        handleBlur({ target: { name: 'Direccion_Entrega', value: values.Direccion_Entrega } });
+        handleBlur({ target: { name: 'Barrio', value: values.Barrio } });
+        handleBlur({ target: { name: 'Notas_Adicionales', value: values.Notas_Adicionales } });
+        handleBlur({ target: { name: 'Fecha_Entrega', value: values.Fecha_Entrega } });
+
+        if (documentoInput === null && nameInput === null && lastName === null && telefonoInput === null && emailInput === null) {
+            axios.post(`${apiUrl}/api/enviarPedido`, values)
                 .then(res => {
                     if (res.data.Status === "Success") {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Te has registrado correctamente',
+                            title: 'Pedido enviado correctamente',
                             showConfirmButton: false,
                             timer: 1500
                         })
-                        navigate('/login')
+                        navigate('/thankyou')
                     }
                 })
                 .then(err => console.log(err));
@@ -286,7 +287,7 @@ function Informacion() {
                                     margin="dense"
                                     color="secondary"
                                     fullWidth
-                                    value={values.Nombre}
+                                    value={values.Nombres}
                                     onChange={handleInput}
                                     onBlur={handleBlur}
                                     error={nameInput !== null}
@@ -340,8 +341,8 @@ function Informacion() {
                                     value={values.Telefono}
                                     onChange={handleInput}
                                     onBlur={handleBlur}
-                                    error={telInput !== null}
-                                    helperText={telInput}
+                                    error={telefonoInput !== null}
+                                    helperText={telefonoInput}
                                 />
                             </Grid>
                             <Grid item xs={12}>
@@ -363,11 +364,14 @@ function Informacion() {
 
                             <Grid item xs={12} sm={6}>
                                 <TextField
+                                    name="Municipio"
                                     id="outlined-select-currency"
                                     select
                                     fullWidth
+                                    onChange={handleInput}
                                     label="Municipio de residencia"
                                     defaultValue=""
+                                    value={values.Municipio}
                                     helperText="¿Dónde será entregado el pedido?"
                                 >
                                     {municipios.map((option) => (
@@ -379,11 +383,14 @@ function Informacion() {
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
+                                    name="Pais"
                                     id="outlined-select-currency"
+                                    onChange={handleInput}
                                     select
                                     fullWidth
                                     label="País de residencia"
                                     defaultValue="Colombia"
+                                    value={values.Pais}
                                     helperText=""
                                 >
                                     {paises.map((option) => (
@@ -396,54 +403,105 @@ function Informacion() {
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     label="Dirección de entrega"
+                                    onChange={handleInput}
                                     type="text"
-                                    name="Direccion"
+                                    name="Direccion_Entrega"
                                     margin="dense"
                                     color="secondary"
                                     fullWidth
-                                    value=""
+                                    value={values.Direccion_Entrega}
                                 />
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     label="Barrio"
+                                    onChange={handleInput}
                                     type="text"
                                     name="Barrio"
                                     margin="dense"
                                     color="secondary"
                                     fullWidth
-                                    value=""
-                                    helperText=" "
+                                    value={values.Barrio}
                                 />
                             </Grid>
 
 
-                            <Grid item xs={12}>
+                            <Grid item xs={12} sm={6}>
                                 <TextField
+                                    name="Notas_Adicionales"
+                                    onChange={handleInput}
                                     id="outlined-multiline-static"
-                                    label="Notas adicionales para el pedido"
+                                    label="Notas adicionales"
                                     color="secondary"
                                     multiline
                                     fullWidth
-                                    rows={3}
+                                    minRows={1}
+                                    maxRows={3}
                                     defaultValue=""
+                                    value={values.Notas_Adicionales}
+                                    helperText="Ingrese notas dicionales como el aparatamento, unidad, torre, bloque u otros."
                                 />
                             </Grid>
+
+                            <Grid item xs={12} sm={6}>
+                                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                                    <TextField
+                                        type="date"
+                                        color="secondary"
+                                        name="Fecha_Entrega"
+                                        label="Fecha de entrega"
+                                        value={values.Fecha_Entrega}
+                                        fullWidth
+                                        onChange={handleInput}
+                                        helperText="Fecha en que espera recibir su pedido."
+                                        InputLabelProps={{
+                                            shrink: true,
+                                        }}
+                                    />
+
+                                    {/* <DateField 
+                                        label="Fecha de entrega"
+                                        onChange={handleInput}
+                                        name="Fecha_Entrega"
+                                        helperText="Fecha en que espera recibir su pedido:"
+                                        format="DD/MM/YYYY"
+                                        color="secondary"
+                                        value={values.Fecha_Entrega}
+                                        fullWidth
+                                        /> */}
+
+                                    {/* <DatePicker
+                                        theme={{ theme }} 
+                                        sx={{ width: '100%'}}
+                                        label="Fecha de entrega"
+                                        format="DD/MM/YYYY"
+                                        margin="dense"
+                                        color="secondary"
+                                        slotProps={{
+                                            textField: {
+                                              helperText: 'Fecha en que espera recibir su pedido.',
+                                            },
+                                          }}
+                                    /> */}
+
+                                </LocalizationProvider>
+                            </Grid>
+
                         </Grid>
                         <br />
-                        
+
 
                     </form>
 
                 </Card>
-                <Button sx={{textTransform: 'none'}}>
-                        <Link to="/carrito" style={{ display: 'flex', alignItems: 'left', justifyContent: 'left', fontFamily: 'Mukta', marginTop: '15px' }}>
-                            <Iconify icon="eva:arrow-ios-back-fill" color="#000000" width={16} height={16} style={{ marginBottom: '3px' }} />
-                            <Typography variant="subtitle2" style={{ fontSize: '13px', color: '#212B36', fontWeight: '700', padding: '4px'}}>
-                                Volver al carrito
-                            </Typography>
-                        </Link>
-                        </Button>
+                <Button sx={{ textTransform: 'none' }}>
+                    <Link to="/carrito" style={{ display: 'flex', alignItems: 'left', justifyContent: 'left', fontFamily: 'Mukta', marginTop: '15px' }}>
+                        <Iconify icon="eva:arrow-ios-back-fill" color="#000000" width={16} height={16} style={{ marginBottom: '3px' }} />
+                        <Typography variant="subtitle2" style={{ fontSize: '13px', color: '#212B36', fontWeight: '700', padding: '4px' }}>
+                            Volver al carrito
+                        </Typography>
+                    </Link>
+                </Button>
             </StyledContent>
 
         </>
