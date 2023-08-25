@@ -1,14 +1,25 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from 'react-router-dom';
 import logo from '../../assets/img/logos/logomoradoclaro.png';
 import '../../assets/css/media.css'
-import { useCart } from '../../hooks/useCart';
+
+import { useCartContext } from '../../context/contador'
 
 function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-    
-    const { cart } = useCart();
-    const totalItems = cart.reduce((total, product) => total + product.quantity, 0);
+    const { items, setItems } = useCartContext();
+
+    useEffect(() => {
+        // Recuperar el valor del contador desde localStorage
+        const savedItemCount = parseInt(localStorage.getItem('cartItemCount'), 10);
+        if (!isNaN(savedItemCount)) {
+            // Si existe un valor almacenado en localStorage, actualizar el contexto
+            setItems(savedItemCount);
+        }
+    }, []);
+
+
+
 
     const toggleMobileMenu = () => {
         setMobileMenuOpen(!mobileMenuOpen);
@@ -18,8 +29,12 @@ function Navbar() {
         setMobileMenuOpen(false);
     };
 
+
+
     return (
+
         <>
+
             <header className="site-navbar" role="banner">
                 <div className="site-navbar-top" style={{ paddingBottom: 20, paddingTop: 20 }}>
                     <div className="container">
@@ -70,8 +85,8 @@ function Navbar() {
                                         </li>
                                         <li>
                                             <Link to="/carrito" className="site-cart">
-                                                <span className="icon icon-shopping_cart"></span>
-                                                <span className="count">{totalItems}</span>
+                                                <span className="icon icon-shopping_cart" ></span>
+                                                <span className="count">{items}</span>
                                             </Link>
                                         </li>
                                         <li className="d-inline-block d-md-none ml-md-0">

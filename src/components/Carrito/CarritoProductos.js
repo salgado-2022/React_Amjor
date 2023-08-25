@@ -5,6 +5,9 @@ import { useCounter } from '../../assets/js/btn';
 import { Card, Typography, IconButton, Table, TableBody, TableCell, TableRow, TableHead, Button, Box, CardHeader } from '@mui/material';
 import Iconify from '../Other/iconify';
 
+import { useCartContext } from '../../context/contador'
+
+
 function CarritoProductos() {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
 
@@ -17,11 +20,14 @@ function CarritoProductos() {
     const handleChange = (e) => {
         setCount(e.target.value);
     };
+    const { items, setItems } = useCartContext();
+
 
     function CartItem({ image, PrecioUnitario, NombreAncheta, quantity, addToCart, removeFromCart }) {
 
         const handleRemoveFromCart = () => {
             removeFromCart();
+            setItems(items - 1);
         }
 
         return (
