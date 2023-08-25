@@ -66,10 +66,11 @@ const CustomWidthTooltip = styled(({ className, ...props }) => (
 });
 
 
-function Informacion() {
+function Informacion({ formSearchValues }) {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
 
     const navigate = useNavigate()
+
 
     const [values, setValues] = useState({
         Nombres: '',
@@ -84,6 +85,21 @@ function Informacion() {
         Notas_Adicionales: '',
         Fecha_Entrega: '',
     });
+
+    useEffect(() => {
+        if (formSearchValues[0]) {
+            setValues(prevValues => ({
+                ...prevValues,
+                Nombres: formSearchValues[0].Nombre,
+                Apellidos: formSearchValues[0].Apellido,
+                Documento: formSearchValues[0].Documento,
+                Telefono: formSearchValues[0].Telefono,
+                Email: formSearchValues[0].correo
+            }));
+        }
+    }, [formSearchValues]);
+
+
 
 
     const municipios = [
