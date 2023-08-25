@@ -78,27 +78,32 @@ export default function LoginForm() {
     handleBlur({ target: { name: "Password", value: values.Password } });
 
     if (correoInput === null && passwordInput === null) {
-        setLoading(true);
+      setLoading(true);
       axios
         .post(`${apiUrl}/api/login`, values)
         .then((res) => {
-          if (res.data.Status === "Success") {
+          if (res.data.Status === "Success client") {
+
             if (checkoutUrl === "/checkout") {
               navigate('/checkout');
             } else {
-            const redirectTo = res.data.redirectTo;
-            window.location.href = redirectTo;
+              const redirectTo = res.data.redirectTo;
+              window.location.href = redirectTo;
             }
-          } else {
+          } else if (res.data.Status === "Success Admin") {
+            const redirectTo = res.data.redirectToAdmin;
+            window.location.href = redirectTo;
+          }
+          else {
             setCorreoInput("Correo incorrecto");
             setPasswordInput("Contraseña incorrecta");
           }
         })
         .catch((err) => console.log(err))
-      .finally(() => {
-        setLoading(false);
-      });
-  }
+        .finally(() => {
+          setLoading(false);
+        });
+    }
   };
 
   return (
@@ -166,9 +171,9 @@ export default function LoginForm() {
           variant="contained"
           color="secondary"
           fontFamily={"Mukta"}
-          //onClick={() => setLoading(true)} 
+        //onClick={() => setLoading(true)} 
         >
-          {loading && <CircularProgress color="inherit" size={26}/>}
+          {loading && <CircularProgress color="inherit" size={26} />}
           {!loading && "Iniciar sesión"}
         </Button>
       </form>
