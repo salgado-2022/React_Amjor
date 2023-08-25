@@ -15,6 +15,8 @@ import './assets/css/scroll.css'
 
 import ReactGA from "react-ga4";
 import { CartProvider2 } from './context/contador';
+import { FormProvider } from './context/formContext';
+
 ReactGA.initialize(`${process.env.REACT_APP_AMJOR_GA_ID}`);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -22,7 +24,9 @@ root.render(
     <CartProvider>
         <FiltersProvider>
             <CartProvider2>
-                <Rutas />
+                <FormProvider>
+                    <Rutas />
+                </FormProvider>
             </CartProvider2>
         </FiltersProvider>
     </CartProvider>
