@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import {Rutas} from './routes/Rutas';
+import { Rutas } from './routes/Rutas';
 import { FiltersProvider } from './context/filters';
 import { CartProvider } from './context/cart';
 
@@ -14,16 +14,23 @@ import './assets/css/anchetas.css'
 import './assets/css/scroll.css'
 
 import ReactGA from "react-ga4";
+import { CartProvider2 } from './context/contador';
+import { FormProvider } from './context/formContext';
+
 ReactGA.initialize(`${process.env.REACT_APP_AMJOR_GA_ID}`);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <CartProvider>
-    <FiltersProvider>
-        <Rutas/> 
-    </FiltersProvider>
+        <FiltersProvider>
+            <CartProvider2>
+                <FormProvider>
+                    <Rutas />
+                </FormProvider>
+            </CartProvider2>
+        </FiltersProvider>
     </CartProvider>
-    
+
 );
 
 // If you want to start measuring performance in your app, pass a function

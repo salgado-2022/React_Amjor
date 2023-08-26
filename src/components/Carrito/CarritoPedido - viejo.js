@@ -2,9 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from '../../hooks/useCart'; 
 import axios from 'axios'
-import { clear } from "i/lib/inflections";
+import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box } from '@mui/material';
 
-function CarritoPedido() {
+function CarritoPedido2() {
   const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
   
   const {  clearCart } = useCart();
@@ -138,4 +138,4 @@ function CarritoPedido() {
     );
 }
 
-export { CarritoPedido }
+export { CarritoPedido2 }
