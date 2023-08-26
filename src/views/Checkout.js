@@ -62,7 +62,7 @@ function Checkout() {
 
                     </Grid>
                     <Grid item xs={12} md={4}>
-                    <CarritoPedido/>
+                    <CarritoPedido formSearchValues={formSearchValues}/>
                     </Grid>
                 </Grid>
 
