@@ -10,8 +10,12 @@ function Recuento(){
 
     // Calcular el precio total sumando los precios de los productos en el carrito
     const totalPrice = cart.reduce((total, product) => {
-      return total + product.PrecioUnitario * product.quantity;
-    }, 0);
+        return total + product.PrecioUnitario * product.quantity;
+      }, 0);
+  
+      // Formatear el precio con separador de miles y dos decimales fijos
+      const formattedPrice = totalPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
+  
 
     return(
         <Grid container direction="column" alignItems="stretch">
