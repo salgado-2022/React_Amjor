@@ -286,7 +286,11 @@ function Informacion({ formSearchValues }) {
                         title={
                             <Typography variant="h4" sx={{ fontFamily: 'Mukta', margin: '0px 0px 24px', padding: '24px 24px 0px', fontSize: '20px', fontWeight: '700' }}>
                                 Información personal
+                                <Typography variant="body1" sx={{ color: 'rgb(99, 115, 129);', fontFamily: 'Mukta', fontSize: '15px', fontWeight: '700' }}>
+                            Esta información se rellena automáticamente a partir de nuestra base de datos.
+                        </Typography>
                             </Typography>
+
                         }
                     />
                     {/* <Typography variant="h4" gutterBottom color="textPrimary" fontFamily={'Mukta'}>
@@ -303,6 +307,7 @@ function Informacion({ formSearchValues }) {
                                     margin="dense"
                                     color="secondary"
                                     fullWidth
+                                    disabled
                                     value={values.Nombres}
                                     onChange={handleInput}
                                     onBlur={handleBlur}
@@ -319,6 +324,7 @@ function Informacion({ formSearchValues }) {
                                     margin="dense"
                                     color="secondary"
                                     fullWidth
+                                    disabled
                                     value={values.Apellidos}
                                     onChange={handleInput}
                                     onBlur={handleBlur}
@@ -334,6 +340,7 @@ function Informacion({ formSearchValues }) {
                                     type="number"
                                     margin="dense"
                                     fullWidth
+                                    disabled
                                     color="secondary"
                                     value={values.Documento}
                                     onChange={handleInput}
@@ -354,6 +361,7 @@ function Informacion({ formSearchValues }) {
                                     margin="dense"
                                     color="secondary"
                                     fullWidth
+                                    disabled
                                     value={values.Telefono}
                                     onChange={handleInput}
                                     onBlur={handleBlur}
@@ -369,6 +377,7 @@ function Informacion({ formSearchValues }) {
                                     margin="dense"
                                     color="secondary"
                                     fullWidth
+                                    disabled
                                     value={values.Email}
                                     onChange={handleInput}
                                     onBlur={handleBlur}
