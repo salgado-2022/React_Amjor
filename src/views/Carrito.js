@@ -11,17 +11,17 @@ import ReactGA from "react-ga4";
 import { Grid, Box, Container } from '@mui/material';
 
 function Carrito() {
-    
+
     useEffect(() => {
         ReactGA.send({ hitType: "pageview", page: window.location.pathname, title: "Carrito" });
     });
 
     return (
         <CartProvider>
-            <Container sx={{ marginTop: "50px"}} >
+            <Container sx={{ marginTop: "50px" }} >
                 <Grid container spacing={2}>
                     <Grid item xs={12} md={8}>
-                    {cart.length > 0 ? <CarritoProductos /> : <CarritoVacio />}
+                        <CarritoProductos />
                     </Grid>
                     <Grid item xs={12} md={4}>
                         <Recuento />
