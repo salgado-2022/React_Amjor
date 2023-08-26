@@ -12,8 +12,9 @@ import {
 function CarritoPedido({ formSearchValues }) {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
 
-    const { formValues } = useContext(FormContext);
+    const { formValues, errors } = useContext(FormContext);
 
+    //const [errors, setErrors] = useState({});
 
     const { clearCart } = useCart();
 
@@ -61,21 +62,26 @@ function CarritoPedido({ formSearchValues }) {
     };
 
 
-    
     const enviarPedido = () => {
-        console.log("Información del pedido:", pedidoData)
+        if (Object.keys(errors).length === 0) {
+            // No hay errores de validación, puedes enviar los datos al servidor
+            console.log("Información del pedido:", pedidoData);
 
-        // Realizar la solicitud HTTP POST al servidor
-        axios.post(`${apiUrl}/api/enviarPedido`, pedidoData)
-            .then(response => {
-                console.log("Pedido enviado con éxito:", response.data);
-                console.log(storedCart)
-                clearCart();
-
-            })
-            .catch(error => {
-                console.error("Error al enviar el pedido:", error);
-            });
+            // Realizar la solicitud HTTP POST al servidor
+            axios
+                .post(`${apiUrl}/api/enviarPedido`, pedidoData)
+                .then((response) => {
+                    console.log("Pedido enviado con éxito:", response.data);
+                    console.log(storedCart);
+                    clearCart();
+                })
+                .catch((error) => {
+                    console.error("Error al enviar el pedido:", error);
+                });
+        } else {
+            // Si hay errores de validación, puedes mostrarlos al usuario o realizar alguna acción adicional
+            console.log("El formulario contiene errores de validación:", errors);
+        }
     };
 
 
