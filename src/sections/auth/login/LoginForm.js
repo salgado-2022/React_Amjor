@@ -24,6 +24,8 @@ export default function LoginForm() {
   const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
 
   const { checkoutUrl } = useFormContext();
+  const { setCheckoutUrl } = useFormContext();
+
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
@@ -85,6 +87,7 @@ export default function LoginForm() {
           if (res.data.Status === "Success client") {
 
             if (checkoutUrl === "/checkout") {
+              setCheckoutUrl(1)
               navigate('/checkout');
             } else {
               const redirectTo = res.data.redirectTo;

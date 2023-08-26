@@ -20,8 +20,8 @@ function Checkout() {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
     const rutaCheckout = window.location.pathname;
 
-    const [ formSearchValues, setFormSearchValues ] = useState([]);
-    const { setCheckoutUrl } = useFormContext();
+    const [formSearchValues, setFormSearchValues] = useState([]);
+    const { checkoutUrl, setCheckoutUrl } = useFormContext();
 
 
     const navigate = useNavigate();
@@ -29,7 +29,12 @@ function Checkout() {
 
 
     useEffect(() => {
-        setCheckoutUrl(rutaCheckout);
+        if (checkoutUrl === "/checkout") {
+            setCheckoutUrl("");
+        } else {
+            setCheckoutUrl(rutaCheckout);
+        }
+
 
         const token = Cookies.get('token');
         if (!token) {
@@ -52,25 +57,26 @@ function Checkout() {
         }
     }, [user, navigate]);
 
+
     return (
         <>
-        <CartProvider>
-            <Container sx={{ marginTop: "50px"}} >
-                <Grid container spacing={2}>
-                    <Grid item xs>
-                    <Informacion formSearchValues={formSearchValues} />
+            <CartProvider>
+                <Container sx={{ marginTop: "50px" }} >
+                    <Grid container spacing={2}>
+                        <Grid item xs>
+                            <Informacion formSearchValues={formSearchValues} />
 
+                        </Grid>
+                        <Grid item xs={12} md={4}>
+                            <CarritoPedido formSearchValues={formSearchValues} />
+                        </Grid>
                     </Grid>
-                    <Grid item xs={12} md={4}>
-                    <CarritoPedido/>
-                    </Grid>
-                </Grid>
 
-            </Container>
-        </CartProvider>
+                </Container>
+            </CartProvider>
 
         </>
     );
 }
 
-export{ Checkout }
+export { Checkout }
