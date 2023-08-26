@@ -5,19 +5,22 @@ import { useCart } from '../../hooks/useCart';
 
 import { Card, CardHeader, Typography, Button, Box, Grid, Divider } from '@mui/material';
 
-function Recuento(){
+function Recuento() {
     const { cart } = useCart();
 
     // Calcular el precio total sumando los precios de los productos en el carrito
     const totalPrice = cart.reduce((total, product) => {
         return total + product.PrecioUnitario * product.quantity;
-      }, 0);
-  
-      // Formatear el precio con separador de miles y dos decimales fijos
-      const formattedPrice = totalPrice.toLocaleString('en-US', { style: 'currency', currency: 'USD' });
-  
+    }, 0);
 
-    return(
+    const formatPrice = (price) => {
+        return price.toLocaleString('es-CO', {
+            style: 'currency',
+            currency: 'COP',
+        });
+    };
+
+    return (
         <Grid container direction="column" alignItems="stretch">
             <Card sx={{ width: '100%', border: 'none', borderRadius: '16px', marginBottom: '25px', boxShadow: 'rgba(145, 158, 171, 0.2) 0px 0px 2px 0px, rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;' }}>
                 <CardHeader
@@ -29,17 +32,17 @@ function Recuento(){
                 />
                 <Box sx={{ padding: '24px' }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px' }}>
-                        <Typography sx={{ color: 'rgb(99, 115, 129);', fontFamily: '"Public Sans", sans-serif;', fontWeight: '400'}} variant="body1">Subtotal</Typography>
-                        <Typography sx={{ color: '#212B36', fontFamily: '"Public Sans", sans-serif;', fontWeight: '600'}} variant="body1">${totalPrice.toFixed(2)}</Typography>
+                        <Typography sx={{ color: 'rgb(99, 115, 129);', fontFamily: '"Public Sans", sans-serif;', fontWeight: '400' }} variant="body1">Subtotal</Typography>
+                        <Typography sx={{ color: '#212B36', fontFamily: '"Public Sans", sans-serif;', fontWeight: '600' }} variant="body1">{formatPrice(totalPrice)}</Typography>
                     </Box>
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px' }}>
-                        <Typography sx={{ color: 'rgb(99, 115, 129);', fontFamily: '"Public Sans", sans-serif;', fontWeight: '400'}} variant="body1">Descuentos</Typography>
-                        <Typography sx={{ color: '#212B36', fontFamily: '"Public Sans", sans-serif;', fontWeight: '600'}} variant="body1"> - </Typography>
+                        <Typography sx={{ color: 'rgb(99, 115, 129);', fontFamily: '"Public Sans", sans-serif;', fontWeight: '400' }} variant="body1">Descuentos</Typography>
+                        <Typography sx={{ color: '#212B36', fontFamily: '"Public Sans", sans-serif;', fontWeight: '600' }} variant="body1"> - </Typography>
                     </Box>
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px' }}>
-                        <Typography sx={{ color: 'rgb(99, 115, 129);', fontFamily: '"Public Sans", sans-serif;', fontWeight: '400'}} variant="body1">Mano de obra</Typography>
+                        <Typography sx={{ color: 'rgb(99, 115, 129);', fontFamily: '"Public Sans", sans-serif;', fontWeight: '400' }} variant="body1">Mano de obra</Typography>
                         <Typography sx={{ color: '#212B36', fontFamily: '"Public Sans", sans-serif;', fontWeight: '600' }} variant="body1">$0.0</Typography>
                     </Box>
 
@@ -47,17 +50,17 @@ function Recuento(){
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px' }}>
                         <Typography sx={{ color: '#212B36', fontFamily: '"Public Sans", sans-serif;', fontWeight: '600' }} variant="body1">Total</Typography>
-                        <Typography sx={{ color: '#FF5630', fontFamily: '"Public Sans", sans serif;', fontWeight: '600' }} variant="body1">${totalPrice.toFixed(2)}</Typography>
+                        <Typography sx={{ color: '#FF5630', fontFamily: '"Public Sans", sans serif;', fontWeight: '600' }} variant="body1">{formatPrice(totalPrice)}</Typography>
                     </Box>
                 </Box>
             </Card>
             <Grid item xs={12}>
 
                 <Link to="/checkout">
-                <Button sx={{ borderRadius: "8px", textTransform: "none", marginTop: '20px', fontFamily: "'Public Sans', sans serif", fontSize: "15px", fontWeight: "400"}} variant="contained" color="secondary" fullWidth size="large" >
-                    Realizar pedido
-                </Button>
-                        </Link>
+                    <Button sx={{ borderRadius: "8px", textTransform: "none", marginTop: '20px', fontFamily: "'Public Sans', sans serif", fontSize: "15px", fontWeight: "400" }} variant="contained" color="secondary" fullWidth size="large" >
+                        Realizar pedido
+                    </Button>
+                </Link>
 
             </Grid>
         </Grid>
