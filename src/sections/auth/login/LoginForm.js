@@ -89,6 +89,7 @@ export default function LoginForm() {
             if (checkoutUrl === "/checkout") {
               setCheckoutUrl(1)
               navigate('/checkout');
+              window.location.reload(true);
             } else {
               const redirectTo = res.data.redirectTo;
               window.location.href = redirectTo;
