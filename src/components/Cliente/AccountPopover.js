@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'
 // @mui
 import { alpha } from '@mui/material/styles';
@@ -10,6 +10,9 @@ import axios from 'axios';
 //sweetalert2
 import Swal from 'sweetalert2';
 
+
+import Cookies from 'js-cookie';
+import jwt_decode from 'jwt-decode';
 
 
 
@@ -29,6 +32,9 @@ export default function AccountPopover() {
     const landingUrl = process.env.REACT_APP_AMJOR_LANDING_URL;
 
     const [open, setOpen] = useState(null);
+    const [user, setUser] = useState(null);
+    const [data, setData] = useState([]);
+    const [loading, setLoading] = useState(true)
 
     const handleOpen = (event) => {
         setOpen(event.currentTarget);
@@ -71,6 +77,27 @@ export default function AccountPopover() {
         handleClose();
         logout();
     }
+
+    useEffect(() => {
+        const token = Cookies.get('token');
+        if (token) {
+            const decodedToken = jwt_decode(token);
+            setUser(decodedToken.userId);
+        }else{
+
+        }
+        if (user) {
+            axios.get(`${apiUrl}/api/checkout/searchuserinfo/${user}`)
+                .then(res => {
+                    setData(res.data);
+                    setLoading(false)
+                    //console.log(res.data);
+                })
+                .catch(error => {
+                    console.error("Error al obtener la información del usuario:", error);
+                });
+        }
+    })
 
 
     return (
@@ -116,14 +143,30 @@ export default function AccountPopover() {
                     },
                 }}
             >
-                <Box sx={{ my: 1.5, px: 2.5 }}>
-                    <Typography variant="subtitle2" noWrap>
-                        Mariano
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-                        salgadojuandavid419@gmail.com
-                    </Typography>
-                </Box>
+                {loading ? (
+                    <Box sx={{ my: 1.5, px: 2.5 }}>
+
+                        <Typography variant="subtitle2" noWrap>
+
+                        </Typography>
+
+                        <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+
+                        </Typography>
+                    </Box>
+                ) : (
+                    <Box sx={{ my: 1.5, px: 2.5 }}>
+
+                        <Typography variant="subtitle2" noWrap>
+                            {data[0].Nombre}
+                        </Typography>
+
+                        <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+                            {data[0].Nombre}
+                        </Typography>
+                    </Box>
+                )}
+
 
                 <Divider sx={{ borderStyle: 'dashed' }} />
 
@@ -140,7 +183,7 @@ export default function AccountPopover() {
                 <MenuItem onClick={handleMultiFunction} sx={{ m: 1 }}>
                     Cerrar sesión
                 </MenuItem>
-            </Popover>
+            </Popover >
         </>
     );
 }
