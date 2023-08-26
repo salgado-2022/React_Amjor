@@ -85,7 +85,7 @@ function Informacion({ formSearchValues }) {
         Notas_Adicionales: '',
         Fecha_Entrega: '',
     });
-
+    console.log(formSearchValues)
     useEffect(() => {
         if (formSearchValues[0]) {
             setValues(prevValues => ({
@@ -178,7 +178,7 @@ function Informacion({ formSearchValues }) {
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    const textRegex = /^[a-zA-Z0-9]+$/;
+    const textRegex = /^[a-zA-Z0-9ñÑ\s]+$/;
 
     const { setFormValues } = useContext(FormContext);
 
@@ -388,6 +388,7 @@ function Informacion({ formSearchValues }) {
                                     label="Municipio de residencia"
                                     defaultValue=""
                                     value={values.Municipio}
+                                    color="secondary"
                                     helperText="¿Dónde será entregado el pedido?"
                                 >
                                     {municipios.map((option) => (
@@ -406,6 +407,7 @@ function Informacion({ formSearchValues }) {
                                     fullWidth
                                     label="País de residencia"
                                     defaultValue="Colombia"
+                                    color="secondary"
                                     value={values.Pais}
                                     helperText=""
                                 >

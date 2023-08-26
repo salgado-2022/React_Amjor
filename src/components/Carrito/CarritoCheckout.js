@@ -9,7 +9,7 @@ import {
     Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box
 } from '@mui/material';
 
-function CarritoPedido() {
+function CarritoPedido({ formSearchValues }) {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
 
     const { formValues } = useContext(FormContext);
@@ -47,7 +47,7 @@ function CarritoPedido() {
     const { cart } = useCart();
 
     const pedidoData = {
-        ID_Cliente: 1,
+        ID_Cliente: formSearchValues.length > 0 ? formSearchValues[0].ID_Cliente : null,
         ...formValues,
         Precio_Total: calcularPrecioTotal(storedCart), // Función para calcular el precio total del carrito
         Anchetas: cart.map(producto => ({
@@ -63,7 +63,7 @@ function CarritoPedido() {
 
     
     const enviarPedido = () => {
-        console.log(pedidoData)
+        console.log("Información del pedido:", pedidoData)
 
         // Realizar la solicitud HTTP POST al servidor
         axios.post(`${apiUrl}/api/enviarPedido`, pedidoData)
