@@ -4,10 +4,13 @@ import logo from '../../assets/img/logos/logomoradoclaro.png';
 import '../../assets/css/media.css'
 
 import { useCartContext } from '../../context/contador'
+import Cookies from 'js-cookie';
+import AccountPopover from "../Cliente/AccountPopover";
 
 function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const { items, setItems } = useCartContext();
+    const [token, setToken] = useState()
 
     useEffect(() => {
         // Recuperar el valor del contador desde localStorage
@@ -16,6 +19,9 @@ function Navbar() {
             // Si existe un valor almacenado en localStorage, actualizar el contexto
             setItems(savedItemCount);
         }
+
+        const token = Cookies.get('token');
+        setToken(token)
     }, []);
 
 
@@ -35,7 +41,7 @@ function Navbar() {
 
         <>
 
-            <header className="site-navbar" role="banner">
+            <header className="site-navbar" role="banner" style={{zIndex: 1000}}>
                 <div className="site-navbar-top" style={{ paddingBottom: 20, paddingTop: 20 }}>
                     <div className="container">
                         <div className="row align-items-center ">
@@ -76,13 +82,18 @@ function Navbar() {
                             <div className="col-3 text-right">
                                 <div className="site-top-icons">
                                     <ul>
-                                        <li style={{ marginRight: '5px' }}>
-                                            <Link to="/login" >
-                                                <span className="textLogin" style={{ fontSize: '15px' }}>INICIAR SESIÓN</span>
-                                                <span className="icon icon-person"></span>
+                                        {!token ? (
+                                            <li style={{ marginRight: '5px' }}>
+                                                <Link to="/login" >
+                                                    <span className="textLogin" style={{ fontSize: '15px' }}>INICIAR SESIÓN</span>
+                                                    <span className="icon icon-person"></span>
 
-                                            </Link>
-                                        </li>
+                                                </Link>
+                                            </li>
+                                        ) : (
+                                            <AccountPopover/>
+                                        )}
+
                                         <li>
                                             <Link to="/carrito" className="site-cart">
                                                 <span className="icon icon-shopping_cart" ></span>
@@ -106,7 +117,7 @@ function Navbar() {
 
             {/* Mobile Menu */}
             <div className={`mobile-menu-overlay ${mobileMenuOpen ? 'active' : ''}`} onClick={toggleMobileMenu}></div>
-            <div className={`mobile-menu ${mobileMenuOpen ? 'active' : ''}`}>
+            <div className={`mobile-menu ${mobileMenuOpen ? 'active' : ''}`} style={{zIndex: 900}}>
                 <nav className="site-navigation-mobile  site-navigation text-center" role="navigation" style={{ marginTop: 170 }}>
                     <ul className="site-menu-mobile site-menu">
                         <li><Link to="/" onClick={closeMobileMenu} className="menu-link">Inicio</Link></li>
