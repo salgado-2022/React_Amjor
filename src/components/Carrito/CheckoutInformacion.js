@@ -266,6 +266,33 @@ function Informacion({ formSearchValues }) {
             }
         }
 
+        if (name === 'Direccion_Entrega') {
+            if (!value) {
+                setDireccionInput('Campo obligatorio')
+                newErrors.Direccion_Entrega = 'El campo dirección de entrega es obligatorio.'
+            } else {
+                setDireccionInput(null)
+            }
+        }
+
+        if (name === 'Municipio') {
+            if (!value) {
+                setMunicipioInput('Campo obligatorio')
+                newErrors.Municipio = 'El campo municipio es obligatorio.'
+            } else {
+                setMunicipioInput(null)
+            }
+        }
+
+        if (name === 'Fecha_Entrega') {
+            if (!value) {
+                setFecha_EntregaInput('Campo obligatorio')
+                newErrors.Fecha_Entrega = 'El campo fecha entrega es obligatorio.'
+            } else {
+                setFecha_EntregaInput(null)
+            }
+        }
+
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0; // Devuelve true si no hay errores
 
@@ -426,12 +453,15 @@ function Informacion({ formSearchValues }) {
                                     id="outlined-select-currency"
                                     select
                                     fullWidth
-                                    onChange={handleInput}
                                     label="Municipio de residencia"
                                     defaultValue=""
+                                    onChange={handleInput}
+                                    onBlur={handleBlur}
+                                    error={municipioInput !== null}
+                                    helperText={municipioInput}
                                     value={values.Municipio}
                                     color="secondary"
-                                    helperText="¿Dónde será entregado el pedido?"
+                                    //helperText="¿Dónde será entregado el pedido?"
                                 >
                                     {municipios.map((option) => (
                                         <MenuItem key={option.value} value={option.value}>
@@ -463,12 +493,15 @@ function Informacion({ formSearchValues }) {
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     label="Dirección de entrega"
-                                    onChange={handleInput}
                                     type="text"
                                     name="Direccion_Entrega"
                                     margin="dense"
                                     color="secondary"
                                     fullWidth
+                                    onChange={handleInput}
+                                    onBlur={handleBlur}
+                                    error={direccionInput !== null}
+                                    helperText={direccionInput}
                                     value={values.Direccion_Entrega}
                                 />
                             </Grid>
@@ -515,8 +548,10 @@ function Informacion({ formSearchValues }) {
                                         label="Fecha de entrega"
                                         value={values.Fecha_Entrega}
                                         fullWidth
+                                        onBlur={handleBlur}
+                                        error={fecha_entregaInput !== null}
                                         onChange={handleInput}
-                                        helperText="Fecha en que espera recibir su pedido."
+                                        helperText={fecha_entregaInput} //"Fecha en que espera recibir su pedido."
                                         InputLabelProps={{
                                             shrink: true,
                                         }}
