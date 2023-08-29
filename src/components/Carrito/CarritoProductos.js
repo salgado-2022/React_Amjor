@@ -1,9 +1,10 @@
-import { React, useContext } from "react";
+import { React, useContext, useState } from "react";
 import { useCart } from '../../hooks/useCart'
 import { CartProvider } from "../../context/cart";
 import { useCounter } from '../../assets/js/btn';
 import { Card, Typography, IconButton, Table, TableBody, TableCell, TableRow, TableHead, Button, Box, CardHeader } from '@mui/material';
 import Iconify from '../Other/iconify';
+import MaxWidthDialog from "../Modals/PersonalizarAncheta";
 
 import { useCartContext } from '../../context/contador'
 import { CarritoVacio } from "./CarritoVacio";
@@ -15,6 +16,16 @@ function CarritoProductos() {
     const { cart, addToCart, clearCart, removeFromCart } = useCart()
 
     const totalItems = cart.reduce((total, product) => total + product.quantity, 0);
+
+    const [dialogOpen, setDialogOpen] = useState(false);
+
+    const handleOpenDialog = () => {
+        setDialogOpen(true);
+    };
+
+    const handleCloseDialog = () => {
+        setDialogOpen(false);
+    };
 
     const { count, setCount, increment, decrement } = useCounter();
 
@@ -65,8 +76,12 @@ function CarritoProductos() {
                 </TableCell>
                 <TableCell style={{ border: 'none' }}>{formatPrice(PrecioUnitario * quantity)}</TableCell>
                 <TableCell style={{ border: 'none' }}>
+                    <IconButton size="large" color="inherit" onClick={handleOpenDialog}>
+                        <Iconify icon={'fa-solid:edit'} />
+                    </IconButton>
                     <IconButton size="large" color="inherit" onClick={handleRemoveFromCart}>
                         <Iconify icon={'eva:trash-2-outline'} />
+
                     </IconButton>
                 </TableCell>
             </TableRow>
@@ -118,6 +133,7 @@ function CarritoProductos() {
             }
 
 
+            <MaxWidthDialog open={dialogOpen} onClose={handleCloseDialog} />
         </>
     );
 }
