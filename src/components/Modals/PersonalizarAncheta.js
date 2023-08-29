@@ -13,37 +13,38 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Switch from "@mui/material/Switch";
 
-export default function MaxWidthDialog() {
-  const [open, setOpen] = React.useState(false);
-  const [fullWidth, setFullWidth] = React.useState(true);
-  const [maxWidth, setMaxWidth] = React.useState("sm");
+export default function MaxWidthDialog({ open, onClose }) {
+  //const [open, setOpen] = React.useState(false);
+  //const [fullWidth, setFullWidth] = React.useState(true);
+  //const [maxWidth, setMaxWidth] = React.useState("sm");
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
 
-  const handleMaxWidthChange = (event) => {
-    setMaxWidth(
-      // @ts-expect-error autofill of arbitrary value is not handled.
-      event.target.value
-    );
-  };
+  // const handleMaxWidthChange = (event) => {
+  //   setMaxWidth(
+  //     // @ts-expect-error autofill of arbitrary value is not handled.
+  //     event.target.value
+  //   );
+  // };
 
-  const handleFullWidthChange = (event) => {
-    setFullWidth(event.target.checked);
-  };
+  // const handleFullWidthChange = (event) => {
+  //   setFullWidth(event.target.checked);
+  // };
 
   return (
+    <>
     <React.Fragment>
       <Dialog
-        fullWidth={fullWidth}
-        maxWidth={maxWidth}
+        fullWidth
+        maxWidth="xl"
         open={open}
-        onClose={handleClose}
+        onClose={onClose}
       >
         <DialogTitle>Optional sizes</DialogTitle>
         <DialogContent>
@@ -64,8 +65,8 @@ export default function MaxWidthDialog() {
               <InputLabel htmlFor="max-width">maxWidth</InputLabel>
               <Select
                 autoFocus
-                value={maxWidth}
-                onChange={handleMaxWidthChange}
+                //value={maxWidth}
+                //onChange={handleMaxWidthChange}
                 label="maxWidth"
                 inputProps={{
                   name: "max-width",
@@ -80,19 +81,20 @@ export default function MaxWidthDialog() {
                 <MenuItem value="xl">xl</MenuItem>
               </Select>
             </FormControl>
-            <FormControlLabel
+            {/* <FormControlLabel
               sx={{ mt: 1 }}
               control={
                 <Switch checked={fullWidth} onChange={handleFullWidthChange} />
               }
               label="Full width"
-            />
+            /> */}
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={onClose}>Close</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
+    </>
   );
 }
