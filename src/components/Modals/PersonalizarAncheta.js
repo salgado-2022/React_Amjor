@@ -13,39 +13,55 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Switch from "@mui/material/Switch";
 
-export default function MaxWidthDialog() {
-  const [open, setOpen] = React.useState(false);
-  const [fullWidth, setFullWidth] = React.useState(true);
-  const [maxWidth, setMaxWidth] = React.useState("sm");
+import { useCart } from '../../hooks/useCart'
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+export default function PersonalizarAncheta({ open, onClose, selectedAnchetaIndex }) {
+  const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  //const [open, setOpen] = React.useState(false);
+  //const [fullWidth, setFullWidth] = React.useState(true);
+  //const [maxWidth, setMaxWidth] = React.useState("sm");
 
-  const handleMaxWidthChange = (event) => {
-    setMaxWidth(
-      // @ts-expect-error autofill of arbitrary value is not handled.
-      event.target.value
-    );
-  };
+  // const handleClickOpen = () => {
+  //   setOpen(true);
+  // };
 
-  const handleFullWidthChange = (event) => {
-    setFullWidth(event.target.checked);
-  };
+  // const handleClose = () => {
+  //   setOpen(false);
+  // };
+
+  // const handleMaxWidthChange = (event) => {
+  //   setMaxWidth(
+  //     // @ts-expect-error autofill of arbitrary value is not handled.
+  //     event.target.value
+  //   );
+  // };
+
+  // const handleFullWidthChange = (event) => {
+  //   setFullWidth(event.target.checked);
+  // };
+
+    // Obtener la información de la ancheta usando el índice
+
+
+
+  const { cart } = useCart()
+
+  const selectedProduct = cart[selectedAnchetaIndex];
+
+  console.log("Received index in PersonalizarAncheta:", selectedAnchetaIndex);
+  console.log("Selected product:", selectedProduct)
 
   return (
+    <>
     <React.Fragment>
       <Dialog
-        fullWidth={fullWidth}
-        maxWidth={maxWidth}
+        fullWidth
+        maxWidth="xl"
         open={open}
-        onClose={handleClose}
+        onClose={onClose}
       >
-        <DialogTitle>Optional sizes</DialogTitle>
+        <DialogTitle>Personalizando {selectedProduct && selectedProduct.NombreAncheta}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             You can set my maximum width and whether to adapt or not.
@@ -60,12 +76,12 @@ export default function MaxWidthDialog() {
               width: "fit-content",
             }}
           >
-            <FormControl sx={{ mt: 2, minWidth: 120 }}>
+            {/* <FormControl sx={{ mt: 2, minWidth: 120 }}>
               <InputLabel htmlFor="max-width">maxWidth</InputLabel>
               <Select
                 autoFocus
-                value={maxWidth}
-                onChange={handleMaxWidthChange}
+                //value={maxWidth}
+                //onChange={handleMaxWidthChange}
                 label="maxWidth"
                 inputProps={{
                   name: "max-width",
@@ -79,20 +95,22 @@ export default function MaxWidthDialog() {
                 <MenuItem value="lg">lg</MenuItem>
                 <MenuItem value="xl">xl</MenuItem>
               </Select>
-            </FormControl>
-            <FormControlLabel
+            </FormControl> */}
+
+            {/* <FormControlLabel
               sx={{ mt: 1 }}
               control={
                 <Switch checked={fullWidth} onChange={handleFullWidthChange} />
               }
               label="Full width"
-            />
+            /> */}
           </Box>
         </DialogContent>
         <DialogActions>
-          <Button onClick={handleClose}>Close</Button>
+          <Button onClick={onClose}>Close</Button>
         </DialogActions>
       </Dialog>
     </React.Fragment>
+    </>
   );
 }

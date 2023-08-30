@@ -7,6 +7,7 @@ import { Card, CardHeader, Typography, Button, Box, Grid, Divider } from '@mui/m
 
 function Recuento() {
     const { cart } = useCart();
+    const totalItems = cart.reduce((total, product) => total + product.quantity, 0);
 
     // Calcular el precio total sumando los precios de los productos en el carrito
     const totalPrice = cart.reduce((total, product) => {
@@ -55,12 +56,20 @@ function Recuento() {
                 </Box>
             </Card>
             <Grid item xs={12}>
-
-                <Link to="/checkout">
-                    <Button sx={{ borderRadius: "8px", textTransform: "none", marginTop: '20px', fontFamily: "'Public Sans', sans serif", fontSize: "15px", fontWeight: "400" }} variant="contained" color="secondary" fullWidth size="large" >
+                {totalItems > 0 ? (
+                    <Link to="/checkout">
+                        <Button sx={{ borderRadius: "8px", textTransform: "none", marginTop: '20px', fontFamily: "'Public Sans', sans serif", fontSize: "15px", fontWeight: "400" }} variant="contained" color="secondary" fullWidth size="large" >
+                            Realizar pedido
+                        </Button>
+                    </Link>
+                ) : (
+                    <Button disabled sx={{ borderRadius: "8px", textTransform: "none", marginTop: '20px', fontFamily: "'Public Sans', sans serif", fontSize: "15px", fontWeight: "400" }} variant="contained" color="secondary" fullWidth size="large" >
                         Realizar pedido
                     </Button>
-                </Link>
+
+
+                )}
+
 
             </Grid>
         </Grid>
