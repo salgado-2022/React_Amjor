@@ -4,7 +4,7 @@ import { CartProvider } from "../../context/cart";
 import { useCounter } from '../../assets/js/btn';
 import { Card, Typography, IconButton, Table, TableBody, TableCell, TableRow, TableHead, Button, Box, CardHeader } from '@mui/material';
 import Iconify from '../Other/iconify';
-import MaxWidthDialog from "../Modals/PersonalizarAncheta";
+import PersonalizarAncheta from "../Modals/PersonalizarAncheta";
 
 import { useCartContext } from '../../context/contador'
 import { CarritoVacio } from "./CarritoVacio";
@@ -19,9 +19,15 @@ function CarritoProductos() {
 
     const [dialogOpen, setDialogOpen] = useState(false);
 
-    const handleOpenDialog = () => {
+    const [selectedAncheta, setSelectedAncheta] = useState(null);
+
+
+    const handleOpenDialog = (index) => {
+        console.log("Opening dialog for product at index:", index);
         setDialogOpen(true);
+        setSelectedAncheta(index); // Aquí accedes al índice del producto
     };
+
 
     const handleCloseDialog = () => {
         setDialogOpen(false);
@@ -43,7 +49,9 @@ function CarritoProductos() {
     };
 
 
-    function CartItem({ image, PrecioUnitario, NombreAncheta, quantity, addToCart, removeFromCart }) {
+    function CartItem({ image, PrecioUnitario, NombreAncheta, quantity, addToCart, removeFromCart, index }) {
+        console.log("Rendering CartItem for product:", NombreAncheta);
+        console.log("Received index:", index);
 
         const handleRemoveFromCart = () => {
             removeFromCart();
@@ -53,7 +61,8 @@ function CarritoProductos() {
         return (
             <TableRow style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.1)' }}>
                 <TableCell style={{ border: 'none' }}>
-                    <img src={`${apiUrl}/anchetas/` + image} alt="Imagen" className="img-fluid" style={{ width: '100px', border: '0px solid #ddd', borderRadius: '10px' }} />
+                    <img src={`https://api.amjor.shop/anchetas/` + image} alt="Imagen" className="img-fluid" style={{ width: '80px', border: '0px solid #ddd', borderRadius: '10px' }} />
+                    {/* <img src={`${apiUrl}/anchetas/` + image} alt="Imagen" className="img-fluid" style={{ width: '100px', border: '0px solid #ddd', borderRadius: '10px' }} /> */}
                 </TableCell>
                 <TableCell style={{ border: 'none' }}>
                     <Typography style={{ fontWeight: 600 }} variant="subtitle2" noWrap>
@@ -76,13 +85,16 @@ function CarritoProductos() {
                 </TableCell>
                 <TableCell style={{ border: 'none' }}>{formatPrice(PrecioUnitario * quantity)}</TableCell>
                 <TableCell style={{ border: 'none' }}>
-                    <IconButton size="large" color="inherit" onClick={handleOpenDialog}>
+
+                    <IconButton size="large" color="inherit" onClick={() => handleOpenDialog(index)}>
                         <Iconify icon={'fa-solid:edit'} />
                     </IconButton>
+
                     <IconButton size="large" color="inherit" onClick={handleRemoveFromCart}>
                         <Iconify icon={'eva:trash-2-outline'} />
 
                     </IconButton>
+
                 </TableCell>
             </TableRow>
         )
@@ -115,11 +127,13 @@ function CarritoProductos() {
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {cart.map(product => (
+                                {cart.map((product, index) => (
                                     <CartItem
                                         key={product.ID_Ancheta}
+                                        handleOpenDialog={handleOpenDialog} // Pasamos la función
+                                        index={index}
                                         addToCart={() => addToCart(product)}
-                                        removeFromCart={() => removeFromCart(product)} // Asegúrate de pasar la función
+                                        removeFromCart={() => removeFromCart(product)}
                                         {...product}
                                     />
                                 ))}
@@ -133,7 +147,7 @@ function CarritoProductos() {
             }
 
 
-            <MaxWidthDialog open={dialogOpen} onClose={handleCloseDialog} />
+            <PersonalizarAncheta open={dialogOpen} onClose={handleCloseDialog} selectedAnchetaIndex={selectedAncheta} />
         </>
     );
 }

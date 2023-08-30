@@ -13,7 +13,11 @@ import MenuItem from "@mui/material/MenuItem";
 import Select from "@mui/material/Select";
 import Switch from "@mui/material/Switch";
 
-export default function MaxWidthDialog({ open, onClose }) {
+import { useCart } from '../../hooks/useCart'
+
+export default function PersonalizarAncheta({ open, onClose, selectedAnchetaIndex }) {
+  const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
+
   //const [open, setOpen] = React.useState(false);
   //const [fullWidth, setFullWidth] = React.useState(true);
   //const [maxWidth, setMaxWidth] = React.useState("sm");
@@ -37,6 +41,17 @@ export default function MaxWidthDialog({ open, onClose }) {
   //   setFullWidth(event.target.checked);
   // };
 
+    // Obtener la información de la ancheta usando el índice
+
+
+
+  const { cart } = useCart()
+
+  const selectedProduct = cart[selectedAnchetaIndex];
+
+  console.log("Received index in PersonalizarAncheta:", selectedAnchetaIndex);
+  console.log("Selected product:", selectedProduct)
+
   return (
     <>
     <React.Fragment>
@@ -46,7 +61,7 @@ export default function MaxWidthDialog({ open, onClose }) {
         open={open}
         onClose={onClose}
       >
-        <DialogTitle>Optional sizes</DialogTitle>
+        <DialogTitle>Personalizando {selectedProduct && selectedProduct.NombreAncheta}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             You can set my maximum width and whether to adapt or not.
@@ -61,7 +76,7 @@ export default function MaxWidthDialog({ open, onClose }) {
               width: "fit-content",
             }}
           >
-            <FormControl sx={{ mt: 2, minWidth: 120 }}>
+            {/* <FormControl sx={{ mt: 2, minWidth: 120 }}>
               <InputLabel htmlFor="max-width">maxWidth</InputLabel>
               <Select
                 autoFocus
@@ -80,7 +95,8 @@ export default function MaxWidthDialog({ open, onClose }) {
                 <MenuItem value="lg">lg</MenuItem>
                 <MenuItem value="xl">xl</MenuItem>
               </Select>
-            </FormControl>
+            </FormControl> */}
+
             {/* <FormControlLabel
               sx={{ mt: 1 }}
               control={
