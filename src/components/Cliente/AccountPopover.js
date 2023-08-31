@@ -83,21 +83,17 @@ export default function AccountPopover() {
         if (token) {
             const decodedToken = jwt_decode(token);
             setUser(decodedToken.userId);
-        }else{
 
-        }
-        if (user) {
-            axios.get(`${apiUrl}/api/checkout/searchuserinfo/${user}`)
+            axios.get(`${apiUrl}/api/checkout/searchuserinfo/${decodedToken.userId}`)
                 .then(res => {
                     setData(res.data);
-                    setLoading(false)
-                    //console.log(res.data);
+                    setLoading(false);
                 })
                 .catch(error => {
                     console.error("Error al obtener la información del usuario:", error);
                 });
         }
-    })
+    }, [user, apiUrl]);
 
 
     return (
@@ -162,7 +158,7 @@ export default function AccountPopover() {
                         </Typography>
 
                         <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-                            {data[0].Nombre}
+                            {data[0].correo}
                         </Typography>
                     </Box>
                 )}
