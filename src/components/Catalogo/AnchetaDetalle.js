@@ -5,6 +5,7 @@ import axios from "axios";
 
 function AnchetaDetalle(props) {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
+    const deployApiUrl = process.env.REACT_APP_AMJOR_DEPLOY_API_URL;
     
     const { selectedAnchetaID, onHide, show } = props;
     const id = selectedAnchetaID;
@@ -86,7 +87,7 @@ function AnchetaDetalle(props) {
                                 <div className="col-xl-6" style={{ marginTop: "20px" }}>
                                     <div className="container modal-container">
                                         <div className="image-container">
-                                            <img src={`${apiUrl}/anchetas/` + dataA.image} className="rounded" alt=""/>
+                                            <img src={`${deployApiUrl}/anchetas/` + dataA.image} className="rounded" alt=""/>
                                         </div>
                                     </div> 
                                 </div>
