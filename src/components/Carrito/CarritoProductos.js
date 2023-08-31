@@ -12,6 +12,7 @@ import { CarritoVacio } from "./CarritoVacio";
 
 function CarritoProductos() {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
+    const deployApiUrl = process.env.REACT_APP_AMJOR_DEPLOY_API_URL;
 
     const { cart, addToCart, clearCart, removeFromCart } = useCart()
 
@@ -61,7 +62,7 @@ function CarritoProductos() {
         return (
             <TableRow style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.1)' }}>
                 <TableCell style={{ border: 'none' }}>
-                    <img src={`https://api.amjor.shop/anchetas/` + image} alt="Imagen" className="img-fluid" style={{ width: '80px', border: '0px solid #ddd', borderRadius: '10px' }} />
+                    <img src={`${deployApiUrl}/anchetas/` + image} alt="Imagen" className="img-fluid" style={{ width: '80px', border: '0px solid #ddd', borderRadius: '10px' }} />
                     {/* <img src={`${apiUrl}/anchetas/` + image} alt="Imagen" className="img-fluid" style={{ width: '100px', border: '0px solid #ddd', borderRadius: '10px' }} /> */}
                 </TableCell>
                 <TableCell style={{ border: 'none' }}>
