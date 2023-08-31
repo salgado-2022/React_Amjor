@@ -11,6 +11,7 @@ import { useCartContext } from '../../context/contador'
 
 function ProductosCatalogo({ products }) {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
+    const deployApiUrl = process.env.REACT_APP_AMJOR_DEPLOY_API_URL;
 
     const { addToCart, removeFromCart, cart } = useCart()
 
@@ -92,7 +93,7 @@ function ProductosCatalogo({ products }) {
                     return (
                         <div className="col-sm-6 col-lg-4 mb-4" data-aos="fade-up" key={product.ID_Ancheta} >
                             <div className="block-4 card catalogue" onClick={() => { handleAnchetaClick(product.ID_Ancheta) }} style={{ borderRadius: "5%", boxShadow: "0 2px 15px rgba(0, 0, 0, 0.1)", border: "none", cursor: "pointer" }}>
-                                <img src={`${apiUrl}/anchetas/` + product.image} alt="" className="card-img-top img-fluid size-catalog block-4-image" />
+                                <img src={`${deployApiUrl}/anchetas/` + product.image} alt="" className="card-img-top img-fluid size-catalog block-4-image" />
                                 <div className="card-body">
                                     <h3 className="card-title" style={{ color: "Black", fontSize: "16px", marginTop: "5px" }}>{product.NombreAncheta}</h3>
                                     <p className="card-text text-right font-weight-normal" style={{ color: "MediumSlateBlue", fontSize: "18px" }}>{formatPrice(product.PrecioUnitario)}</p>
