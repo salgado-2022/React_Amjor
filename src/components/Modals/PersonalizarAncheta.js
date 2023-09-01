@@ -249,7 +249,7 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
 
                       {state.length === 0 ? (<CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '235px', color: "#98a4b0" }}><Typography variant="body1">Sin Insumos</Typography></CardContent>
                       ) : (
-                        <List sx={{ height: "235px", overflowY: 'auto' }}>
+                        <List sx={{ height: "600px", overflowY: 'auto' }}>
                           {state.map((insumo) => (
                             <ListItem key={insumo.ID_Insumo} secondaryAction={
                               <div>
@@ -282,8 +282,9 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
                     </Card>
                     <Typography variant="h5" marginBottom={1}>Total: {formatPrice(Precio)}</Typography>
                     <Stack direction="row" alignItems="center" spacing={1}>
-                      <Button type="submit" variant="contained" color="primary" fullWidth>Crear Ancheta</Button>
-                      <Button type="reset" variant="contained" color="secondary" fullWidth>Cancelar</Button>
+                    <Button variant="contained" onClick={handleEnviar} fullWidth size="large" color="secondary" sx={{ backgroundColor: "#9C27B0", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Modificar</Button>
+                <Button variant="contained" fullWidth size="large" sx={{ ":hover": { bgcolor: "#000", color: "white" }, backgroundColor: "#343A40", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Cancelar</Button>
+              
                     </Stack>
                   </Grid>
                   <Grid item md={7}>
@@ -395,8 +396,9 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
               </Box>
 
               <DialogActions>
-                <Button variant="contained" onClick={handleEnviar} size="large" color="secondary" sx={{ backgroundColor: "#9C27B0", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Modificar</Button>
+                {/* <Button variant="contained" onClick={handleEnviar} size="large" color="secondary" sx={{ backgroundColor: "#9C27B0", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Modificar</Button>
                 <Button variant="contained" size="large" sx={{ ":hover": { bgcolor: "#000", color: "white" }, backgroundColor: "#343A40", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Cancelar</Button>
+               */}
               </DialogActions>
 
             </DialogContent>
