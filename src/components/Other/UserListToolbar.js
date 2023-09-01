@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { styled, alpha } from '@mui/material/styles';
 import { Toolbar, Tooltip, IconButton, Typography, OutlinedInput, InputAdornment } from '@mui/material';
 // component
-import Iconify from '../../iconify/Iconify';
+import Iconify from '../../components/Other/iconify/Iconify';
 
 // ----------------------------------------------------------------------
 
@@ -22,7 +22,7 @@ const StyledSearch = styled(OutlinedInput)(({ theme }) => ({
   }),
   '&.Mui-focused': {
     width: 320,
-    boxShadow: theme.customShadows,
+    boxShadow: theme.customShadows.z8,
   },
   '& fieldset': {
     borderWidth: `1px !important`,
