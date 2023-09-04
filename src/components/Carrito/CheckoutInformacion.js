@@ -66,7 +66,7 @@ function Informacion({ formSearchValues }) {
     const today = dayjs();
     const minDate = today.add(2, 'day').format('YYYY-MM-DD');
     const maxDate = today.add(50, 'year').format('YYYY-MM-DD');
-    
+
 
     const navigate = useNavigate()
 
@@ -308,6 +308,13 @@ function Informacion({ formSearchValues }) {
         return Object.keys(newErrors).length === 0; // Devuelve true si no hay errores
 
     }
+
+
+    // Chat. Necesito hacer que el handleBlur se ejecute para todos los campos de @CheckoutInformacion.js desde el 
+    // boton  que hay  en@CheckoutInformacion.js . Esto hará  que se ejecuten las validaciones, y evitará que el
+    //  formulario sea enviado si hay alguna validacion que no se cumpla. El enfoque de usar contextos NO funciona.
+
+    // Estos componentes  se cargan como una vista  en @Checkout.js 
 
 
 
@@ -576,7 +583,7 @@ function Informacion({ formSearchValues }) {
                                         inputProps={{
                                             min: minDate, // Establece la fecha mínima
                                             max: maxDate, // Establece la fecha
-                                          }}
+                                        }}
                                     />
 
                                     {/* <DateField 
