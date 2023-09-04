@@ -41,7 +41,7 @@ function Navbar() {
 
         <>
 
-            <header className="site-navbar" role="banner" style={{zIndex: 1000}}>
+            <header className="site-navbar" role="banner" style={{ zIndex: 1000 }}>
                 <div className="site-navbar-top" style={{ paddingBottom: 20, paddingTop: 20 }}>
                     <div className="container">
                         <div className="row align-items-center ">
@@ -59,7 +59,7 @@ function Navbar() {
                                     <div className="col-12">
                                         <nav className="site-navigation text-center" role="navigation">
                                             <div className="container">
-                                                <ul className="site-menu  d-none d-md-block">
+                                                <ul className="site-menu menuOpcion">
                                                     <li>
                                                         <Link to="/">Inicio</Link>
                                                     </li>
@@ -72,6 +72,14 @@ function Navbar() {
                                                     <li className="">
                                                         <Link to="/contact">Contacto</Link>
                                                     </li>
+                                                    {!token ? (
+                                                        <li>
+                                                        </li>
+                                                    ) : (
+                                                        <li>
+                                                            <Link to="/shopping">Mis Compras</Link>
+                                                        </li>
+                                                    )}
                                                 </ul>
                                             </div>
                                         </nav>
@@ -91,7 +99,7 @@ function Navbar() {
                                                 </Link>
                                             </li>
                                         ) : (
-                                            <AccountPopover/>
+                                            <AccountPopover />
                                         )}
 
                                         <li>
@@ -100,24 +108,26 @@ function Navbar() {
                                                 <span className="count">{items}</span>
                                             </Link>
                                         </li>
-                                        <li className="d-inline-block d-md-none ml-md-0">
-                                            <a href="#!" className={`site-menu-toggle ${mobileMenuOpen ? 'active' : ''}`} onClick={toggleMobileMenu}>
-                                                <span className="icon-menu"></span>
-                                            </a>
-                                        </li>
+                                        <div className="header">
+                                            <li className="botonMenu">
+                                                <a href="#!" className={`site-menu-toggle ${mobileMenuOpen ? 'active' : ''}`} onClick={toggleMobileMenu}>
+                                                    <span className="icon-menu"></span>
+                                                </a>
+                                            </li>
+                                        </div>
                                     </ul>
                                 </div>
                             </div>
 
                         </div>
                     </div>
-                </div>
+                </div >
 
-            </header>
+            </header >
 
             {/* Mobile Menu */}
-            <div className={`mobile-menu-overlay ${mobileMenuOpen ? 'active' : ''}`} onClick={toggleMobileMenu}></div>
-            <div className={`mobile-menu ${mobileMenuOpen ? 'active' : ''}`} style={{zIndex: 900}}>
+            <div div className={`mobile-menu-overlay ${mobileMenuOpen ? 'active' : ''}`} onClick={toggleMobileMenu} ></div >
+            <div className={`mobile-menu ${mobileMenuOpen ? 'active' : ''}`} style={{ zIndex: 900 }}>
                 <nav className="site-navigation-mobile  site-navigation text-center" role="navigation" style={{ marginTop: 170 }}>
                     <ul className="site-menu-mobile site-menu">
                         <li><Link to="/" onClick={closeMobileMenu} className="menu-link">Inicio</Link></li>
