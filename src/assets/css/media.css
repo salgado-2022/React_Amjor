@@ -1,8 +1,34 @@
-Navbar.css
-
-.mobile-menu {
+Navbar.css .mobile-menu .botonMenu {
     display: none;
     /* Ocultar por defecto en todos los tamaños de pantalla */
+}
+
+.header .botonMenu {
+    display: none !important;
+    /* Alineación horizontal */
+    margin-left: 10px;
+    /* Ajusta el valor según sea necesario */
+}
+
+
+/* Mostrar el elemento en pantallas de 951px o menos */
+@media (max-width: 992px) {
+    .header .botonMenu {
+        display: block !important;
+        /* Usa !important para forzar la prioridad */
+    }
+
+    .site-top-icons ul {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        height: 100%;
+        margin: 0;
+    }
+
+    .site-top-icons ul li {
+        margin-left: 10px;
+    }
 }
 
 /* Estilos para modo móvil */
@@ -67,11 +93,20 @@ Navbar.css
     /* Agregar un espacio entre el ícono y el texto */
 }
 
+.menuOpcion {
+    display: inline-block;
+    /* Mostrar el texto */
+    vertical-align: middle;
+}
 
 /* Media query para pantallas pequeñas */
-@media (max-width: 1000px) {
+@media (max-width: 992px) {
     .textLogin {
         display: none;
         /* Ocultar el texto */
+    }
+
+    .menuOpcion {
+        display: none;
     }
 }
