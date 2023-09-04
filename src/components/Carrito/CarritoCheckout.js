@@ -9,11 +9,17 @@ import {
     Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box
 } from '@mui/material';
 
+import { useCartContext } from '../../context/contador'
+//import { handleBlur } from './CheckoutInformacion'
+
+
+
 function CarritoPedido({ formSearchValues }) {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
 
     const { formValues, errors } = useContext(FormContext);
-
+    
+    const { items, setItems } = useCartContext();
     //const [errors, setErrors] = useState({});
 
     const { clearCart } = useCart();
@@ -50,12 +56,13 @@ function CarritoPedido({ formSearchValues }) {
     const pedidoData = {
         ID_Cliente: formSearchValues.length > 0 ? formSearchValues[0].ID_Cliente : null,
         ...formValues,
+        Pais: "Colombia",
         Precio_Total: calcularPrecioTotal(storedCart), // Función para calcular el precio total del carrito
         Anchetas: cart.map(producto => ({
             ID_Ancheta: producto.ID_Ancheta,
             Cantidad: producto.quantity,
             Insumos: producto.insumos ? producto.insumos.map(insumo => ({
-                ID_Insumo: insumo.ID_Insumos_Ancheta,
+                ID_Insumo: insumo.ID_Insumo,
                 Cantidad: insumo.Cantidad
             })) : []
         }))
@@ -74,6 +81,9 @@ function CarritoPedido({ formSearchValues }) {
                     console.log("Pedido enviado con éxito:", response.data);
                     console.log(storedCart);
                     clearCart();
+                    setItems(0);
+                    // Actualizar el valor del contador de items en carrito en localStorage
+                    localStorage.setItem('cartItemCount', 0);
                 })
                 .catch((error) => {
                     console.error("Error al enviar el pedido:", error);
