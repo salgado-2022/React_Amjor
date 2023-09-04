@@ -1,5 +1,5 @@
-import React, { useState, useEffect, useCallback, useContext } from "react";
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, useContext } from "react";
+import { Link, useNavigate } from 'react-router-dom';
 
 import {
   Container,
@@ -70,29 +70,32 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
     },
   });
 
-  const { cart } = useCart()
 
-  const selectedProduct = cart[selectedAnchetaIndex];
+  // COSAS DE addAncheta de Brandon
 
-
-  const location = useLocation();
-  const id = selectedAnchetaIndex
   const navigate = useNavigate();
 
   const [values, setValues] = useState({
     NombreAncheta: '',
     Descripcion: '',
     PrecioUnitario: '',
-    ID_Estado: '',
+    ID_Estado: '2',
     image: ''
   });
+
+  const initialValues = {
+    NombreAncheta: '',
+    Descripcion: '',
+    PrecioUnitario: '',
+    ID_Estado: '2',
+    image: ''
+  };
 
   const [nombreError, setNombreError] = useState('');
   const [descripcionError, setDescripcionError] = useState('');
 
-  const [isChecked, setIsChecked] = useState(false);
-  const [imageUrlEdit, setImageUrlEdit] = useState(null);
-  const [oldImage, setOldImage] = useState('');
+  const [imageUrl, setImageUrl] = useState(null);
+  const [imageHolder, setImageHolder] = useState(null);
 
   const Globalstate = useContext(Insumoscontext);
   const state = Globalstate.state;
@@ -101,36 +104,18 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
   const insumosAgregados = insumosState.map((insumo) => insumo.ID_Insumo);
 
   const [data, setData] = useState([]);
-  const [dataInsumo, setDataInsumo] = useState([]);
-  const [InitialInsumos, setInitialInsumos] = useState(true);
 
   const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   const [filterName, setFilterName] = useState('');
-  
-
-  const fetchData = useCallback(async () => {
-    try {
-      const res = selectedProduct;
-      setDataInsumo(res.insumos);
-      console.log("Cart dataaaa", dataInsumo);
-    } catch (err) {
-      console.log(err);
-    }
-    
-
-    axios.get(`${apiUrl}/api/admin/insumos`)
-      .then((res) => {
-        setData(res.data);
-      })
-      .catch((err) => console.log(err));
-  }, [apiUrl, id]);
 
   const states = state.map(obj => ({ idInsumo: obj.ID_Insumo, cantidad: obj.Cantidad, precio: obj.PrecioUnitario * obj.Cantidad }));
 
   const Precio = state.reduce((Precio, insumo) => {
     return Precio + insumo.PrecioUnitario * insumo.Cantidad;
   }, 0)
+
+
 
   const formatPrice = (price) => {
     return price.toLocaleString("es-CO", {
@@ -141,19 +126,28 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
   };
 
   useEffect(() => {
+    const fetchData = () => {
+      axios
+        .get(`${apiUrl}/api/admin/insumos`)
+        .then((res) => {
+          setData(res.data);
+        })
+        .catch((err) => console.log(err));
+    };
+
     fetchData();
     return () => {
       dispatch({ type: 'ResetInsumos' });
     };
-  }, [dispatch, fetchData]);
+  }, [dispatch, apiUrl]);
 
 
   const handleReset = () => {
-    dispatch({ type: 'ResetInsumos' });
-    fetchData();
-    setInitialInsumos(true);
+    setValues(initialValues);
+    setImageUrl(null);
     setNombreError('');
     setDescripcionError('');
+    dispatch({ type: 'ResetInsumos' });
   };
 
   const handleChangePage = (event, newPage) => {
@@ -178,27 +172,63 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
 
   const dataLength = state ? (data.length - state.length) : (data.length);
 
-  console.log(state)
+  
+
+
+
+const totalGeneral = insumosState.reduce((total, insumo) => {
+  if (insumo.PrecioUnitario && insumo.Cantidad) {
+    return total + insumo.PrecioUnitario * insumo.Cantidad;
+  }
+  return total;
+}, 0);
+
+
+  const { cart } = useCart()
+
+  const selectedProduct = cart[selectedAnchetaIndex];
+
+  const [dataInsumo, setDataInsumo] = useState([]);
+  const [InitialInsumos, setInitialInsumos] = useState(true);
 
   if (InitialInsumos) {
     data.forEach((insumo) => {
-      const dataInsumoItem = dataInsumo.find(item => item.ID_Insumo === insumo.ID_Insumo);
-      if (dataInsumoItem) {
-        dispatch({ type: 'AddInsumo', payload: { ...insumo, Cantidad: dataInsumoItem.Cantidad, Precio: insumo.PrecioUnitario } });
-        setInitialInsumos(false);
-      }
+        const dataInsumoItem = dataInsumo.find(item => item.ID_Insumo === insumo.ID_Insumo);
+        if (dataInsumoItem) {
+            dispatch({ type: 'AddInsumo', payload: { ...insumo, Cantidad: dataInsumoItem.Cantidad, Precio: insumo.PrecioUnitario } });
+            setInitialInsumos(false);
+        }
     });
-  }
+}
+
+  useEffect(() => {
+    if (selectedProduct) {
+      selectedProduct.insumos.forEach(insumo => {
+        setDataInsumo(selectedProduct.insumos);
+        dispatch({ type: 'AddInsumo', payload: { insumo, Precio: insumo.PrecioUnitario } });
+      });
+      selectedProduct.insumos.forEach(insumo => {
+        console.log(insumo.Total); // Esto imprimirá el precio de cada insumo
+      });
+    }
+  }, [selectedProduct]);
 
 
-  console.log("INSUMOS", state)
+  console.log("STATES", states)
+  console.log("state:", state)
+  console.log("Insumos:", dataInsumo)
+  console.log("Selected product:", selectedProduct)
+  console.log("Insumos agregados:", insumosAgregados)
 
-  const handleEnviar = () => {
-    const carrito = JSON.parse(localStorage.getItem("cart"));
-    carrito[selectedAnchetaIndex].insumos = state;
-    localStorage.setItem("cart", JSON.stringify(carrito));
-  }
+  // Calcula el total general de los insumos
+ 
 
+
+
+  // const theme = useTheme();
+  // const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
+
+  // ACTUALIZAR CARRITO CON LA PERSONALIZACIÓN
 
 
 
@@ -249,14 +279,14 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
 
                       {state.length === 0 ? (<CardContent sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '235px', color: "#98a4b0" }}><Typography variant="body1">Sin Insumos</Typography></CardContent>
                       ) : (
-                        <List sx={{ height: "600px", overflowY: 'auto' }}>
+                        <List sx={{ height: "235px", overflowY: 'auto' }}>
                           {state.map((insumo) => (
                             <ListItem key={insumo.ID_Insumo} secondaryAction={
                               <div>
                                 <IconButton color="primary" onClick={() => dispatch({ type: 'Decrement', payload: insumo })}>
                                   <RemoveIcon sx={{ fontSize: '16px' }} />
                                 </IconButton>
-                                <TextField  value={insumo.Cantidad} onChange={(event) => dispatch({ type: "SetCantidad", payload: { idInsumo: insumo.ID_Insumo, cantidad: event.target.value } })} inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', style: { textAlign: 'center', fontSize: '14px', width: '15px', height: '5px' } }} />
+                                <TextField type="number" value={insumo.Cantidad} onChange={(event) => dispatch({ type: "SetCantidad", payload: { idInsumo: insumo.ID_Insumo, cantidad: event.target.value } })} inputProps={{ style: { textAlign: 'center', fontSize: '14px', width: '15px', height: '5px' } }} />
                                 <IconButton color="primary" onClick={() => dispatch({ type: 'Increment', payload: insumo })}>
                                   <AddIcon sx={{ fontSize: '16px' }} />
                                 </IconButton>
@@ -282,9 +312,8 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
                     </Card>
                     <Typography variant="h5" marginBottom={1}>Total: {formatPrice(Precio)}</Typography>
                     <Stack direction="row" alignItems="center" spacing={1}>
-                    <Button variant="contained" onClick={handleEnviar} fullWidth size="large" color="secondary" sx={{ backgroundColor: "#9C27B0", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Modificar</Button>
-                <Button variant="contained" fullWidth size="large" sx={{ ":hover": { bgcolor: "#000", color: "white" }, backgroundColor: "#343A40", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Cancelar</Button>
-              
+                      <Button type="submit" variant="contained" color="primary" fullWidth>Crear Ancheta</Button>
+                      <Button type="reset" variant="contained" color="secondary" fullWidth>Cancelar</Button>
                     </Stack>
                   </Grid>
                   <Grid item md={7}>
@@ -396,9 +425,8 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
               </Box>
 
               <DialogActions>
-                {/* <Button variant="contained" onClick={handleEnviar} size="large" color="secondary" sx={{ backgroundColor: "#9C27B0", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Modificar</Button>
+                <Button variant="contained" size="large" color="secondary" sx={{ backgroundColor: "#9C27B0", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Modificar</Button>
                 <Button variant="contained" size="large" sx={{ ":hover": { bgcolor: "#000", color: "white" }, backgroundColor: "#343A40", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Cancelar</Button>
-               */}
               </DialogActions>
 
             </DialogContent>
