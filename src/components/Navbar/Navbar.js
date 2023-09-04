@@ -131,11 +131,11 @@ function Navbar() {
                         <li><Link to="/nosotros" onClick={closeMobileMenu} className="menu-link">Nosotros</Link></li>
                         <li><Link to="/shop" onClick={closeMobileMenu} className="menu-link">Catálogo</Link></li>
                         <li><Link to="/contact" onClick={closeMobileMenu} className="menu-link">Contacto</Link></li>
+                        {!token ? (<li></li>) : (<li><Link to="/shopping" onClick={closeMobileMenu} className="menu-link">Mis Compras</Link></li>)}
+
                     </ul>
                 </nav>
             </div>
-
-
         </>
 
     );
