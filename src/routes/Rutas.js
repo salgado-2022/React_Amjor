@@ -21,6 +21,7 @@ import ResetPassword from '../components/Reset-Password/Reset-Password2';
 import { UpdataPassword } from '../components/Register/updatePassword';
 import { Navbar } from '../components/Navbar/Navbar';
 import { Shops } from '../views/shops';
+import { PrivateRoute } from './PrivateRoute';
 
 
 
@@ -40,7 +41,11 @@ function Rutas() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/restore/password" element={<UpdataPassword />} />
                 <Route path="/reset" element={<ResetPassword />} />
-                <Route path="/shopping" element={<Shops />} />
+                <Route path="/shopping" element={
+                    <PrivateRoute>
+                        <Shops />
+                    </PrivateRoute>
+                } />
 
                 <Route path="*" element={<Error404 />} />
             </Routes>

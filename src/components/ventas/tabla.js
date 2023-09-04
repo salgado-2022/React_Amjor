@@ -277,7 +277,7 @@ export default function SalesPage() {
                     </Box>
 
                     <div style={{ overflowX: 'auto' }}>
-                        <Table responsive>
+                        <Table>
                             <OrderListHead
                                 order={order}
                                 orderBy={orderBy}

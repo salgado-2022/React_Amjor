@@ -24,9 +24,6 @@ function Navbar() {
         setToken(token)
     }, []);
 
-
-
-
     const toggleMobileMenu = () => {
         setMobileMenuOpen(!mobileMenuOpen);
     };
@@ -47,7 +44,7 @@ function Navbar() {
                         <div className="row align-items-center ">
 
                             <div className="col-1 site-search-icon text-left">
-                                <div className="">
+                                <div>
                                     <Link to="/">
                                         <img src={logo} style={{ width: '95px' }} alt="logo" />
                                     </Link>
