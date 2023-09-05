@@ -1,16 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom'
 import { useContext } from 'react';
 import { FormContext } from '../../context/formContext';
 import { Link } from "react-router-dom";
 import { useCart } from '../../hooks/useCart';
 import axios from 'axios'
+import Swal from 'sweetalert2'
 import {
     Grid, Card, CardHeader, Divider,
     Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Box
 } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 import { useCartContext } from '../../context/contador'
-//import { handleBlur } from './CheckoutInformacion'
+import { Informacion } from './CheckoutInformacion'
+
+import { ValidationContext } from '../../context/ValidationContext';
 
 
 
@@ -22,7 +27,27 @@ function CarritoPedido({ formSearchValues }) {
     const { items, setItems } = useCartContext();
     //const [errors, setErrors] = useState({});
 
-    const { clearCart } = useCart();
+    const { cart, clearCart } = useCart();
+
+    const validateAllFields = useContext(ValidationContext);
+
+    const [loading, setLoading] = React.useState(false);
+    const [submitAttempted, setSubmitAttempted] = useState(false);
+
+    // Calcular el precio total sumando los precios de los productos en el carrito
+    const totalPrice = cart.reduce((total, product) => {
+        return total + product.PrecioUnitario * product.quantity;
+    }, 0);
+
+    const formatPrice = (price) => {
+        return price.toLocaleString('es-CO', {
+            style: 'currency',
+            currency: 'COP',
+        });
+    };
+
+    
+    const navigate = useNavigate()
 
 
     //   const [pedidoData, setPedidoData] = useState({
@@ -51,7 +76,6 @@ function CarritoPedido({ formSearchValues }) {
     }
 
     const storedCart = JSON.parse(window.localStorage.getItem('cart')) || [];
-    const { cart } = useCart();
 
     const pedidoData = {
         ID_Cliente: formSearchValues.length > 0 ? formSearchValues[0].ID_Cliente : null,
@@ -67,6 +91,41 @@ function CarritoPedido({ formSearchValues }) {
             })) : []
         }))
     };
+
+    const informacionRef = React.useRef();
+
+    const handleClickVIEJO = () => {
+        // Aquí puedes llamar a validateFields
+        informacionRef.current.validateFields();
+        // ... luego puedes verificar los errores y decidir si enviar el formulario o no ...
+    };
+    const isValid = false;
+    const handleClick = async () => {
+        const isValid = await validateAllFields();
+        console.log("Errores:", errors);
+        setSubmitAttempted(true);
+
+        if (isValid) {
+            enviarPedido();
+            setLoading(true);
+        }
+    };
+
+    useEffect(() => {
+        console.log("Errores:", errors);
+
+        if (submitAttempted && formValues.isValid) {
+            enviarPedido();
+            setLoading(true);
+        }
+        setSubmitAttempted(false);
+    }, [errors, isValid]);
+
+
+    function handlePrueba() {
+        setLoading(true);
+    }
+
 
 
     const enviarPedido = () => {
@@ -84,6 +143,33 @@ function CarritoPedido({ formSearchValues }) {
                     setItems(0);
                     // Actualizar el valor del contador de items en carrito en localStorage
                     localStorage.setItem('cartItemCount', 0);
+
+                    Swal.fire(
+                        'Good job!',
+                        'You clicked the button!',
+                        'success'
+                    )
+
+                    Swal.fire({
+                        title: 'Pedido realizado',
+                        //color: '#000',
+                        timer: 2000,
+                        text: '¡Tu pedido se ha realizado correctamente!',
+                        icon: 'success',
+                        confirmButtonColor: '#9C27B0',
+                        confirmButtonText: 'Hecho',
+                        showConfirmButton: true,
+                        didClose: () => {
+                            console.log('La alerta se ha cerrado');
+                            setLoading(false);
+                            navigate(`/thankyou?id=${response.data.pedidoID}`)
+
+                        },
+                    })
+
+
+
+                    //navigate('/thankyou')
                 })
                 .catch((error) => {
                     console.error("Error al enviar el pedido:", error);
@@ -108,7 +194,7 @@ function CarritoPedido({ formSearchValues }) {
                 <Box sx={{ padding: '24px' }}>
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px' }}>
                         <Typography sx={{ color: 'rgb(99, 115, 129);', fontFamily: '"Public Sans", sans-serif;', fontWeight: '400' }} variant="body1">Subtotal</Typography>
-                        <Typography sx={{ color: '#212B36', fontFamily: '"Public Sans", sans-serif;', fontWeight: '600' }} variant="body1">$1</Typography>
+                        <Typography sx={{ color: '#212B36', fontFamily: '"Public Sans", sans-serif;', fontWeight: '600' }} variant="body1">{formatPrice(totalPrice)}</Typography>
                     </Box>
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px' }}>
@@ -125,28 +211,45 @@ function CarritoPedido({ formSearchValues }) {
 
                     <Box sx={{ display: 'flex', justifyContent: 'space-between', marginBottom: '16px' }}>
                         <Typography sx={{ color: '#212B36', fontFamily: '"Public Sans", sans-serif;', fontWeight: '600' }} variant="body1">Total</Typography>
-                        <Typography sx={{ color: '#FF5630', fontFamily: '"Public Sans", sans serif;', fontWeight: '600' }} variant="body1">1</Typography>
+                        <Typography sx={{ color: '#FF5630', fontFamily: '"Public Sans", sans serif;', fontWeight: '600' }} variant="body1">{formatPrice(totalPrice)}</Typography>
                     </Box>
                 </Box>
             </Card>
             <Grid item xs={12}>
 
                 <Link to="/checkout">
-                    <Button
+                    <LoadingButton
+                        size="large"
+                        fullWidth
+                        onClick={handleClick}
+                        loading={loading}
+                        variant="contained"
+                        color="secondary"
+                        //disabled
+                        sx={{ borderRadius: "8px", textTransform: "none", marginTop: '20px', fontFamily: "'Public Sans', sans serif", fontSize: "15px", fontWeight: "400" }}
+                    >
+                        <span>Realizar pedido</span>
+                    </LoadingButton>
+
+                    {/* <Button
                         type="submit"
                         sx={{ borderRadius: "8px", textTransform: "none", marginTop: '20px', fontFamily: "'Public Sans', sans serif", fontSize: "15px", fontWeight: "400" }}
                         variant="contained"
                         color="secondary"
                         fullWidth
                         size="large"
-                        onClick={enviarPedido} // Agrega esta línea
+                        onClick={handleClick} // Agrega esta línea
                     >
                         Realizar pedido
-                    </Button>
+                    </Button> */}
+
+
                 </Link>
 
             </Grid>
+            {/* <Informacion ref={informacionRef} hidden /> */}
         </Grid>
+
     );
 }
 

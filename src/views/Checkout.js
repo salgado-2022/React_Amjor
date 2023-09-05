@@ -7,12 +7,15 @@ import jwt_decode from 'jwt-decode';
 
 import { Informacion } from "../components/Carrito/CheckoutInformacion";
 import { CarritoPedido } from "../components/Carrito/CarritoCheckout";
+import { ValidationContext } from '../context/ValidationContext';
+
 
 
 import ReactGA from "react-ga4";
 import { CartProvider } from "../context/cart";
 import { Grid, Box, Container } from "@mui/material";
 import axios from 'axios'
+
 
 
 
@@ -23,9 +26,11 @@ function Checkout() {
     const [formSearchValues, setFormSearchValues] = useState([]);
     const { checkoutUrl, setCheckoutUrl } = useFormContext();
 
+    const informacionRef = React.useRef();
 
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
+
 
 
     useEffect(() => {
@@ -63,18 +68,17 @@ function Checkout() {
             <CartProvider>
                 <Container sx={{ marginTop: "50px" }} >
                     <Grid container spacing={2}>
-                        <Grid item xs>
-                            <Informacion formSearchValues={formSearchValues} />
-
-                        </Grid>
-                        <Grid item xs={12} md={4}>
-                            <CarritoPedido formSearchValues={formSearchValues} />
-                        </Grid>
+                        <ValidationContext.Provider value={() => informacionRef.current.validateAllFields()}>
+                            <Grid item xs>
+                                <Informacion ref={informacionRef} formSearchValues={formSearchValues} />
+                            </Grid>
+                            <Grid item xs={12} md={4}>
+                                <CarritoPedido formSearchValues={formSearchValues} />
+                            </Grid>
+                        </ValidationContext.Provider>
                     </Grid>
-
                 </Container>
             </CartProvider>
-
         </>
     );
 }

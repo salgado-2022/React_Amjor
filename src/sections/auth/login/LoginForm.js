@@ -8,6 +8,7 @@ import {
   Button,
   CircularProgress,
 } from "@mui/material";
+import LoadingButton from '@mui/lab/LoadingButton';
 // components
 import Iconify from "../../../components/iconify";
 
@@ -101,11 +102,12 @@ export default function LoginForm() {
           else {
             setCorreoInput("Correo incorrecto");
             setPasswordInput("Contraseña incorrecta");
+            setLoading(false);
           }
         })
         .catch((err) => console.log(err))
         .finally(() => {
-          setLoading(false);
+          //setLoading(false);
         });
     }
   };
@@ -168,6 +170,19 @@ export default function LoginForm() {
           </Link>
         </Stack>
 
+        <LoadingButton
+          size="large"
+          fullWidth
+          type="submit"
+          loading={loading}
+          variant="contained"
+          color="secondary"
+        //disabled
+        >
+          <span>Iniciar sesión</span>
+        </LoadingButton>
+
+        {/* 
         <Button
           fullWidth
           size="large"
@@ -179,7 +194,8 @@ export default function LoginForm() {
         >
           {loading && <CircularProgress color="inherit" size={26} />}
           {!loading && "Iniciar sesión"}
-        </Button>
+        </Button> */}
+
       </form>
     </>
   );
