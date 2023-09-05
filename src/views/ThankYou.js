@@ -6,14 +6,13 @@ import ReactGA from "react-ga4";
 function CompraThankYou() {
     useEffect(() => {
         ReactGA.send({ hitType: "pageview", page: window.location.pathname, title: "Pedido realizado" });
-      });
+    });
 
     return (
         <>
-            
-                <ThankYou/>
+            <ThankYou />
         </>
     );
 }
 
-export{ CompraThankYou }
+export { CompraThankYou }

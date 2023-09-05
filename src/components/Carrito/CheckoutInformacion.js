@@ -60,7 +60,7 @@ const CustomWidthTooltip = styled(({ className, ...props }) => (
     },
 });
 
-function Informacion({ formSearchValues }) {
+const Informacion = React.forwardRef(({ formSearchValues }, ref) => {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
 
     const today = dayjs();
@@ -87,7 +87,7 @@ function Informacion({ formSearchValues }) {
     console.log("Form search values:", formSearchValues)
 
     useEffect(() => {
-        if (formSearchValues[0]) {
+        if (formSearchValues && formSearchValues.length > 0) {
             setValues(prevValues => ({
                 ...prevValues,
                 Nombres: formSearchValues[0].Nombre,
@@ -309,13 +309,40 @@ function Informacion({ formSearchValues }) {
 
     }
 
+    const validateAllFields = async () => {
+        const fieldValidations = [
+          handleBlur({ target: { name: 'Municipio', value: values.Municipio } }),
+          handleBlur({ target: { name: 'Direccion_Entrega', value: values.Direccion_Entrega } }),
+          handleBlur({ target: { name: 'Barrio', value: values.Barrio } }),
+          handleBlur({ target: { name: 'Fecha_Entrega', value: values.Fecha_Entrega } })
+        ];
+      
+        const results = await Promise.all(fieldValidations);
+        const isValid = results.every(result => result);
+      
+        return isValid;
+      };
 
-    // Chat. Necesito hacer que el handleBlur se ejecute para todos los campos de @CheckoutInformacion.js desde el 
-    // boton  que hay  en@CheckoutInformacion.js . Esto hará  que se ejecuten las validaciones, y evitará que el
-    //  formulario sea enviado si hay alguna validacion que no se cumpla. El enfoque de usar contextos NO funciona.
+    const validateAllFieldsBUENO = () => {
+        return new Promise(resolve => {
+            //handleBlur({ target: { name: 'Nombres', value: values.Nombres } });
+            //handleBlur({ target: { name: 'Apellidos', value: values.Apellidos } });
+            //handleBlur({ target: { name: 'Documento', value: values.Documento } });
+            //handleBlur({ target: { name: 'Telefono', value: values.Telefono } });
+            //handleBlur({ target: { name: 'Email', value: values.Email } });
+            handleBlur({ target: { name: 'Pais', value: values.Pais } });
+            handleBlur({ target: { name: 'Municipio', value: values.Municipio } });
+            handleBlur({ target: { name: 'Direccion_Entrega', value: values.Direccion_Entrega } });
+            handleBlur({ target: { name: 'Barrio', value: values.Barrio } });
+            handleBlur({ target: { name: 'Fecha_Entrega', value: values.Fecha_Entrega } });
+            setTimeout(resolve, 1000);
+        });
 
-    // Estos componentes  se cargan como una vista  en @Checkout.js 
+    };
 
+    React.useImperativeHandle(ref, () => ({
+        validateAllFields,
+    }));
 
 
 
@@ -633,6 +660,7 @@ function Informacion({ formSearchValues }) {
 
         </>
     );
-}
+})
+
 
 export { Informacion }

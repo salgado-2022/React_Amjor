@@ -197,6 +197,8 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
     const carrito = JSON.parse(localStorage.getItem("cart"));
     carrito[selectedAnchetaIndex].insumos = state;
     localStorage.setItem("cart", JSON.stringify(carrito));
+    handleReset();
+    onClose();
   }
 
 
@@ -283,7 +285,7 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
                     <Typography variant="h5" marginBottom={1}>Total: {formatPrice(Precio)}</Typography>
                     <Stack direction="row" alignItems="center" spacing={1}>
                     <Button variant="contained" onClick={handleEnviar} fullWidth size="large" color="secondary" sx={{ backgroundColor: "#9C27B0", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Modificar</Button>
-                <Button variant="contained" fullWidth size="large" sx={{ ":hover": { bgcolor: "#000", color: "white" }, backgroundColor: "#343A40", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Cancelar</Button>
+                <Button variant="contained" onClick={onClose} fullWidth size="large" sx={{ ":hover": { bgcolor: "#000", color: "white" }, backgroundColor: "#343A40", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Cancelar</Button>
               
                     </Stack>
                   </Grid>

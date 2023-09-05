@@ -5,6 +5,7 @@ import axios from "axios";
 
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
+import { Toaster, toast } from 'sonner'
 
 import { useCartContext } from '../../context/contador'
 
@@ -70,8 +71,13 @@ function ProductosCatalogo({ products }) {
                         insumos: insumos,
                     });
 
-                    setSnackbarMessage('Producto añadido al carrito');
-                    setSnackbarOpen(true); // Mostrar la Snackbar
+                    //setSnackbarMessage('Producto añadido al carrito');
+                    
+                    toast.success('Producto agregado', {
+                        description: 'El producto fue agregado al carrito correctamente.'
+                      });
+
+                    //setSnackbarOpen(true); // Mostrar la Snackbar
                     setItems(items + 1);
 
                     // Almacenar el valor en localStorage
@@ -86,6 +92,8 @@ function ProductosCatalogo({ products }) {
 
     return (
         <>
+            <Toaster richColors closeButton duration={3000}/>
+
             <div className="row mb-5">
                 {products.map((product) => {
                     const isProductInCart = checkProductInCart(product)
