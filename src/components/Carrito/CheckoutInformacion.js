@@ -141,7 +141,7 @@ const Informacion = React.forwardRef(({ formSearchValues }, ref) => {
         },
         {
             value: 'Sabaneta',
-            label: 'sabaneta',
+            label: 'Sabaneta',
         },
     ];
 
