@@ -89,6 +89,7 @@ function CarritoPedido({ formSearchValues }) {
             Insumos: producto.insumos ? producto.insumos.map(insumo => ({
                 ID_Insumo: insumo.ID_Insumo,
                 Precio: insumo.Precio,
+                Precio: insumo.Total,
                 Cantidad: insumo.Cantidad
             })) : []
         }))
