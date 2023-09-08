@@ -10,7 +10,7 @@ export const cartReducer = (state, action) => {
         case 'ADD_TO_CART': {
             const { ID_Ancheta } = actionPayload
             const productInCartIndex = state.findIndex(item => item.ID_Ancheta === ID_Ancheta)
-            
+
             if (productInCartIndex >= 0) {
                 const newState = structuredClone(state)
                 newState[productInCartIndex].quantity += 1
@@ -18,7 +18,7 @@ export const cartReducer = (state, action) => {
                 return newState
             }
 
-            
+
             const newState = [
                 ...state,
                 {
@@ -49,6 +49,18 @@ export const cartReducer = (state, action) => {
         case 'SET_CART':
             // Aquí actualizamos el estado con los datos del carrito
             return actionPayload;
+
+        case 'UPDATE_PRICE': {
+            const { ID_Ancheta, PrecioUnitario } = actionPayload;
+            const productIndex = state.findIndex(item => item.ID_Ancheta === ID_Ancheta);
+
+            if (productIndex >= 0) {
+                const newState = [...state];
+                newState[productIndex].PrecioUnitario = PrecioUnitario;
+                updateLocalStorage(newState);
+                return newState;
+            }
+        }
         
         default:
             return state

@@ -84,9 +84,11 @@ function CarritoPedido({ formSearchValues }) {
         Precio_Total: calcularPrecioTotal(storedCart), // Función para calcular el precio total del carrito
         Anchetas: cart.map(producto => ({
             ID_Ancheta: producto.ID_Ancheta,
+            PrecioUnitario: producto.PrecioUnitario,
             Cantidad: producto.quantity,
             Insumos: producto.insumos ? producto.insumos.map(insumo => ({
                 ID_Insumo: insumo.ID_Insumo,
+                Precio: insumo.Precio,
                 Cantidad: insumo.Cantidad
             })) : []
         }))
