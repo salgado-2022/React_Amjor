@@ -28,6 +28,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { createTheme } from '@mui/material/styles';
 import { AdapterLuxon } from '@mui/x-date-pickers/AdapterLuxon'
 
+import dayjs from 'dayjs';
+
 // ----------------------------------------------------------------------
 
 const StyledContent = styled('div')(({ theme }) => ({
@@ -58,8 +60,13 @@ const CustomWidthTooltip = styled(({ className, ...props }) => (
     },
 });
 
-function Informacion({ formSearchValues }) {
+const Informacion = React.forwardRef(({ formSearchValues }, ref) => {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
+
+    const today = dayjs();
+    const minDate = today.add(2, 'day').format('YYYY-MM-DD');
+    const maxDate = today.add(50, 'year').format('YYYY-MM-DD');
+
 
     const navigate = useNavigate()
 
@@ -80,14 +87,17 @@ function Informacion({ formSearchValues }) {
     console.log("Form search values:", formSearchValues)
 
     useEffect(() => {
-        if (formSearchValues[0]) {
+        if (formSearchValues && formSearchValues.length > 0) {
             setValues(prevValues => ({
                 ...prevValues,
                 Nombres: formSearchValues[0].Nombre,
                 Apellidos: formSearchValues[0].Apellido,
                 Documento: formSearchValues[0].Documento,
                 Telefono: formSearchValues[0].Telefono,
-                Email: formSearchValues[0].correo
+                Email: formSearchValues[0].correo,
+
+                // Definir Colombia como país por defecto.
+                Pais: paises[0].value,
             }));
         }
     }, [formSearchValues]);
@@ -131,7 +141,7 @@ function Informacion({ formSearchValues }) {
         },
         {
             value: 'Sabaneta',
-            label: 'sabaneta',
+            label: 'Sabaneta',
         },
     ];
 
@@ -164,8 +174,9 @@ function Informacion({ formSearchValues }) {
         const { name, value } = event.target;
         setValues(prev => ({ ...prev, [name]: value }));
         setFormValues(prev => ({ ...prev, [name]: value })); // Almacena los valores en el contexto
-    
+
         handleBlur(event); // Pasa el evento a handleBlur
+        console.log(`Campo ${name} se ha actualizado con el valor: ${value}`);
     }
 
     //const [errors, setErrors] = useState({});
@@ -298,6 +309,41 @@ function Informacion({ formSearchValues }) {
 
     }
 
+    const validateAllFields = async () => {
+        const fieldValidations = [
+          handleBlur({ target: { name: 'Municipio', value: values.Municipio } }),
+          handleBlur({ target: { name: 'Direccion_Entrega', value: values.Direccion_Entrega } }),
+          handleBlur({ target: { name: 'Barrio', value: values.Barrio } }),
+          handleBlur({ target: { name: 'Fecha_Entrega', value: values.Fecha_Entrega } })
+        ];
+      
+        const results = await Promise.all(fieldValidations);
+        const isValid = results.every(result => result);
+      
+        return isValid;
+      };
+
+    const validateAllFieldsBUENO = () => {
+        return new Promise(resolve => {
+            //handleBlur({ target: { name: 'Nombres', value: values.Nombres } });
+            //handleBlur({ target: { name: 'Apellidos', value: values.Apellidos } });
+            //handleBlur({ target: { name: 'Documento', value: values.Documento } });
+            //handleBlur({ target: { name: 'Telefono', value: values.Telefono } });
+            //handleBlur({ target: { name: 'Email', value: values.Email } });
+            handleBlur({ target: { name: 'Pais', value: values.Pais } });
+            handleBlur({ target: { name: 'Municipio', value: values.Municipio } });
+            handleBlur({ target: { name: 'Direccion_Entrega', value: values.Direccion_Entrega } });
+            handleBlur({ target: { name: 'Barrio', value: values.Barrio } });
+            handleBlur({ target: { name: 'Fecha_Entrega', value: values.Fecha_Entrega } });
+            setTimeout(resolve, 1000);
+        });
+
+    };
+
+    React.useImperativeHandle(ref, () => ({
+        validateAllFields,
+    }));
+
 
 
     const handleSubmit = (event) => {
@@ -335,6 +381,8 @@ function Informacion({ formSearchValues }) {
                 .then(err => console.log(err));
         }
     }
+
+    console.log("Form values:", values)
 
 
     return (
@@ -449,6 +497,29 @@ function Informacion({ formSearchValues }) {
 
                             <Grid item xs={12} sm={6}>
                                 <TextField
+                                    name="Pais"
+                                    id="outlined-select-currency"
+                                    onChange={handleInput}
+                                    onBlur={handleBlur}
+                                    select
+                                    fullWidth
+                                    label="País de residencia"
+                                    defaultValue="Colombia"
+                                    color="secondary"
+                                    //value="Colombia"
+                                    value={values.Pais}
+                                    helperText=""
+                                >
+                                    {paises.map((option) => (
+                                        <MenuItem key={option.value} value={option.value}>
+                                            {option.label}
+                                        </MenuItem>
+                                    ))}
+                                </TextField>
+                            </Grid>
+
+                            <Grid item xs={12} sm={6}>
+                                <TextField
                                     name="Municipio"
                                     id="outlined-select-currency"
                                     select
@@ -461,7 +532,7 @@ function Informacion({ formSearchValues }) {
                                     helperText={municipioInput}
                                     value={values.Municipio}
                                     color="secondary"
-                                    //helperText="¿Dónde será entregado el pedido?"
+                                //helperText="¿Dónde será entregado el pedido?"
                                 >
                                     {municipios.map((option) => (
                                         <MenuItem key={option.value} value={option.value}>
@@ -470,26 +541,7 @@ function Informacion({ formSearchValues }) {
                                     ))}
                                 </TextField>
                             </Grid>
-                            <Grid item xs={12} sm={6}>
-                                <TextField
-                                    name="Pais"
-                                    id="outlined-select-currency"
-                                    onChange={handleInput}
-                                    select
-                                    fullWidth
-                                    label="País de residencia"
-                                    defaultValue="Colombia"
-                                    color="secondary"
-                                    value={values.Pais}
-                                    helperText=""
-                                >
-                                    {paises.map((option) => (
-                                        <MenuItem key={option.value} value={option.value}>
-                                            {option.label}
-                                        </MenuItem>
-                                    ))}
-                                </TextField>
-                            </Grid>
+
                             <Grid item xs={12} sm={6}>
                                 <TextField
                                     label="Dirección de entrega"
@@ -555,6 +607,10 @@ function Informacion({ formSearchValues }) {
                                         InputLabelProps={{
                                             shrink: true,
                                         }}
+                                        inputProps={{
+                                            min: minDate, // Establece la fecha mínima
+                                            max: maxDate, // Establece la fecha
+                                        }}
                                     />
 
                                     {/* <DateField 
@@ -604,6 +660,7 @@ function Informacion({ formSearchValues }) {
 
         </>
     );
-}
+})
+
 
 export { Informacion }

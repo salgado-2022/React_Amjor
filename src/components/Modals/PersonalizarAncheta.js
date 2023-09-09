@@ -53,6 +53,7 @@ import Iconify from "../../components/iconify";
 import { useCart } from '../../hooks/useCart'
 import { Insumoscontext } from '../../context/Context';
 
+
 export default function PersonalizarAncheta({ open, onClose, selectedAnchetaIndex }) {
   const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
   const deployApiUrl = process.env.REACT_APP_AMJOR_DEPLOY_API_URL;
@@ -190,13 +191,27 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
     });
   }
 
+  const { addToCart, clearCart, removeFromCart, setCart } = useCart();
+  
+
 
   console.log("INSUMOS", state)
 
   const handleEnviar = () => {
     const carrito = JSON.parse(localStorage.getItem("cart"));
     carrito[selectedAnchetaIndex].insumos = state;
+    carrito[selectedAnchetaIndex].PrecioUnitario = Precio;
     localStorage.setItem("cart", JSON.stringify(carrito));
+
+    //addToCart(carrito[selectedAnchetaIndex]);
+
+    handleReset();
+    onClose();
+    window.location.reload();
+  }
+
+  const handleClose = () => {
+    window.location.reload();
   }
 
 
@@ -209,7 +224,7 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
           <Dialog
             fullScreen
             open={open}
-            onClose={onClose}
+            onClose={handleClose}
             style={{ borderRadius: '10px' }}
             sx={{ '& .MuiDialog-container': { borderRadius: '10px', }, borderRadius: '10px', padding: '24px 24px 24px 24px', boxShadow: 'rgba(0, 0, 0, 0.24) -40px 40px 80px -8px;', borderRadius: 30 }}
           >
@@ -283,7 +298,7 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
                     <Typography variant="h5" marginBottom={1}>Total: {formatPrice(Precio)}</Typography>
                     <Stack direction="row" alignItems="center" spacing={1}>
                     <Button variant="contained" onClick={handleEnviar} fullWidth size="large" color="secondary" sx={{ backgroundColor: "#9C27B0", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Modificar</Button>
-                <Button variant="contained" fullWidth size="large" sx={{ ":hover": { bgcolor: "#000", color: "white" }, backgroundColor: "#343A40", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Cancelar</Button>
+                <Button variant="contained" onClick={handleClose} fullWidth size="large" sx={{ ":hover": { bgcolor: "#000", color: "white" }, backgroundColor: "#343A40", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Cancelar</Button>
               
                     </Stack>
                   </Grid>

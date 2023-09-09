@@ -1,22 +1,42 @@
-import React from "react";
+import { React } from "react";
+//import { useLocation } from 'react-router-dom';
+import { Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom'
 
 function ThankYou() {
+  //const location = useLocation();
+  //const searchParams = new URLSearchParams(location.search);
+  //const pedidoID = searchParams.get('id');
+  const navigate = useNavigate()
 
-    return(
-        <div class="site-section">
+  return (
+    <div class="site-section">
       <div class="container">
         <div class="row">
           <div class="col-md-12 text-center">
             <span class="icon-check_circle display-3 text-success"></span>
             <h2 class="display-3 text-black">¡Muchas gracias!</h2>
-            <p class="lead mb-5">Tu pedido se ha solicitado correctamente. Recibirás un correo electrónico cuando este
+            <p class="lead mb-5">Tu pedido se ha solicitado correctamente y se encuentra pendiente. Recibirás un correo electrónico cuando este
               sea aprobado.</p>
-            <p><a href="shop" class="btn btn-sm btn-primary">Volver al catálogo</a></p>
+            <Button
+              size="large"
+              type="submit"
+              variant="contained"
+              color="secondary"
+              fontFamily={'"Mukta", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";'}
+              onClick={() => navigate('/shop')}
+              sx={{ textTransform: 'none', fontFamily: "'Public Sans', sans serif", fontSize: "15px", fontWeight: "400" }}
+            >
+              Volver al catálogo
+            </Button>
+
+            {/* <p><a href="shop" className="btn btn-sm btn-primary">Volver al catálogo</a></p> */}
+
           </div>
         </div>
       </div>
     </div>
-    );
+  );
 }
 
 export { ThankYou }

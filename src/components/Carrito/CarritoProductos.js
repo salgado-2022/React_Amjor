@@ -70,7 +70,7 @@ function CarritoProductos() {
                         {NombreAncheta}
                     </Typography>
                 </TableCell>
-                <TableCell style={{ border: 'none' }}>{formatPrice(PrecioUnitario)}</TableCell>
+                <TableCell style={{ border: 'none' }}>{formatPrice(PrecioUnitario * 1)}</TableCell>
                 <TableCell style={{ border: 'none' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
                         <IconButton onClick={decrement} size="small">
@@ -106,7 +106,7 @@ function CarritoProductos() {
 
             {totalItems > 0 ? (
                 <>
-                    <Card sx={{ width: '100%', border: 'none', borderRadius: '16px', marginBottom: '25px', boxShadow: 'rgba(145, 158, 171, 0.2) 0px 0px 2px 0px, rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;' }}>
+                    <Card sx={{ overflowX: 'auto', width: '100%', border: 'none', borderRadius: '16px', marginBottom: '25px', boxShadow: 'rgba(145, 158, 171, 0.2) 0px 0px 2px 0px, rgba(145, 158, 171, 0.12) 0px 12px 24px -4px;' }}>
                         <CardHeader
                             title={
                                 <Typography variant="h4" sx={{ fontFamily: 'Mukta', margin: '0px 0px 24px', padding: '24px 24px 0px', fontSize: '20px', fontWeight: '700' }}>

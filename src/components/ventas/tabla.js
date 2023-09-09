@@ -88,7 +88,7 @@ function applySortFilter(array, comparator, query) {
 export default function SalesPage() {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
 
-    const apiUrlImage = process.env.REACT_APP_AMJOR_API_URL_NEW;
+    const apiUrlImage = process.env.REACT_APP_AMJOR_API_URL;
 
     const [open, setOpen] = useState({});
 
@@ -131,7 +131,7 @@ export default function SalesPage() {
                 })
                 .catch((err) => { console.log(err) })
         }
-    },[user,apiUrl])
+    }, [user, apiUrl])
 
 
     const handleOpenMenu = async (ID_Ancheta) => {
