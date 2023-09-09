@@ -36,22 +36,6 @@ function Filtro() {
         </div>
 
         <div className="mb-4">
-          <h3 className="mb-3 h6 text-uppercase text-black d-block">Tamaño</h3>
-          <label htmlFor="s_sm" className="d-flex">
-            <input type="checkbox" id="s_sm" className="mr-2 mt-1" />{" "}
-            <span className="text-black">Pequeña</span>
-          </label>
-          <label htmlFor="s_md" className="d-flex">
-            <input type="checkbox" id="s_md" className="mr-2 mt-1" />{" "}
-            <span className="text-black">Mediana </span>
-          </label>
-          <label htmlFor="s_lg" className="d-flex">
-            <input type="checkbox" id="s_lg" className="mr-2 mt-1" />{" "}
-            <span className="text-black">Grande</span>
-          </label>
-        </div>
-
-        <div className="mb-4">
           <h3 className="mb-3 h6 text-uppercase text-black d-block">Motivos</h3>
           <a href="#/" className="d-flex color-item align-items-center">
             <span className="bg-primary color d-inline-block rounded-circle mr-2"></span>{" "}

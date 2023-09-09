@@ -89,7 +89,6 @@ function ProductosCatalogo({ products }) {
             <div className="row mb-5">
                 {products.map((product) => {
                     const isProductInCart = checkProductInCart(product)
-
                     return (
                         <div className="col-sm-6 col-lg-4 mb-4" data-aos="fade-up" key={product.ID_Ancheta} >
                             <div className="block-4 card catalogue" onClick={() => { handleAnchetaClick(product.ID_Ancheta) }} style={{ borderRadius: "5%", boxShadow: "0 2px 15px rgba(0, 0, 0, 0.1)", border: "none", cursor: "pointer" }}>

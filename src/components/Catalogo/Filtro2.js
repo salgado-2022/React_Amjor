@@ -20,7 +20,6 @@ function Filtro2() {
                             <div className="dropdown-menu" aria-labelledby="dropdownMenuOffset">
                                 <a className="dropdown-item" href="#/">Orden alfabetico</a>
                                 <a className="dropdown-item" href="#/">Más antiguo</a>
-                                <a className="dropdown-item" href="#/">Promociones</a>
                             </div>
                         </div>
                     </div>
