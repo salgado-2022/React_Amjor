@@ -117,9 +117,10 @@ export default function LoginForm() {
       <form onSubmit={handleSubmit}>
         <Stack spacing={3}>
           <TextField
+            //color="info"
+            color="secondary"
             name="Correo"
             label="Correo"
-            color="info"
             id="Correo"
             value={values.Correo}
             onChange={handleInput}
@@ -129,7 +130,8 @@ export default function LoginForm() {
           />
 
           <TextField
-            color="info"
+            //color="info"
+            color="secondary"
             name="Password"
             id="Password"
             label="Contraseña"

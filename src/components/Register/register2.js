@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 
 // @mui
 import { styled } from '@mui/material/styles';
-import { Container, Typography, InputAdornment, IconButton, Button, Grid, TextField, Tooltip, tooltipClasses } from '@mui/material';
+import { Divider, Container, Typography, InputAdornment, IconButton, Button, Grid, TextField, Tooltip, tooltipClasses } from '@mui/material';
 
 import { Link } from "react-router-dom";
 
@@ -28,7 +28,7 @@ const StyledContent = styled('div')(({ theme }) => ({
     display: 'flex',
     justifyContent: 'center',
     flexDirection: 'column',
-    padding: theme.spacing(2, 0),
+    padding: theme.spacing(5, 0),
 }));
 
 // ----------------------------------------------------------------------
@@ -231,9 +231,22 @@ export default function FormRegister() {
         <>
             <Container maxWidth="sm" style={{ boxShadow: '0px 0px 10px rgba(0, 0, 0, 0.2)', borderRadius: 10, marginTop: 40, backgroundColor: '#FFFFFF' }}>
                 <StyledContent>
-                    <Typography variant="h4" gutterBottom color="textPrimary" fontFamily={'Mukta'}>
+                    {/* <Typography variant="h4" gutterBottom color="textPrimary" fontFamily={'Mukta'}>
                         Registrar
-                    </Typography>
+                    </Typography> */}
+                    <Typography variant="h4" display="flex" justifyContent="center" gutterBottom color="textPrimary" fontFamily={'Mukta'}>
+                            Registrarse
+                        </Typography>
+
+                        <Typography variant="body2" display="flex" justifyContent="center" fontFamily={'Mukta'} sx={{  }} style={{ fontSize: 16 }} color="textPrimary">
+                            ¿Ya tienes una cuenta? {''}
+                            <Link to="/login" style={{ fontSize: 16, fontWeight: 'bold', color: '#9C27B0', marginLeft: '5px'}}>Inicia sesión ahora</Link>
+                        </Typography>
+
+                        <Divider sx={{ my: 3 }}>
+
+                        </Divider>
+
                     <form onSubmit={handleSubmit}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>

@@ -13,7 +13,6 @@ import { LoginForm } from '../sections/auth/login';
 
 import ReactGA from "react-ga4";
 
-
 // ----------------------------------------------------------------------
 
 const StyledContent = styled('div')(({ theme }) => ({
@@ -49,13 +48,14 @@ export default function Login() {
                             Iniciar sesión
                         </Typography>
                         {/* <br /> */}
-
-                        <Typography variant="body2" display="flex" justifyContent="center" fontFamily={'Mukta'} sx={{ mb: 5 }} style={{ fontSize: 16 }} color="textPrimary">
+                        
+                        {/* <Typography variant="body2" display="flex" justifyContent="center" fontFamily={'Mukta'} sx={{ mb: 5 }} style={{ fontSize: 16 }} color="textPrimary"> */}
+                        <Typography variant="body2" display="flex" justifyContent="center" fontFamily={'Mukta'} sx={{  }} style={{ fontSize: 16 }} color="textPrimary">
                             ¿No tienes una cuenta? {''}
                             <Link to="/register" style={{ fontSize: 16, fontWeight: 'bold', color: '#9C27B0', marginLeft: '5px'}}>Regístrate ahora</Link>
                         </Typography>
 
-                        <Stack direction="row" spacing={2}>
+                        {/* <Stack direction="row" spacing={2}>
                             <Button fullWidth size="large" color="inherit" variant="outlined">
                                 <Iconify icon="eva:google-fill" color="#DF3E30" width={22} height={22} />
                             </Button>
@@ -67,7 +67,7 @@ export default function Login() {
                             <Button fullWidth size="large" color="inherit" variant="outlined">
                                 <Iconify icon="bi:github" color="#000000" width={22} height={22} />
                             </Button>
-                        </Stack>
+                        </Stack> */}
 
                         <Divider sx={{ my: 3 }}>
                             <Typography variant="body2" sx={{ color: 'text.secondary' }} fontFamily={'Mukta'}>
