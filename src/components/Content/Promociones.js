@@ -12,7 +12,7 @@ function Promociones() {
             <div className="container">
                 <div className="row justify-content-center  mb-5">
                     <div className="col-md-7 site-section-heading text-center pt-4">
-                        <h2>PROMOCIONES!</h2>
+                        <h2>NUESTRAS PROMOCIONES</h2>
                     </div>
                 </div>
                 <div className="row align-items-center">
@@ -20,8 +20,8 @@ function Promociones() {
                         <img src={promo} alt="Imagen placeholder" className="img-fluid rounded" />
                     </div>
                     <div className="col-md-12 col-lg-5 text-center pl-md-5">
-                        <h2><a href="#/">50% ANCHETA DE GRADOS!</a></h2>
-                        <p>Aprovecha esta promoción del 50% en todas las anchetas de grados! <br /> Disponible hasta fin de mes.</p>
+                        <h2><a href="#/" style={{fontSize: '20px' }} > -50% DE DESCUENTO EN ANCHETA DE GRADOS</a></h2>
+                        <p>¡Aprovecha esta promoción del 50% de descuento en todas nuestras anchetas de grados! Disponible hasta fin de mes.</p>
                         <p><a href="shop" className="btn btn-primary btn-sm">Comprar ahora</a></p>
                     </div>
                 </div>

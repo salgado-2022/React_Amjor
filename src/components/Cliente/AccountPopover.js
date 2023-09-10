@@ -30,6 +30,7 @@ const MENU_OPTIONS = [
 export default function AccountPopover() {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
     const landingUrl = process.env.REACT_APP_AMJOR_LANDING_URL;
+    const deployApiUrl = process.env.REACT_APP_AMJOR_DEPLOY_URL;
 
     const [open, setOpen] = useState(null);
     const [user, setUser] = useState(null);
@@ -116,7 +117,7 @@ export default function AccountPopover() {
                     marginRight: "13px"
                 }}
             >
-                <Avatar src="" alt="photoURL" sx={{ width: "30px", height: "30px" }} />
+                <Avatar src="" alt={`${deployApiUrl}/anchetas/` + data[0].correo} sx={{ width: "30px", height: "30px" }} />
             </IconButton>
 
             <Popover

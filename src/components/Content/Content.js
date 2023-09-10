@@ -11,7 +11,7 @@ function Content() {
                         <div className="col-md-5 text-center text-md-left pt-5 pt-md-0">
                             <h1 className="mb-2">Amjor <br /> ¡Hecho con amor!</h1>
                             <div className="intro-text text-center text-md-left">
-                                <p className="mb-4">Venta de anchetas personalizables y de cátalogo con la mejor calidad y a un buen precio! </p>
+                                <p className="mb-4">¡Venta de anchetas personalizables y de catálogo con la mejor calidad y a un precio increíble! </p>
                                 <p>
                                     <a href="shop" className="btn btn-sm btn-primary">Comprar ahora</a>
                                 </p>
@@ -29,8 +29,8 @@ function Content() {
                                 <span className="icon-truck"></span>
                             </div>
                             <div className="text">
-                                <h2 className="text-uppercase">Envios seguros</h2>
-                                <p>Recibe tu producto cumpliendo con el tiempo establecido en toda el area metropolitana.
+                                <h2 className="text-uppercase">Envíos seguros</h2>
+                                <p>Recibe tu producto en toda el área metropolitana cumpliendo con el tiempo establecido.
 
                                 </p>
                             </div>
@@ -41,7 +41,7 @@ function Content() {
                             </div>
                             <div className="text">
                                 <h2 className="text-uppercase">Personalizable</h2>
-                                <p>Elige una de las anchetas y agrega tus productos deseados segun tus preferencias.</p>
+                                <p>Elige una de las anchetas del catálogo y agrega tus productos deseados según tus preferencias.</p>
                             </div>
                         </div>
                         <div className="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4" data-aos="fade-up" data-aos-delay="200">
@@ -49,8 +49,8 @@ function Content() {
                                 <span className="icon-dollar"></span>
                             </div>
                             <div className="text">
-                                <h2 className="text-uppercase">Métodos de Pago</h2>
-                                <p>Paga contra entrega o mediante transacciones. </p>
+                                <h2 className="text-uppercase">Métodos de pago</h2>
+                                <p>Paga cuando recibas tu pedido o mediante transferencias bancarias. </p>
                             </div>
                         </div>
                     </div>
