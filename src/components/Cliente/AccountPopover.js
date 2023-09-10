@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 // @mui
 import { alpha } from '@mui/material/styles';
 import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover } from '@mui/material';
+import { Link } from 'react-router-dom';
+
 
 
 import axios from 'axios';
@@ -34,6 +36,8 @@ export default function AccountPopover() {
     const [open, setOpen] = useState(null);
     const [user, setUser] = useState(null);
     const [data, setData] = useState([]);
+    const [img, setImg] = useState();
+
     const [loading, setLoading] = useState(true)
 
     const handleOpen = (event) => {
@@ -87,6 +91,7 @@ export default function AccountPopover() {
             axios.get(`${apiUrl}/api/checkout/searchuserinfo/${decodedToken.userId}`)
                 .then(res => {
                     setData(res.data);
+                    setImg(res.data[0].img)
                     setLoading(false);
                 })
                 .catch(error => {
@@ -116,7 +121,7 @@ export default function AccountPopover() {
                     marginRight: "13px"
                 }}
             >
-                <Avatar src="" alt="photoURL" sx={{ width: "30px", height: "30px" }} />
+                <Avatar src={`${apiUrl}/anchetas/${img}`} alt="photoURL" sx={{ width: "30px", height: "30px" }} />
             </IconButton>
 
             <Popover
@@ -167,11 +172,11 @@ export default function AccountPopover() {
                 <Divider sx={{ borderStyle: 'dashed' }} />
 
                 <Stack sx={{ p: 1 }}>
-                    {MENU_OPTIONS.map((option) => (
-                        <MenuItem key={option.label} onClick={handleClose}>
-                            {option.label}
+                    <Link to="/usuario/perfil" style={{ color: '#000' }}>
+                        <MenuItem onClick={handleClose}>
+                            Mi Perfil
                         </MenuItem>
-                    ))}
+                    </Link>
                 </Stack>
 
                 <Divider sx={{ borderStyle: 'dashed' }} />
