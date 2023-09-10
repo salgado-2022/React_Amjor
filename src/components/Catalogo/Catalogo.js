@@ -5,19 +5,18 @@ import axios from "axios";
 
 import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
-import { Toaster, toast } from 'sonner'
+import { Toaster, toast } from 'sonner';
 
 import { useCartContext } from '../../context/contador'
 
 
-function ProductosCatalogo({ products }) {
+function ProductosCatalogo({ products, dataLoaded }) {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
     const deployApiUrl = process.env.REACT_APP_AMJOR_DEPLOY_API_URL;
 
     const { addToCart, removeFromCart, cart } = useCart()
 
     const [snackbarOpen, setSnackbarOpen] = useState(false);
-    const [snackbarMessage, setSnackbarMessage] = useState('');
 
     const { items, setItems } = useCartContext();
 
@@ -42,8 +41,6 @@ function ProductosCatalogo({ products }) {
         setSelectedAnchetaID(anchetaID);
         setModalShow(true);
     };
-
-    //console.log(data)
 
 
 
@@ -93,9 +90,15 @@ function ProductosCatalogo({ products }) {
     return (
         <>
             <Toaster richColors closeButton duration={3000}/>
-
-            <div className="row mb-5">
-                {products.map((product) => {
+            {dataLoaded ? (
+                products.length === 0 ? (
+                <div className="text-center">
+                    <h2 style={{ color: "MediumSlateBlue"}}>No Encontrado</h2>
+                    <p>Por el momento no hay productos disponibles con el precio o motivo que usted desea.</p>
+                </div>
+            ) : (
+                <div className="row mb-5">
+                {products.filter(product => product.Estado !== "Agotado").map((product) => {
                     const isProductInCart = checkProductInCart(product)
                     return (
                         <div className="col-sm-6 col-lg-4 mb-4" data-aos="fade-up" key={product.ID_Ancheta} >
@@ -125,7 +128,9 @@ function ProductosCatalogo({ products }) {
                         </div>
                     )
                 })}
-            </div>
+                </div>
+            )  
+            ) : null}       
             <AnchetaDetalle
                 show={modalShow}
                 onHide={() => setModalShow(false)}

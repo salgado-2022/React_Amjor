@@ -1,26 +1,52 @@
 import { React, useId } from "react";
-//import { ProductosCatalogo } from "../Catalogo/Catalogo";
 import { useFilters } from "../../hooks/useFilters";
+import {Radio, RadioGroup, FormControlLabel, FormControl} from '@mui/material';
 
 function Filtro() {
   const { filters, setFilters } = useFilters()
 
+  const mediumSlateBlue = "#7B68EE";
+  const msbSelected = "#705FD8";
+
   const minPriceFilterId = useId()
 
   const handleChangeMinPrice = (event) => {
-    setFilters(prevState => ({
-      ...prevState,
-      minPrice: event.target.value
-    }))
+    const newMinPrice = parseFloat(event.target.value);
+    if (!isNaN(newMinPrice)) {
+      setFilters(prevState => ({
+        ...prevState,
+        minPrice: newMinPrice
+      }));
+    }
   }
 
+  const handleChangeMotivo = (event) => {
+    setFilters((prevState) => ({
+      ...prevState,
+      motivo: event.target.value
+    }));
+  };
+
+  const motivoOptions = [
+    { value: "", label: "Todos" },
+    { value: "cumple", label: "Cumpleaños" },
+    { value: "amor", label: "Amor y Amistad" },
+    { value: "grado", label: "Grados" },
+    { value: "halloween", label: "Halloween" },
+    { value: "navidad", label: "Navidad" }
+  ];
+
+  const formattedMinPrice = filters.minPrice.toLocaleString('es-CO', {
+    style: 'currency',
+    currency: 'COP',
+    minimumFractionDigits: 0,
+  });
+  
   return (
     <div className="col-md-3 order-1 mb-5 mb-md-0">
       <div className="border p-4 rounded mb-4">
         <div className="mb-4">
-          <h3 className="mb-3 h6 text-uppercase text-black d-block">
-            Filtrar por precio
-          </h3>
+          <h3 className="mb-3 text-black d-block" style={{ fontSize: "18px" }}>Filtrar por precio</h3>
           <div>
             <label htmlFor={minPriceFilterId}>Precio a partir de: </label>
             <input
@@ -30,49 +56,29 @@ function Filtro() {
               max="500000"
               onChange={handleChangeMinPrice}
               value={filters.minPrice}
+              style={{ backgroundColor: mediumSlateBlue }}
             />
-            <span>${filters.minPrice}</span>
+            <span>{formattedMinPrice}</span>
           </div>
         </div>
-
+        
         <div className="mb-4">
-          <h3 className="mb-3 h6 text-uppercase text-black d-block">Motivos</h3>
-          <a href="#/" className="d-flex color-item align-items-center">
-            <span className="bg-primary color d-inline-block rounded-circle mr-2"></span>{" "}
-            <span className="text-black">Cumpleaños </span>
-          </a>
-          <a href="#/" className="d-flex color-item align-items-center">
-            <span className="bg-primary color d-inline-block rounded-circle mr-2"></span>{" "}
-            <span className="text-black">Bodas</span>
-          </a>
-          <a href="#/" className="d-flex color-item align-items-center">
-            <span className="bg-primary color d-inline-block rounded-circle mr-2"></span>{" "}
-            <span className="text-black">Grados </span>
-          </a>
-          <a href="#/" className="d-flex color-item align-items-center">
-            <span className="bg-primary color d-inline-block rounded-circle mr-2"></span>{" "}
-            <span className="text-black">Halloween </span>
-          </a>
-          <a href="#/" className="d-flex color-item align-items-center">
-            <span className="bg-primary color d-inline-block rounded-circle mr-2"></span>{" "}
-            <span className="text-black">Navidad </span>
-          </a>
-          <a href="#/" className="d-flex color-item align-items-center">
-            <span className="bg-primary color d-inline-block rounded-circle mr-2"></span>{" "}
-            <span className="text-black">Desayunos </span>
-          </a>
-          <a href="#/" className="d-flex color-item align-items-center">
-            <span className="bg-primary color d-inline-block rounded-circle mr-2"></span>{" "}
-            <span className="text-black">Bandejas </span>
-          </a>
-          <a href="#/" className="d-flex color-item align-items-center">
-            <span className="bg-primary color d-inline-block rounded-circle mr-2"></span>{" "}
-            <span className="text-black">Amor y amistad </span>
-          </a>
-          <a href="#/" className="d-flex color-item align-items-center">
-            <span className="bg-primary color d-inline-block rounded-circle mr-2"></span>{" "}
-            <span className="text-black">Otras</span>
-          </a>
+          <FormControl component="fieldset">
+            <h3 className="mb-3 text-black d-block" style={{ fontSize: "18px" }}>Motivos</h3>
+            <RadioGroup aria-label="motivo" name="motivo" value={filters.motivo} onChange={handleChangeMotivo}>
+              <ul style={{ listStyle: "none", padding: 0 }}>
+                {motivoOptions.map((option) => (
+                  <li key={option.value} style={{ marginBottom: "-13px" }}>
+                    <FormControlLabel
+                      value={option.value}
+                      control={<Radio sx={{ color: mediumSlateBlue, '&.Mui-checked': { color: msbSelected }, '& .MuiSvgIcon-root': { fontSize: 22 }}}/>}
+                      label={<span style={{ fontSize: "14px" }}>{option.label}</span>}
+                    />
+                  </li>
+                ))}
+              </ul>
+            </RadioGroup>
+          </FormControl>
         </div>
       </div>
     </div>

@@ -10,7 +10,8 @@ import AccountPopover from "../Cliente/AccountPopover";
 function Navbar() {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
     const { items, setItems } = useCartContext();
-    const [token, setToken] = useState()
+    const [token, setToken] = useState();
+    const [scrolled, setScrolled] = useState(false);
 
     useEffect(() => {
         // Recuperar el valor del contador desde localStorage
@@ -22,7 +23,24 @@ function Navbar() {
 
         const token = Cookies.get('token');
         setToken(token)
+
+         // Agrega un evento de scroll para detectar el desplazamiento
+         window.addEventListener("scroll", handleScroll);
+
+         // Limpia el evento de scroll al desmontar el componente
+         return () => {
+             window.removeEventListener("scroll", handleScroll);
+         };
     }, []);
+
+    const handleScroll = () => {
+        // Verifica si el usuario ha hecho scroll más allá de un cierto punto (por ejemplo, 100px)
+        if (window.scrollY > 100) {
+            setScrolled(true);
+        } else {
+            setScrolled(false);
+        }
+    };
 
     const toggleMobileMenu = () => {
         setMobileMenuOpen(!mobileMenuOpen);
