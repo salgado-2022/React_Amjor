@@ -29,7 +29,7 @@ root.render(
             <CartProvider2>
                 <FormProvider>
                     <Context>
-                        <Rutas />
+                        <Rutas/>
                     </Context>
                 </FormProvider>
             </CartProvider2>

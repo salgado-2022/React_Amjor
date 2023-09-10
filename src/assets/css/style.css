@@ -60,7 +60,7 @@ a:hover {
 }
 
 .btn {
-  text-transform: uppercase;
+  text-transform: capitalize;
   position: relative;
   -webkit-transition: 0.2s all ease-in-out !important;
   -o-transition: 0.2s all ease-in-out !important;
@@ -78,9 +78,11 @@ a:hover {
 }
 
 .btn.btn-secondary {
+  text-transform: capitalize;
   background-color: #e6e7e9;
   border-color: #e6e7e9;
   color: #000;
+  font-size: 17px;
 }
 
 .btn.btn-sm {
@@ -91,7 +93,17 @@ a:hover {
 .btn.btn-primary {
   font-size: 17px;
   font-weight: 300;
-  letter-spacing: .2em;
+  justify-content: space-between;
+}
+
+.btn.btn-cart {
+  background-color: #9c27b0;
+  border-color: #9c27b0;
+  font-size: 17px;
+  font-weight: 500;
+  width: 250px;
+  justify-content: space-between;
+  letter-spacing: .01em;
 }
 
 .btn:hover {
@@ -711,8 +723,8 @@ a:hover {
 
 .site-blocks-1 .text h2 {
   color: #25262a;
-  letter-spacing: .05em;
-  font-size: 18px;
+  letter-spacing: .01em;
+  font-size: 22px;
 }
 
 .site-blocks-1 .text p:last-child {

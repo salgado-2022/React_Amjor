@@ -1,21 +1,18 @@
 import React from "react";
-import background from '../../assets/img/hero_1.jfif';
+import { Link } from 'react-router-dom';
+import background from '../../assets/img/hero_1.jpg';
 
 
 function Content() {
     return (
         <div className="Content">
-            <div className="site-blocks-cover" style={{ backgroundImage: `url(${background})` }} data-aos="fade">
+            <div className="site-blocks-cover" style={{ backgroundImage: `url(${background})` }}>
                 <div className="container">
-                    <div className="row align-items-start align-items-md-center justify-content-end">
-                        <div className="col-md-5 text-center text-md-left pt-5 pt-md-0">
-                            <h1 className="mb-2">Amjor <br /> ¡Hecho con amor!</h1>
-                            <div className="intro-text text-center text-md-left">
-                                <p className="mb-4">Venta de anchetas personalizables y de cátalogo con la mejor calidad y a un buen precio! </p>
-                                <p>
-                                    <a href="shop" className="btn btn-sm btn-primary">Comprar ahora</a>
-                                </p>
-                            </div>
+                    <div className="row align-items-start align-items-md-center justify-content-center">
+                        <div className="col-md-6 text-center">
+                            <h1 style={{fontSize: "54px"}} className="text-white" data-aos="fade-up-right" data-aos-delay="">Amjor <br/>¡Hecho con amor!</h1>
+                            <p className="mb-4" style={{color: "rgba(255, 255, 255, 0.7)", fontSize: "18px"}} data-aos="fade-up-right" data-aos-delay="100">Venta de anchetas personalizadas con productos de buena calidad al mejor precio</p>
+                            <Link to="/shop"><p data-aos="fade-up-right" data-aos-delay="200"><a href="" className="btn btn-sm btn-primary">Comprar ahora</a></p></Link>
                         </div>
                     </div>
                 </div>
@@ -29,10 +26,8 @@ function Content() {
                                 <span className="icon-truck"></span>
                             </div>
                             <div className="text">
-                                <h2 className="text-uppercase">Envios seguros</h2>
-                                <p>Recibe tu producto cumpliendo con el tiempo establecido en toda el area metropolitana.
-
-                                </p>
+                                <h2 className="text-capitalize">Envios seguros</h2>
+                                <p>Recibe tu producto cumpliendo con el tiempo establecido en toda el area metropolitana.</p>
                             </div>
                         </div>
                         <div className="col-md-6 col-lg-4 d-lg-flex mb-4 mb-lg-0 pl-4" data-aos="fade-up" data-aos-delay="100">
@@ -40,7 +35,7 @@ function Content() {
                                 <span className="icon-edit"></span>
                             </div>
                             <div className="text">
-                                <h2 className="text-uppercase">Personalizable</h2>
+                                <h2 className="text-capitalize">Personalizable</h2>
                                 <p>Elige una de las anchetas y agrega tus productos deseados segun tus preferencias.</p>
                             </div>
                         </div>
@@ -49,7 +44,7 @@ function Content() {
                                 <span className="icon-dollar"></span>
                             </div>
                             <div className="text">
-                                <h2 className="text-uppercase">Métodos de Pago</h2>
+                                <h2 className="text-capitalize">Métodos de Pago</h2>
                                 <p>Paga contra entrega o mediante transacciones. </p>
                             </div>
                         </div>

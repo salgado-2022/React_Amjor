@@ -3,11 +3,11 @@ import { Button } from "react-bootstrap";
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
 
-function AnchetaDetalle(props) {
+function AnchetaDetalle(props, product) {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
     const deployApiUrl = process.env.REACT_APP_AMJOR_DEPLOY_API_URL;
     
-    const { selectedAnchetaID, onHide, show } = props;
+    const { selectedAnchetaID, onHide, show, handleAddToCart } = props;
     const id = selectedAnchetaID;
 
     const [dataA, setDataA] = useState([]);
@@ -26,7 +26,12 @@ function AnchetaDetalle(props) {
         }
         return 'N/A'; // Otra opción es retornar un valor predeterminado en caso de que price no sea un número válido
     };
-    
+
+    const handleAddToCartInDetail = () => {
+        if (handleAddToCart) {
+            handleAddToCart(dataA);
+        }
+    };
 
     useEffect(() => {
         setIsLoading(true);
@@ -84,14 +89,14 @@ function AnchetaDetalle(props) {
                     <>
                         <div className="section" style={{ display: "flex", padding: "10px" }}>
                             <div className="row">
-                                <div className="col-xl-6" style={{ marginTop: "20px" }}>
+                                <div className="col-xl-7" style={{ marginTop: "20px" }}>
                                     <div className="container modal-container">
                                         <div className="image-container">
                                             <img src={`${deployApiUrl}/anchetas/` + dataA.image} className="rounded" alt=""/>
                                         </div>
                                     </div> 
                                 </div>
-                                <div className="col-xl-6" style={{ marginTop: "20px" }}>
+                                <div className="col-xl-5" style={{ marginTop: "20px" }}>
                                     <div className="container">
                                         <h1 style={{ fontSize: '26px', fontWeight: "bold", color: "#2E2C36"}}>{dataA.NombreAncheta}</h1>
                                         <p style={{fontWeight: "normal", fontSize: '16px', color: "MediumSlateBlue" }}>{formatPrice(dataA.PrecioUnitario)+"/u"}</p> 
@@ -112,8 +117,8 @@ function AnchetaDetalle(props) {
                             <p style={{ fontSize: '16px', color: "#2E2C36"}}>{dataA.Descripcion}</p>
                         </div>
                         <Modal.Footer>
-                        <button type="submit" className="btn btn-cart" id="crearAncheta" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                            <span style={{fontWeight: "700"}}>Agregar</span> <a href="!#">{formatPrice(dataA.PrecioUnitario)}</a>
+                        <button type="submit" onClick={handleAddToCartInDetail} className="btn btn-cart text-white" style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                            <span>Agregar</span><a>{formatPrice(dataA.PrecioUnitario)}</a>
                         </button>
                         {/* <button className="btn btn-cart" onClick={(e) => {e.stopPropagation(); isProductInCart ? removeFromCart(product) : addToCart(product)}} style={{ display: "flex", justifyContent: "space-between", alignItems: "center", backgroundColor: isProductInCart ? 'red' : 'MediumSlateBlue'}}><span style={{fontWeight: "700"}}>Agregar</span><a>{formatPrice(dataA.PrecioUnitario)}</a></button> */}
                         </Modal.Footer>

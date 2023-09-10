@@ -19,6 +19,15 @@
     transition: transform 0.5s ease; 
 }
 
+.carrousel {
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.5s ease; 
+}
+
 .catalogue:hover {
     transform: scale(1.05);
 }
@@ -54,3 +63,19 @@
         max-height: auto;
     }
 }
+
+.site-blocks-cover {
+    position: relative;
+  }
+  
+  .site-blocks-cover::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.3); /* Color oscuro con una transparencia del 50% */
+    z-index: 0; /* Asegúrate de que esté detrás del contenido */
+  }
+  
