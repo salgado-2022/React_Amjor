@@ -6,9 +6,11 @@ export const FiltersContext = createContext();
 // Este es el que nos da acceso al context
 export function FiltersProvider({ children }) {
   const [filters, setFilters] = useState({
-    category: "all",
-    minPrice: 500
+    minPrice: 500, 
+    motivo: "",
+    orderBy: "reciente"
   })
+  
   return (
     <FiltersContext.Provider value={{
         filters,

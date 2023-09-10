@@ -110,3 +110,12 @@ Navbar.css .mobile-menu .botonMenu {
         display: none;
     }
 }
+
+.custom-navbar {
+    background-color: #333; 
+    color: white;
+  }
+
+/* Estilos iniciales del Navbar transparente */
+  
+  

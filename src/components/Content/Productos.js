@@ -1,18 +1,10 @@
 import React from 'react';
-
-import '../../assets/css/carousel.css'
-//Importación de la libreria react-multi-carousel 
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import '../../assets/css/carousel.css';
+import { useNavigate } from 'react-router-dom';
 
-//Importación de imagenes para Owl-Carousel
-import img1 from '../../assets/img/ancheta1.jpg'
-import img2 from '../../assets/img/ancheta2.jpg'
-import img3 from '../../assets/img/ancheta3.jpg'
-import img4 from '../../assets/img/ancheta4.jpg'
-
-//Componente de productos destacados
-function Productos() {
+function Productos({ products }) {
 
     const responsive = {
         desktop: {
@@ -26,90 +18,71 @@ function Productos() {
         mobile: {
             breakpoint: { max: 464, min: 0 },
             items: 1,
-        }
+        },
     };
 
-    return (
+    const deployApiUrl = process.env.REACT_APP_AMJOR_DEPLOY_API_URL;
+    const lastFourProducts = products.slice(-4);
 
+    const navigate = useNavigate();
+
+    const formatPrice = (price) => {
+        return price.toLocaleString('es-CO', {
+            style: 'currency',
+            currency: 'COP',
+            minimumFractionDigits: 0,
+        });
+    };
+
+    const handleDetalle = (idAncheta) => {
+        navigate("/shop", { state: { idAncheta } });
+      };
+
+    return (
         <div className="site-section block-6 site-blocks-2 bg-light">
             <div className="container">
                 <div className="row justify-content-center">
                     <div className="col-md-7 site-section-heading text-center pt-4">
                         <h2>Productos destacados</h2>
                     </div>
-
                 </div>
                 <div className="row">
                     <div className="col-md-12">
                         <div className="nonloop-block-3">
-                            <Carousel responsive={responsive} showDots={false} infinite={true}
-                                draggable={false} autoPlay autoPlaySpeed={4000} partialVisible={true}
-                                partialVisibilityGutter={40} containerClass="carousel-container"    
-                                itemClass="carousel-item-padding">
-                                <div className='item'>
-                                    <div className="">
-                                        <div className="block-4 text-center">
-                                            <figure className="block-4-image">
-                                                <img className="img-fluid" src={img1} alt="" />
-                                            </figure>
-                                            <div className="block-4-text p-4">
-                                                <h3><a href="#/">Ancheta elegante</a></h3>
-                                                <p className="mb-0">Perfecta para situaciones importantes</p>
-                                                <p className="text-primary font-weight-bold">$80.000</p>
+                            <Carousel
+                                responsive={responsive}
+                                showDots={false}
+                                infinite={true}
+                                draggable={false}
+                                autoPlay
+                                autoPlaySpeed={2000}
+                                partialVisible={true}
+                                partialVisibilityGutter={40}
+                                containerClass="carousel-container"
+                                itemClass="carousel-item-padding"
+                            >
+                                {lastFourProducts.map((product) => (
+                                    <div key={product.ID_Ancheta} className="item" >
+                                        <div className="block-4 card carrousel" onClick={() => { handleDetalle(product.ID_Ancheta)}}>
+                                            <img src={`${deployApiUrl}/anchetas/` + product.image} alt="" className="card-img-top img-fluid size-catalog block-4-image" />
+                                            <div className="card-body">
+                                                <h3 className="card-title text-left" style={{ color: "Black", fontSize: "16px", marginTop: "5px" }}>{product.NombreAncheta}</h3>
+                                                <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                                                    <div>
+                                                        <p className="card-text text-left font-weight-normal" style={{ color: "MediumSlateBlue", fontSize: "18px", alignSelf: 'center' }}>{formatPrice(product.PrecioUnitario)}</p>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div className='item'>
-                                    <div className="">
-                                        <div className="block-4 text-center">
-                                            <figure className="block-4-image">
-                                                <img className="img-fluid" src={img2} alt="" />
-                                            </figure>
-                                            <div className="block-4-text p-4">
-                                                <h3><a href="#/">Ancheta elegante</a></h3>
-                                                <p className="mb-0">Perfecta para situaciones importantes</p>
-                                                <p className="text-primary font-weight-bold">$80.000</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='item'>
-                                    <div className="">
-                                        <div className="block-4 text-center">
-                                            <figure className="block-4-image">
-                                                <img className="img-fluid" src={img3} alt="" />
-                                            </figure>
-                                            <div className="block-4-text p-4">
-                                                <h3><a href="#/">Ancheta elegante</a></h3>
-                                                <p className="mb-0">Perfecta para situaciones importantes</p>
-                                                <p className="text-primary font-weight-bold">$80.000</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className='item'>
-                                    <div className="">
-                                        <div className="block-4 text-center">
-                                            <figure className="block-4-image">
-                                                <img className="img-fluid" src={img4} alt="" />
-                                            </figure>
-                                            <div className="block-4-text p-4">
-                                                <h3><a href="#/">Ancheta elegante</a></h3>
-                                                <p className="mb-0">Perfecta para situaciones importantes</p>
-                                                <p className="text-primary font-weight-bold">$80.000</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
+                                ))}
                             </Carousel>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-
     );
 }
 
-export { Productos }
+export { Productos };

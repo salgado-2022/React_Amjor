@@ -22,6 +22,7 @@ import { UpdataPassword } from '../components/Register/updatePassword';
 import { Navbar } from '../components/Navbar/Navbar';
 import { Shops } from '../views/shops';
 import { PrivateRoute } from './PrivateRoute';
+import { Perfil } from '../views/perfil';
 
 
 
@@ -46,6 +47,7 @@ function Rutas() {
                         <Shops />
                     </PrivateRoute>
                 } />
+                <Route path='/usuario/perfil' element={<Perfil/>}/>
 
                 <Route path="*" element={<Error404 />} />
             </Routes>
