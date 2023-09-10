@@ -108,7 +108,7 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [filterName, setFilterName] = useState('');
-  
+
 
   const fetchData = useCallback(async () => {
     try {
@@ -118,7 +118,7 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
     } catch (err) {
       console.log(err);
     }
-    
+
 
     axios.get(`${apiUrl}/api/admin/insumos`)
       .then((res) => {
@@ -192,7 +192,7 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
   }
 
   const { addToCart, clearCart, removeFromCart, setCart } = useCart();
-  
+
 
 
   console.log("INSUMOS", state)
@@ -271,7 +271,7 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
                                 <IconButton color="primary" onClick={() => dispatch({ type: 'Decrement', payload: insumo })}>
                                   <RemoveIcon sx={{ fontSize: '16px' }} />
                                 </IconButton>
-                                <TextField  value={insumo.Cantidad} onChange={(event) => dispatch({ type: "SetCantidad", payload: { idInsumo: insumo.ID_Insumo, cantidad: event.target.value } })} inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', style: { textAlign: 'center', fontSize: '14px', width: '15px', height: '5px' } }} />
+                                <TextField value={insumo.Cantidad} onChange={(event) => dispatch({ type: "SetCantidad", payload: { idInsumo: insumo.ID_Insumo, cantidad: event.target.value } })} inputProps={{ inputMode: 'numeric', pattern: '[0-9]*', style: { textAlign: 'center', fontSize: '14px', width: '15px', height: '5px' } }} />
                                 <IconButton color="primary" onClick={() => dispatch({ type: 'Increment', payload: insumo })}>
                                   <AddIcon sx={{ fontSize: '16px' }} />
                                 </IconButton>
@@ -297,9 +297,9 @@ export default function PersonalizarAncheta({ open, onClose, selectedAnchetaInde
                     </Card>
                     <Typography variant="h5" marginBottom={1}>Total: {formatPrice(Precio)}</Typography>
                     <Stack direction="row" alignItems="center" spacing={1}>
-                    <Button variant="contained" onClick={handleEnviar} fullWidth size="large" color="secondary" sx={{ backgroundColor: "#9C27B0", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Modificar</Button>
-                <Button variant="contained" onClick={handleClose} fullWidth size="large" sx={{ ":hover": { bgcolor: "#000", color: "white" }, backgroundColor: "#343A40", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Cancelar</Button>
-              
+                      <Button variant="contained" onClick={handleEnviar} fullWidth size="large" color="secondary" sx={{ backgroundColor: "#9C27B0", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Modificar</Button>
+                      <Button variant="contained" onClick={handleClose} fullWidth size="large" sx={{ ":hover": { bgcolor: "#000", color: "white" }, backgroundColor: "#343A40", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Cancelar</Button>
+
                     </Stack>
                   </Grid>
                   <Grid item md={7}>

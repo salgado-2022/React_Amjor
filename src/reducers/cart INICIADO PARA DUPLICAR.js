@@ -1,5 +1,3 @@
-import { v4 as uuidv4 } from 'uuid';
-
 export const cartInitialState = JSON.parse(window.localStorage.getItem('cart')) || []
 
 export const updateLocalStorage = state => {
@@ -10,26 +8,52 @@ export const cartReducer = (state, action) => {
 
     switch (actionType) {
         case 'ADD_TO_CART': {
+            const { ID_Ancheta } = actionPayload
+            const productInCartIndex = state.findIndex(item => item.ID_Ancheta === ID_Ancheta)
+
+            if (productInCartIndex >= 0) {
+                const newState = [
+                    ...state,
+                    {
+                        ...actionPayload,
+                        quantity: 1,
+                        insumos: actionPayload.insumos || [],
+                    }
+                ]
+
+                updateLocalStorage(newState)
+                return newState
+            }
+
+
+            // if (productInCartIndex >= 0) {
+            //     const newState = structuredClone(state)
+            //     newState[productInCartIndex].quantity += 1
+            //     console.log("Product added to existing:", newState);
+            //     return newState
+            // }
+
+
             const newState = [
-              ...state,
-              {
-                ...actionPayload,
-                id: uuidv4(), // Genera un ID único para el producto
-                quantity: 1,
-                insumos: actionPayload.insumos || [],
-              }
+                ...state,
+                {
+                    ...actionPayload,
+                    quantity: 1,
+                    insumos: actionPayload.insumos || [],
+                }
             ]
-          
+
             updateLocalStorage(newState)
             return newState
-          }
+        }
 
-          case 'REMOVE_TO_CART': {
-            const productId = actionPayload;
-            const newState = state.filter(product => product.id !== productId);
-            updateLocalStorage(newState);
-            return newState;
-          }
+        case 'REMOVE_TO_CART': {
+            const { ID_Ancheta } = actionPayload
+            const newState = state.filter(item => item.ID_Ancheta !== ID_Ancheta)
+            console.log("Product removed:", newState);
+            updateLocalStorage(newState)
+            return newState
+        }
 
         case 'CLEAR_CART': {
             updateLocalStorage(cartInitialState) // Limpiar carrito 1
