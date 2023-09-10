@@ -10,13 +10,13 @@ function ThankYou() {
   const navigate = useNavigate()
 
   return (
-    <div class="site-section">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-12 text-center">
-            <span class="icon-check_circle display-3 text-success"></span>
-            <h2 class="display-3 text-black">¡Muchas gracias!</h2>
-            <p class="lead mb-5">Tu pedido se ha solicitado correctamente y se encuentra pendiente. Recibirás un correo electrónico cuando este
+    <div className="site-section">
+      <div className="container">
+        <div className="row">
+          <div className="col-md-12 text-center">
+            <span className="icon-check_circle display-3 text-success"></span>
+            <h2 className="display-3 text-black">¡Muchas gracias!</h2>
+            <p className="lead mb-5">Tu pedido se ha solicitado correctamente y se encuentra pendiente. Recibirás un correo electrónico cuando este
               sea aprobado.</p>
             <Button
               size="large"

@@ -46,7 +46,7 @@ function CarritoPedido({ formSearchValues }) {
         });
     };
 
-    
+
     const navigate = useNavigate()
 
 
@@ -89,7 +89,7 @@ function CarritoPedido({ formSearchValues }) {
             Insumos: producto.insumos ? producto.insumos.map(insumo => ({
                 ID_Insumo: insumo.ID_Insumo,
                 Precio: insumo.Precio,
-                Precio: insumo.Total,
+                Precio_Total: insumo.Total,
                 Cantidad: insumo.Cantidad
             })) : []
         }))
@@ -143,6 +143,7 @@ function CarritoPedido({ formSearchValues }) {
                     console.log("Pedido enviado con éxito:", response.data);
                     console.log(storedCart);
                     clearCart();
+                    window.localStorage.removeItem('cart')
                     setItems(0);
                     // Actualizar el valor del contador de items en carrito en localStorage
                     localStorage.setItem('cartItemCount', 0);
@@ -166,7 +167,6 @@ function CarritoPedido({ formSearchValues }) {
                             console.log('La alerta se ha cerrado');
                             setLoading(false);
                             navigate(`/thankyou?id=${response.data.pedidoID}`)
-
                         },
                     })
 
