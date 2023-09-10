@@ -21,7 +21,7 @@ function Footer() {
                                         id="email_subscribe"
                                         placeholder=""
                                     />
-                                    <input type="submit" className="btn btn-sm btn-primary" value="envia" />
+                                    <input type="submit" className="btn btn-sm btn-primary" value="Enviar" />
                                 </div>
                             </form>
                         </div>

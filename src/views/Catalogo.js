@@ -5,7 +5,7 @@ import { Filtro2 } from '../components/Filtro/Filtro2'
 import axios from "axios";
 import { useFilters } from '../hooks/useFilters';
 
-import { ProductosCatalogo } from '../components/Catalogo/Catalogo'
+import { ProductosCatalogo } from '../components/Catalogo/Catalogo';
 import { CartProvider } from '../context/cart';
 
 import ReactGA from "react-ga4";

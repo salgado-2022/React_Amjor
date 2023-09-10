@@ -19,6 +19,15 @@
     transition: transform 0.5s ease; 
 }
 
+.carrousel {
+    border-top-left-radius: 5%;
+    border-top-right-radius: 5%;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    border: none;
+    cursor: pointer;
+    transition: transform 0.5s ease; 
+}
+
 .catalogue:hover {
     transform: scale(1.05);
 }

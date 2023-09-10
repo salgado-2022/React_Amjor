@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useCart } from '../../hooks/useCart';
 import { AnchetaDetalle } from "./AnchetaDetalle";
 import axios from "axios";
@@ -7,9 +7,8 @@ import Snackbar from '@mui/material/Snackbar';
 import Alert from '@mui/material/Alert';
 import { Toaster, toast } from 'sonner';
 
-import { useCartContext } from '../../context/contador'
-
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import { useCartContext } from '../../context/contador';
+import { useLocation } from 'react-router-dom';
 
 import { IconButton } from '@mui/material';
 import Iconify from '../Other/iconify';
@@ -25,7 +24,8 @@ function ProductosCatalogo({ products, dataLoaded }) {
 
     const { items, setItems } = useCartContext();
 
-
+    const location = useLocation();
+    const id = location.state?.idAncheta;
 
     const checkProductInCart = product => {
         return cart.some(item => item.ID_Ancheta === product.ID_Ancheta)
@@ -47,7 +47,13 @@ function ProductosCatalogo({ products, dataLoaded }) {
         setModalShow(true);
     };
 
-
+    useEffect(() => {
+        if (id) {
+            setTimeout(() => {
+                handleAnchetaClick(id);
+            }, 1000)
+        }
+    }, [id]);
 
     const handleSnackbarClose = (event, reason) => {
         if (reason === 'clickaway') {
@@ -136,7 +142,7 @@ function ProductosCatalogo({ products, dataLoaded }) {
                             <div className="block-4 card catalogue" onClick={() => { handleAnchetaClick(product.ID_Ancheta) }} style={{ borderRadius: "5%", boxShadow: "0 2px 15px rgba(0, 0, 0, 0.1)", border: "none", cursor: "pointer" }}>
                                 <img src={`${deployApiUrl}/anchetas/` + product.image} alt="" className="card-img-top img-fluid size-catalog block-4-image" />
                                 <div className="card-body" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                                    <h3 className="card-title text-left" style={{ color: "Black", fontSize: "16px", fontWeight: 'bold', marginTop: "5px" }}>{product.NombreAncheta}</h3>
+                                    <h3 className="card-title text-left" style={{ color: "Black", fontSize: "16px", marginTop: "5px" }}>{product.NombreAncheta}</h3>
                                     <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                                         <div>
                                             <p className="card-text text-left font-weight-normal" style={{ color: "MediumSlateBlue", fontSize: "18px", alignSelf: 'center' }}>{formatPrice(product.PrecioUnitario)}</p>
@@ -151,7 +157,7 @@ function ProductosCatalogo({ products, dataLoaded }) {
                                                 height: '50px'
                                             }}
                                             color="secondary" onClick={(e) => { e.stopPropagation(); handleAddToCart(product) }}>
-                                            <Iconify icon={'mdi:cart'} style={{ width: '40px', height: '40px' }} />
+                                            <Iconify icon={'bxs:cart-add'} style={{ width: '40px', height: '40px' }} />
                                         </IconButton>
                                     </div>
                                 </div>
@@ -166,6 +172,7 @@ function ProductosCatalogo({ products, dataLoaded }) {
                 show={modalShow}
                 onHide={() => setModalShow(false)}
                 selectedAnchetaID={selectedAnchetaID}
+                handleAddToCart={handleAddToCart}
             />
             <Snackbar
                 anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
