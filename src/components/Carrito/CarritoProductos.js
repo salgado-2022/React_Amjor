@@ -16,7 +16,7 @@ function CarritoProductos() {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
     const deployApiUrl = process.env.REACT_APP_AMJOR_DEPLOY_API_URL;
 
-    const { cart, addToCart, clearCart, removeFromCart } = useCart()
+    const { cart, addToCart, clearCart, removeFromCart, incrementQuantity, decrementQuantity } = useCart()
 
     const totalItems = cart.reduce((total, product) => total + product.quantity, 0);
 
@@ -54,7 +54,7 @@ function CarritoProductos() {
 
     function CartItem({ id, image, PrecioUnitario, NombreAncheta, quantity, addToCart, removeFromCart, index }) {
         //const [id] = useId();
-        
+
         //console.log("Producto renderizado con el id: ", id)
 
         console.log("Rendering CartItem for product:", NombreAncheta);
@@ -80,15 +80,16 @@ function CarritoProductos() {
                 <TableCell style={{ border: 'none' }}>{formatPrice(PrecioUnitario * 1)}</TableCell>
                 <TableCell style={{ border: 'none' }}>
                     <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                        <IconButton onClick={decrement} size="small">
+                    <IconButton onClick={() => decrementQuantity(id)} size="small">
                             <Iconify icon={'eva:minus-outline'} />
                         </IconButton>
                         <Typography variant="body2" sx={{ mx: 1 }}>
                             {quantity}
                         </Typography>
-                        <IconButton onClick={increment} size="small">
+                        <IconButton onClick={() => incrementQuantity(id)} size="small">
                             <Iconify icon={'eva:plus-outline'} />
                         </IconButton>
+
                     </Box>
                 </TableCell>
                 <TableCell style={{ border: 'none' }}>{formatPrice(PrecioUnitario * quantity)}</TableCell>
@@ -135,7 +136,7 @@ function CarritoProductos() {
                             </TableHead>
                             <TableBody>
                                 {cart.map((product, index) => (
-                                    
+
                                     <CartItem
                                         key={product.id}
                                         handleOpenDialog={() => handleOpenDialog(product.id, index)} // Pasamos la función

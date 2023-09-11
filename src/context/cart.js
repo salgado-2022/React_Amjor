@@ -28,13 +28,21 @@ export function useCartReducer() {
         type: 'CLEAR_CART'
     })
 
-    return { state, dispatch, addToCart, removeFromCart, clearCart }
+    const incrementQuantity = (productId) => {
+        dispatch({ type: 'INCREMENT_QUANTITY', payload: productId });
+    };
+
+    const decrementQuantity = (productId) => {
+        dispatch({ type: 'DECREMENT_QUANTITY', payload: productId });
+    };
+
+    return { state, dispatch, addToCart, removeFromCart, clearCart, incrementQuantity, decrementQuantity }
 
 }
 
 
 export function CartProvider({ children }) {
-    const { state, dispatch, addToCart, removeFromCart, clearCart } = useCartReducer();
+    const { state, dispatch, addToCart, removeFromCart, clearCart, incrementQuantity, decrementQuantity } = useCartReducer();
 
     useEffect(() => {
         const storedCart = JSON.parse(window.localStorage.getItem('cart')) || [];
@@ -50,6 +58,8 @@ export function CartProvider({ children }) {
                 addToCart,
                 removeFromCart,
                 clearCart,
+                incrementQuantity,
+                decrementQuantity,
             }}
         >
             {children}

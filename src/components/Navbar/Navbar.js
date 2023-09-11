@@ -64,7 +64,7 @@ function Navbar() {
                             <div className="col-1 site-search-icon text-left">
                                 <div>
                                     <Link to="/">
-                                        <img src={logo} style={{ width: '95px' }} alt="logo" />
+                                        <img src={logo} style={{ width: '80px' }} alt="logo" />
                                     </Link>
                                 </div>
                             </div>
@@ -75,24 +75,24 @@ function Navbar() {
                                         <nav className="site-navigation text-center" role="navigation">
                                             <div className="container">
                                                 <ul className="site-menu menuOpcion">
-                                                    <li>
-                                                        <Link to="/">Inicio</Link>
+                                                    <li >
+                                                        <Link to="/" style={{ fontSize: '16px' }}>Inicio</Link>
                                                     </li>
                                                     <li>
-                                                        <Link to="/nosotros">Nosotros</Link>
+                                                        <Link to="/nosotros" style={{ fontSize: '16px' }}>Nosotros</Link>
                                                     </li>
                                                     <li>
-                                                        <Link to="/shop">Catálogo</Link>
+                                                        <Link to="/shop" style={{ fontSize: '16px' }}>Catálogo</Link>
                                                     </li>
                                                     <li className="">
-                                                        <Link to="/contact">Contacto</Link>
+                                                        <Link to="/contact" style={{ fontSize: '16px' }}>Contacto</Link>
                                                     </li>
                                                     {!token ? (
                                                         <li>
                                                         </li>
                                                     ) : (
                                                         <li>
-                                                            <Link to="/shopping">Mis Compras</Link>
+                                                            <Link to="/shopping" style={{ fontSize: '16px' }}>Mis compras</Link>
                                                         </li>
                                                     )}
                                                 </ul>
@@ -108,7 +108,7 @@ function Navbar() {
                                         {!token ? (
                                             <li style={{ marginRight: '5px' }}>
                                                 <Link to="/login" >
-                                                    <span className="textLogin" style={{ fontSize: '15px' }}>INICIAR SESIÓN</span>
+                                                    <span className="textLogin" style={{ fontSize: '16px' }}>INICIAR SESIÓN</span>
                                                     <span className="icon icon-person"></span>
 
                                                 </Link>
@@ -119,6 +119,8 @@ function Navbar() {
 
                                         <li>
                                             <Link to="/carrito" className="site-cart">
+                                                {/* <span className="textLogin" style={{ fontSize: '15px' }}>CARRITO</span> */}
+                                                <span className="textLogin" style={{ fontSize: '15px' }}></span>
                                                 <span className="icon icon-shopping_cart" ></span>
                                                 <span className="count">{items}</span>
                                             </Link>
@@ -149,7 +151,7 @@ function Navbar() {
                         <li><Link to="/nosotros" onClick={closeMobileMenu} className="menu-link">Nosotros</Link></li>
                         <li><Link to="/shop" onClick={closeMobileMenu} className="menu-link">Catálogo</Link></li>
                         <li><Link to="/contact" onClick={closeMobileMenu} className="menu-link">Contacto</Link></li>
-                        {!token ? (<li></li>) : (<li><Link to="/shopping" onClick={closeMobileMenu} className="menu-link">Mis Compras</Link></li>)}
+                        {!token ? (<li></li>) : (<li><Link to="/shopping" onClick={closeMobileMenu} className="menu-link">Mis compras</Link></li>)}
 
                     </ul>
                 </nav>

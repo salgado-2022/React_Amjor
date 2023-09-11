@@ -32,6 +32,7 @@ const MENU_OPTIONS = [
 export default function AccountPopover() {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
     const landingUrl = process.env.REACT_APP_AMJOR_LANDING_URL;
+    const deployApiUrl = process.env.REACT_APP_AMJOR_DEPLOY_URL;
 
     const [open, setOpen] = useState(null);
     const [user, setUser] = useState(null);
@@ -60,12 +61,15 @@ export default function AccountPopover() {
                 Swal.fire({
                     title: 'Cerrando sesión...',
                     html: 'Por favor espere un momento',
-                    timer: 2000,
+                    timer: 1000,
+                    showConfirmButton: false,
                     timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    },
                     willClose: () => {
                         clearInterval(timerInterval);
                         window.location.reload(true);
-
                     },
                 }).then((result) => {
                     /* Read more about handling dismissals below */
@@ -174,7 +178,7 @@ export default function AccountPopover() {
                 <Stack sx={{ p: 1 }}>
                     <Link to="/usuario/perfil" style={{ color: '#000' }}>
                         <MenuItem onClick={handleClose}>
-                            Mi Perfil
+                            Mi perfil
                         </MenuItem>
                     </Link>
                 </Stack>

@@ -130,8 +130,8 @@ function ProductosCatalogo({ products, dataLoaded }) {
             {dataLoaded ? (
                 products.length === 0 ? (
                 <div className="text-center">
-                    <h2 style={{ color: "MediumSlateBlue"}}>No Encontrado</h2>
-                    <p>Por el momento no hay productos disponibles con el precio o motivo que usted desea.</p>
+                    <h2 style={{ color: "MediumSlateBlue"}}>No encontrado</h2>
+                    <p>Por el momento no hay productos disponibles con el precio o motivo que usted está buscando.</p>
                 </div>
             ) : (
                 <div className="row mb-5">

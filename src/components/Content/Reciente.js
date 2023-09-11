@@ -10,7 +10,7 @@ function Reciente({ products }) {
         <div className="container">
             <div className="row justify-content-center  mb-5">
                 <div className="col-md-7 site-section-heading text-center pt-4">
-                    <h2>Nueva Ancheta!</h2>
+                    <h2>¡Mira nuestra última ancheta!</h2>
                 </div>
             </div>
         {lastFourProducts.map((product) => (
@@ -22,7 +22,7 @@ function Reciente({ products }) {
                     <div className="col-md-12 col-lg-5 text-center pl-md-5" data-aos="fade-left" data-aos-duration="1000">
                         <h2><a style={{ color: "MediumSlateBlue"}}>{product.NombreAncheta}</a></h2>
                         <p>{product.Descripcion}</p>
-                        <p><a href="shop" className="btn btn-primary btn-sm">Comprar ahora</a></p>
+                        <p><a href="shop" style={{ textTransform: 'none'}} className="btn btn-primary btn-sm">Comprar ahora</a></p>
                     </div>
                 </div>
             </div>
