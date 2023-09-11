@@ -16,6 +16,8 @@ import { Link } from "react-router-dom";
 
 //Axios
 import axios from "axios";
+import Swal from 'sweetalert2'
+
 import { useFormContext } from "../../../context/formContext";
 import { useNavigate } from 'react-router-dom';
 
@@ -98,6 +100,20 @@ export default function LoginForm() {
           } else if (res.data.Status === "Success Admin") {
             const redirectTo = res.data.redirectToAdmin;
             window.location.href = redirectTo;
+          } else if (res.data.Status === "off") {
+            Swal.fire({
+              title: 'Error',
+              //color: '#000',
+              timer: 3000,
+              text: 'Tu cuenta está deshabilitada ponte en contacto con el administrador del sistema.',
+              icon: 'error',
+              confirmButtonColor: '#9C27B0',
+              confirmButtonText: 'Ok',
+              showConfirmButton: true,
+              didClose: () => {
+                navigate("/")
+              },
+            })
           }
           else {
             setCorreoInput("Correo incorrecto");
