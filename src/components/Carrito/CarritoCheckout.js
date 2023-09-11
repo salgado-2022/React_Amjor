@@ -164,9 +164,17 @@ function CarritoPedido({ formSearchValues }) {
                         confirmButtonText: 'Hecho',
                         showConfirmButton: true,
                         didClose: () => {
+                            const data = {
+                                pedido: response.data.pedidoID,
+                                cliente: response.data.clienteID
+                            }
                             console.log('La alerta se ha cerrado');
                             setLoading(false);
-                            navigate(`/thankyou?id=${response.data.pedidoID}`)
+                            axios.get(`${apiUrl}/api/pedido/creado`, { params: data })
+                                .then((res) => {
+                                    navigate(`/thankyou`)
+                                })
+                                .catch((err)=>{console.log(err)})
                         },
                     })
 

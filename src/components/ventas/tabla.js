@@ -479,7 +479,7 @@ export default function SalesPage() {
                         </Table>
                     </div>
 
-                    <TablePagination style={{ marginBottom: '' }}
+                    <TablePagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
                         count={filteredUsers.length}
@@ -487,8 +487,21 @@ export default function SalesPage() {
                         page={page}
                         onPageChange={handleChangePage}
                         onRowsPerPageChange={handleChangeRowsPerPage}
-                        labelRowsPerPage="Filas por pagina:"
+                        labelRowsPerPage="Filas por página:"
+                        SelectProps={{
+                            MenuProps: {
+                                style: { marginTop: '8px' }, // Agregar espacio en la parte superior del menú desplegable
+                            },
+                            renderValue: (value) => (
+                                <div style={{ paddingBottom: '-10px' }}>{value}</div> // Agregar espacio inferior
+                            ),
+                            // Estilos personalizados para las opciones individuales de filas por página
+                            IconComponent: (props) => (
+                                <div style={{ marginRight: '-10px' }}>{props.children}</div>
+                            ),
+                        }}
                     />
+
                 </Card>
             </Container>
             <VerInsumosPedido show={openModal} onHide={() => setOpenModal(false)} selectedAnchetaID={selectedAnchetaID} />
