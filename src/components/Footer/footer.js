@@ -1,4 +1,5 @@
 import React from "react";
+import { Divider} from "@mui/material"
 
 function Footer() {
     return (
@@ -8,26 +9,14 @@ function Footer() {
 
                     <div className="col-md-6 col-lg-12">
 
-                        <div className="block-7">
-                            <form action="#" method="">
-                                <label
-                                    htmlFor="email_subscribe"
-                                    className="footer-heading"
-                                >Escribenos!</label>
-                                <div className="form-group">
-                                    <input
-                                        className="form-control py-4"
-                                        type="text"
-                                        id="email_subscribe"
-                                        placeholder=""
-                                    />
-                                    <input type="submit" className="btn btn-sm btn-primary" value="Enviar" />
-                                </div>
-                            </form>
+                        <div className="block-7" style={{ marginTop: '25px'}}>
+                            <Divider style={{ width: '100%', margin: '10px'}}>
+
+                            </Divider>
                         </div>
 
                         <div className="block-5 mb-5">
-                            <h5 className="footer-heading mb-4">Información de contacto:</h5>
+                            
                             <div className="row">
                                 <div className="col">
                                     <ul>

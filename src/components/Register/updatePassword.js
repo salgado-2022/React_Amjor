@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import { useNavigate, useSearchParams } from 'react-router-dom';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 import { ValidationPass } from './password'
 
@@ -12,6 +13,8 @@ import Swal from 'sweetalert2';
 
 function UpdataPassword() {
     const apiUrl = process.env.REACT_APP_AMJOR_API_URL;
+
+    const [loading, setLoading] = useState(false);
 
     /* Estas líneas de código usan hooks de la biblioteca `react-router-dom` para acceder y extraer el
     parámetro `token` de los parámetros de búsqueda de URL. */
@@ -98,22 +101,26 @@ function UpdataPassword() {
     const handleSubmit = (event) => {
         event.preventDefault();
         if (errorP.password === "") {
+            setLoading(true);
             axios.patch(`${apiUrl}/api/actualizar`, values)
                 .then(res => {
                     if (res.data.Status === "Success") {
                         Swal.fire({
                             icon: 'success',
-                            title: 'Contraseña actualizada correctamente',
+                            title: 'Cambio exitoso',
+                            text: 'Cambiaste tu contraseña correctamente',
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 1500,
+                            onClose: setLoading(false)
                         })
                         navigate('/login')
                     } else {
                         Swal.fire({ // Muestra la alerta de SweetAlert2
-                            title: 'Error!',
-                            text: 'Hubo un problema al registrar el usuario.',
+                            title: 'Error',
+                            text: 'Hubo un problema al cambiar tu contraseña.',
                             icon: 'error',
-                            confirmButtonText: 'OK'
+                            confirmButtonText: 'Ok',
+                            onClose: setLoading(false)
                         });
                     }
                 })
@@ -134,7 +141,7 @@ function UpdataPassword() {
 
                                         <div className="text-center">
 
-                                            <h4 className="mt-1 mb-5 pb-1">Actualizar constraseña</h4>
+                                            <h4 className="mt-1 mb-5 pb-1">Actualizar contraseña</h4>
                                         </div>
 
                                         <form onSubmit={handleSubmit}>
@@ -142,13 +149,24 @@ function UpdataPassword() {
 
                                             <div className="form-outline mb-4">
                                                 <input type="password" id="password" name="password" className="form-control"
-                                                    placeholder="Contraseña" onChange={handleInput} onBlur={handleBlurPass} />
+                                                    placeholder="Nueva contraseña" onChange={handleInput} onBlur={handleBlurPass} />
                                                 {errorP.password && <span className="text-danger"> {errorP.password}</span>}
 
                                             </div>
                                             <div className="text-center  pt-1 mb-5 pb-1">
-                                                <button className="btn btn-primary btn-block fa-lg gradient-custom-2 mb-3" type="submit"
-                                                >Registrar</button>
+                                                <LoadingButton
+                                                    size="large"
+                                                    fullWidth
+                                                    type="submit"
+                                                    loading={loading}
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    sx={{ backgroundColor: "#9C27B0", textTransform: 'none', marginTop: '8px', fontWeight: 400, fontFamily: '"Public Sans", sans-serif;' }}
+
+                                                //disabled
+                                                >
+                                                    <span>Cambiar contraseña</span>
+                                                </LoadingButton>
                                             </div>
                                         </form>
 

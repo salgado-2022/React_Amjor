@@ -126,8 +126,8 @@ export default function Profile() {
         axios.put(`${apiUrl}/api/user/perfil/update/` + id, formdata)
             .then(res => {
                 Swal.fire({
-                    title: 'Actualizado Correctamente',
-                    text: "Se actualizo correctamente",
+                    title: 'Actualizado correctamente',
+                    text: "Tu información se actualizó correctamente",
                     icon: 'success',
                     showConfirmButton: false,
                     timer: 1500
@@ -150,17 +150,17 @@ export default function Profile() {
 
     return (
         <>
-            <Container maxWidth="xl" style={{ marginTop: 40 }}>
+            <Container maxWidth="lg" style={{ marginTop: 40 }}>
                 <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5}>
-                    <Typography variant="h4" gutterBottom>
-                        Mi Perfil
+                    <Typography variant="h4" gutterBottom sx={{ fontSize: '24px', color: "#212B36", fontFamily: "'Public Sans',sans-serif;", fontWeight: 'bold' }}>
+                        Mi perfil
                     </Typography>
                 </Stack>
 
                 <form onSubmit={handleUpdate} onReset={handleReset} encType="multipart/form-data">
                     <Grid container spacing={3}>
                         <Grid xs={12} md={4}>
-                            <Card>
+                        <Card sx={{ width: '100%', border: 'none', borderRadius: '16px', marginBottom: '25px', boxShadow: 'rgba(145, 158, 171, 0.2) 0px 0px 2px 0px, rgba(145, 158, 171, 0.3) 0px 12px 24px -4px;' }}>
                                 <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                                     <div style={{ paddingTop: "80px", marginRight: "24px", marginLeft: "24px", marginBottom: "40px" }}>
 
@@ -210,20 +210,32 @@ export default function Profile() {
                         <Grid xs={12} md={8}>
                             <Box display="flex" justifyContent="center">
                                 {/* Inicio de la Card */}
-                                <Card>
-                                    <CardHeader title={"Información personal"} />
+                                <Card sx={{ width: '100%', border: 'none', borderRadius: '16px', marginBottom: '50px', boxShadow: 'rgba(145, 158, 171, 0.2) 0px 0px 2px 0px, rgba(145, 158, 171, 0.3) 0px 12px 24px -4px;' }}>
+                                    <CardHeader
+                                        title={"Información personal"}
+                                        titleTypographyProps={{
+                                            style: {
+                                                padding: '12px',
+                                                fontSize: '20px',  
+                                                color: "#212B36",     // Cambia el color del texto
+                                                fontFamily: "'Public Sans',sans-serif;",
+                                                fontWeight: 'bold' 
+                                            },
+                                            
+                                        }}
+                                    />
                                     <Box p={3}> {/* Agrega espacio interno a la Card */}
                                         <Grid container spacing={3}>
                                             <Grid xs={12} sm={6}>
                                                 <NoNumberArrowsTextField
-                                                    label="Documento"
+                                                    label="Documento *"
                                                     name="Documento"
                                                     type="number"
                                                     margin="dense"
                                                     fullWidth
                                                     value={values.Documento}
                                                     onChange={handleInput}
-                                                    color="primary"
+                                                    color="secondary"
                                                     inputProps={{
                                                         inputMode: 'numeric',
                                                         pattern: '[0-9]*',
@@ -233,11 +245,11 @@ export default function Profile() {
                                             </Grid>
                                             <Grid xs={12} sm={6}>
                                                 <TextField
-                                                    label="Nombre"
+                                                    label="Nombre *"
                                                     name="Nombre"
                                                     type="text"
                                                     margin="dense"
-                                                    color="primary"
+                                                    color="secondary"
                                                     fullWidth
                                                     value={values.Nombre}
                                                     onChange={handleInput}
@@ -247,11 +259,11 @@ export default function Profile() {
                                             </Grid>
                                             <Grid xs={12} sm={6}>
                                                 <TextField
-                                                    label="Apellidos"
+                                                    label="Apellidos *"
                                                     name="Apellido"
                                                     type="text"
                                                     margin="dense"
-                                                    color="primary"
+                                                    color="secondary"
                                                     fullWidth
                                                     value={values.Apellido}
                                                     onChange={handleInput}
@@ -260,11 +272,11 @@ export default function Profile() {
                                             </Grid>
                                             <Grid xs={12} sm={6}>
                                                 <NoNumberArrowsTextField
-                                                    label="Teléfono"
+                                                    label="Teléfono *"
                                                     name="Telefono"
                                                     type="number"
                                                     margin="dense"
-                                                    color="primary"
+                                                    color="secondary"
                                                     fullWidth
                                                     value={values.Telefono}
                                                     onChange={handleInput}
@@ -273,19 +285,19 @@ export default function Profile() {
                                             </Grid>
                                             <Grid xs={12}>
                                                 <TextField
-                                                    label="Correo electrónico"
+                                                    label="Correo electrónico *"
                                                     type='Email'
                                                     name="correo"
                                                     margin="dense"
-                                                    color="primary"
+                                                    color="secondary"
                                                     fullWidth
                                                     value={values.correo}
                                                     onChange={handleInput}
                                                 />
                                                 {/* Mostrar mensaje de error si es necesario */}
                                                 <Box mt={2} display="flex" justifyContent="flex-start">
-                                                    <Button type="submit" variant="contained" color="primary">Actualizar</Button>
-                                                    <Button type="reset" variant="contained" color="secondary" style={{ marginLeft: '16px' }}>Cancelar</Button>
+                                                    <Button type="submit" variant="contained" color="secondary" sx={{ boxShadow: '0 8px 16px 0 rgba(52, 58, 64, 0.24)', backgroundColor: "#9C27B0", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }}>Actualizar</Button>
+                                                    <Button type="reset" variant="contained" color="secondary" sx={{ ":hover": { bgcolor: "#000", color: "white" }, backgroundColor: "#343A40", textTransform: 'none', padding: '6px 16px', fontSize: '14px', marginTop: '8px', borderRadius: '6px;', fontWeight: 700, fontFamily: '"Public Sans", sans-serif;' }} style={{ marginLeft: '16px' }}>Cancelar</Button>
                                                 </Box>
                                             </Grid>
                                         </Grid>

@@ -7,17 +7,17 @@ import wh from '../../assets/img/logos/whatsapp.png';
 
 const facebook = "https://www.facebook.com/profile.php?id=100063563502774";
 const instagram = "https://www.instagram.com/amjorhechoamor/";
-const whatsapp = "https://wa.me/573053782378";
+const whatsapp = "https://wa.me/573053782378?text=¡Hola! ¡Vengo desde la página web, y necesito ayuda! ";
 
 function Social() {
     return (
     <div data-aos="fade-left" data-aos-delay="">
         <div className="site-section-heading pt-3 mb-5">
-            <h1 className="text-black" style={{fontSize: "54px"}}>Muchas Gracias</h1>
-            <h2 color="#25262a" style={{fontSize: "48px", marginTop: "-10px"}}>¿Preguntas?</h2>
+            <h1 className="text-black" style={{fontSize: "54px"}}>¡Muchas gracias!</h1>
+            <h2 color="#25262a" style={{fontSize: "48px", marginTop: "-10px"}}>¿Necesitas ayuda?</h2>
         </div>
         <div className="site-section pt-4">
-            <h3 className="text-black" style={{fontSize: "22px"}}><strong>Dirección</strong></h3>
+            <h3 className="text-black" style={{fontSize: "22px"}}><strong>Nuestra dirección</strong></h3>
             <h3 className="text-black mb-4" style={{fontSize: "18px"}}>Carrera 58 # 56-81</h3>
             <p className="text-black" style={{fontSize: "16px"}}>Copacabana Antioquia, Colombia</p>
         </div>

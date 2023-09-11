@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 // @mui
 import { styled } from '@mui/material/styles';
 import { Divider, Container, Typography, InputAdornment, IconButton, Button, Grid, TextField, Tooltip, tooltipClasses } from '@mui/material';
+import LoadingButton from '@mui/lab/LoadingButton';
 
 import { Link } from "react-router-dom";
 
@@ -62,6 +63,8 @@ export default function FormRegister() {
 
     const [showPassword, setShowPassword] = useState(false);
 
+    const [loading, setLoading] = useState(false);
+
     const [values, setValues] = useState({
         Documento: '',
         Nombre: '',
@@ -89,7 +92,7 @@ export default function FormRegister() {
     const documentoRegex = /^\d{1,10}$/;
 
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-    
+
     //Validacion para que acepte ñ y espacios en blanco
     const textRegex = /^[a-zA-Z0-9ñÑ\s]+$/;
 
@@ -200,6 +203,7 @@ export default function FormRegister() {
         handleBlur({ target: { name: 'PasswordVerify', value: values.PasswordVerify } });
 
         if (documentoInput === null && nameInput === null && lastName === null && telInput === null && emailInput === null && passwordInput === null && passwordVerify === null) {
+            setLoading(true);
             axios.post(`${apiUrl}/api/register`, values)
                 .then(res => {
                     if (res.data.Status === "Success") {
@@ -207,12 +211,17 @@ export default function FormRegister() {
                             icon: 'success',
                             title: 'Te has registrado correctamente',
                             showConfirmButton: false,
-                            timer: 1500
+                            timer: 1500,
+                            onClose: setLoading(false)
                         })
                         navigate('/login')
                     }
                 })
-                .then(err => console.log(err));
+                .then(err => {
+                    console.log(err)
+                    setLoading(false);
+                });
+
         }
     }
 
@@ -235,23 +244,23 @@ export default function FormRegister() {
                         Registrar
                     </Typography> */}
                     <Typography variant="h4" display="flex" justifyContent="center" gutterBottom color="textPrimary" fontFamily={'Mukta'}>
-                            Registrarse
-                        </Typography>
+                        Crear nueva cuenta
+                    </Typography>
 
-                        <Typography variant="body2" display="flex" justifyContent="center" fontFamily={'Mukta'} sx={{  }} style={{ fontSize: 16 }} color="textPrimary">
-                            ¿Ya tienes una cuenta? {''}
-                            <Link to="/login" style={{ fontSize: 16, fontWeight: 'bold', color: '#9C27B0', marginLeft: '5px'}}>Inicia sesión ahora</Link>
-                        </Typography>
+                    <Typography variant="body2" display="flex" justifyContent="center" fontFamily={'Mukta'} sx={{}} style={{ fontSize: 16 }} color="textPrimary">
+                        ¿Ya tienes una cuenta? {''}
+                        <Link to="/login" style={{ fontSize: 16, fontWeight: 'bold', color: '#9C27B0', marginLeft: '5px' }}>Inicia sesión ahora</Link>
+                    </Typography>
 
-                        <Divider sx={{ my: 3 }}>
+                    <Divider sx={{ my: 3 }}>
 
-                        </Divider>
+                    </Divider>
 
                     <form onSubmit={handleSubmit}>
                         <Grid container spacing={2}>
                             <Grid item xs={12} sm={6}>
                                 <NoNumberArrowsTextField
-                                    label="Documento"
+                                    label="Documento *"
                                     name="Documento"
                                     type="number"
                                     margin="dense"
@@ -271,7 +280,7 @@ export default function FormRegister() {
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
-                                    label="Nombre"
+                                    label="Nombre *"
                                     name="Nombre"
                                     type="text"
                                     margin="dense"
@@ -287,7 +296,7 @@ export default function FormRegister() {
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <TextField
-                                    label="Apellidos"
+                                    label="Apellidos *"
                                     name="Apellidos"
                                     type="text"
                                     margin="dense"
@@ -303,7 +312,7 @@ export default function FormRegister() {
                             </Grid>
                             <Grid item xs={12} sm={6}>
                                 <NoNumberArrowsTextField
-                                    label="Telefono"
+                                    label="Teléfono *"
                                     name="Telefono"
                                     type="number"
                                     margin="dense"
@@ -319,7 +328,7 @@ export default function FormRegister() {
                             </Grid>
                             <Grid item xs={12}>
                                 <TextField
-                                    label="Correo electrónico"
+                                    label="Correo electrónico *"
                                     type='Email'
                                     name="Email"
                                     margin="dense"
@@ -340,7 +349,7 @@ export default function FormRegister() {
                                         color='secondary'
                                         name="Password"
                                         id='Password'
-                                        label="Contraseña"
+                                        label="Contraseña *"
                                         type={showPassword ? 'text' : 'password'}
                                         InputProps={{
                                             endAdornment: (
@@ -366,7 +375,7 @@ export default function FormRegister() {
                                     color='secondary'
                                     name="PasswordVerify"
                                     id='PasswordVerify'
-                                    label="Confimar contraseña"
+                                    label="Confimar contraseña *"
                                     type={showPassword ? 'text' : 'password'}
                                     InputProps={{
                                         endAdornment: (
@@ -388,9 +397,23 @@ export default function FormRegister() {
                             </Grid>
                         </Grid>
                         <br />
-                        <Button fullWidth size="large" type="submit" variant="contained" color='secondary' fontFamily={'Mukta'}>
+                        {/* <Button fullWidth size="large" type="submit" variant="contained" color='secondary' fontFamily={'Mukta'}>
                             Registrar
-                        </Button>
+                        </Button> */}
+
+                        <LoadingButton
+                            size="large"
+                            fullWidth
+                            type="submit"
+                            loading={loading}
+                            variant="contained"
+                            color="secondary"
+                            sx={{ backgroundColor: "#9C27B0", textTransform: 'none',  marginTop: '8px', fontWeight: 400, fontFamily: '"Public Sans", sans-serif;' }}
+                        //disabled
+                        >
+                            <span>Crear cuenta</span>
+                        </LoadingButton>
+
                         <Link to="/login" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Mukta', marginTop: '15px' }}>
                             <Iconify icon="eva:arrow-ios-back-fill" color="#000000" width={16} height={16} style={{ marginBottom: '3px' }} />
                             <Typography variant="subtitle2" style={{ color: '#212B36' }}>
