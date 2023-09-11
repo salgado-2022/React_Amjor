@@ -22,7 +22,7 @@ function Somos() {
 
 
                         <div className="site-section-heading pt-3 mb-4">
-                            <h2 className="text-black">¿Quiénes somos?</h2>
+                            <h2 className="text-black" style={{fontSize: "54px"}}>¿Quiénes somos?</h2>
                         </div>
                         <p color="color: rgb(99, 115, 129)">AMJOR “Hecho con amor” es una compañía fundada en 2016, dedicada a la preparación, empaque y
                             distribución de postres y anchetas en toda el Área Metropolitana del Valle de Aburrá, con el fin de deleitar y acompañar

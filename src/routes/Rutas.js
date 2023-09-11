@@ -11,6 +11,7 @@ import { Error404 } from '../views/404';
 import { Carrito } from '../views/Carrito';
 import { Checkout } from '../views/Checkout';
 import { CompraThankYou } from '../views/ThankYou';
+import { Contact } from '../views/contact';
 import Login from '../views/Login';
 import { Register } from '../views/Register';
 import ResetPassword from '../components/Reset-Password/Reset-Password2';
@@ -42,6 +43,7 @@ function Rutas() {
                 <Route path="/register" element={<Register />} />
                 <Route path="/restore/password" element={<UpdataPassword />} />
                 <Route path="/reset" element={<ResetPassword />} />
+                <Route path="/contact" element={<Contact />} />
                 <Route path="/shopping" element={
                     <PrivateRoute>
                         <Shops />
