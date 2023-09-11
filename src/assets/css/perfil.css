@@ -31,3 +31,9 @@
     opacity: 1;
     background-color: rgba(0, 0, 0, 0.7);
 }
+
+.card-delete-button {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+  }

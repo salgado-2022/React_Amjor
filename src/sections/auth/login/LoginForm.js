@@ -179,6 +179,8 @@ export default function LoginForm() {
           loading={loading}
           variant="contained"
           color="secondary"
+          sx={{ backgroundColor: "#9C27B0", textTransform: 'none',  marginTop: '8px', fontWeight: 400, fontFamily: '"Public Sans", sans-serif;' }}
+
         //disabled
         >
           <span>Iniciar sesión</span>

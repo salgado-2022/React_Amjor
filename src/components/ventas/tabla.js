@@ -242,18 +242,18 @@ export default function SalesPage() {
     return (
         <>
 
-            <Container maxWidth="xl">
-                <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5} style={{ marginTop: "30px", marginBottom: "1px", marginLeft: "20px" }}>
-                    <Typography variant="h4" gutterBottom>
+            <Container maxWidth="lg">
+                <Stack direction="row" alignItems="center" justifyContent="space-between" mb={5} style={{ marginTop: "30px", marginBottom: "10px", marginLeft: "20px" }}>
+                    <Typography variant="h4" gutterBottom  sx={{ fontSize: '24px', color: "#212B36", fontFamily: "'Public Sans',sans-serif;", fontWeight: 'bold' }}>
                         Mis compras
                     </Typography>
 
                 </Stack>
-                <Card >
+                <Card sx={{ width: '100%', border: 'none', borderRadius: '16px', marginBottom: '25px', boxShadow: 'rgba(145, 158, 171, 0.2) 0px 0px 2px 0px, rgba(145, 158, 171, 0.3) 0px 12px 24px -4px;' }}>
                     <Divider />
                     <Box sx={{ overflowX: 'auto' }}>
                         <Box display="flex" alignItems="center" justifyContent="space-between" p={2}>
-                            <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} placeholder="Buscar venta..." />
+                            <UserListToolbar numSelected={selected.length} filterName={filterName} onFilterName={handleFilterByName} placeholder="Buscar una compra..." />
                             <div style={{ display: 'flex', alignItems: 'center' }}>
                                 <TextField
                                     id="start-date"
