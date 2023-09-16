@@ -123,7 +123,7 @@ export default function Profile() {
         formdata.append('Apellido', values.Apellido);
         formdata.append('Telefono', values.Telefono)
         formdata.append('correo', values.correo)
-        axios.put(`${apiUrl}/api/user/perfil/update/` + id, formdata)
+        axios.put(`${deployApiUrl}/api/user/perfil/update/` + id, formdata)
             .then(res => {
                 Swal.fire({
                     title: 'Actualizado correctamente',
@@ -138,7 +138,7 @@ export default function Profile() {
                     console.log(oldImage)
                     formdata.append('image', values.img);
                     formdata.append('oldImage', oldImage);
-                    axios.put(`${apiUrl}/api/user/perfil/update/` + id, formdata)
+                    axios.put(`${deployApiUrl}/api/user/perfil/update/` + id, formdata)
                 }
                 setTimeout(() => {
                     window.location.reload();
@@ -169,7 +169,7 @@ export default function Profile() {
                                                 <CardMedia component="img" onClick={() => {
                                                     setImageUrlEdit(null);
                                                     setValues((prev) => ({ ...prev, img: null }));
-                                                }} alt="" sx={{ width: 150, height: 150, borderRadius: 50 }} image={imageUrlEdit || `${apiUrl}/anchetas/` + values.img} />
+                                                }} alt="" sx={{ width: 150, height: 150, borderRadius: 50 }} image={imageUrlEdit || `${deployApiUrl}/anchetas/` + values.img} />
 
                                             </div>
                                         )}
@@ -187,7 +187,7 @@ export default function Profile() {
                                                     overflow: 'hidden',
                                                     height: "150px",
                                                     width: "150px",
-                                                    backgroundImage: `https://api.amjor.shop/usuario/${values.img}`
+                                                    backgroundImage: `https://api.amjor.shop/anchetas/${values.img}`
                                                 }}
                                                 title={
                                                     <div style={{ fontSize: "48px", marginBottom: "21px" }}>
