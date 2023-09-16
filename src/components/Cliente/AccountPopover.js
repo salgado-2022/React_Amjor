@@ -125,7 +125,7 @@ export default function AccountPopover() {
                     marginRight: "13px"
                 }}
             >
-                <Avatar src={`${apiUrl}/anchetas/${img}`} alt="photoURL" sx={{ width: "30px", height: "30px" }} />
+                <Avatar src={`${deployApiUrl}/anchetas/${img}`} alt="photoURL" sx={{ width: "30px", height: "30px" }} />
             </IconButton>
 
             <Popover
